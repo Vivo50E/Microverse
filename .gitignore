@@ -85,6 +85,25 @@ config/private/
 *.key
 *.pem
 
+# Economy Experiments - Experiment data (keep structure, ignore content)
+economy_experiments/data/sessions/*
+!economy_experiments/data/sessions/.gitkeep
+economy_experiments/data/logs/*.log
+economy_experiments/data/logs/*.json
+!economy_experiments/data/logs/.gitkeep
+economy_experiments/data/exports/*
+!economy_experiments/data/exports/.gitkeep
+
+# Economy Experiments - Python virtual environment
+economy_experiments/analysis/venv/
+economy_experiments/analysis/.ipynb_checkpoints/
+economy_experiments/analysis/__pycache__/
+economy_experiments/analysis/*.pyc
+
+# Economy Experiments - Temporary analysis files
+economy_experiments/analysis/notebooks/*.html
+economy_experiments/analysis/notebooks/*.pdf
+
 # Build outputs
 build/
 dist/

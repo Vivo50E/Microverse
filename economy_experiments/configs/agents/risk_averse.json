@@ -1,0 +1,28 @@
+{
+  "name": "risk_averse",
+  "description": "Agent with high risk aversion - prefers safe, predictable outcomes",
+  "parameters": {
+    "risk_aversion": 0.8,
+    "time_preference": 0.6,
+    "altruism": 0.5,
+    "fairness_concern": 0.7,
+    "trust_level": 0.4,
+    "reciprocity": 0.6,
+    "learning_rate": 0.05
+  },
+  "decision_style": "bounded_rational",
+  "behavioral_traits": {
+    "prefers_certain_outcomes": true,
+    "avoids_losses": true,
+    "values_stability": true,
+    "cautious_in_new_situations": true
+  },
+  "typical_behaviors": [
+    "Offers fair splits in Ultimatum Game to ensure acceptance",
+    "Sends less in Trust Game due to uncertainty",
+    "Contributes moderately in Public Goods Game",
+    "Prefers low-risk, low-return investments",
+    "Holds cash rather than speculating in markets"
+  ]
+}
+

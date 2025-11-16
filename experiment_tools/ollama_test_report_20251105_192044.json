@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-11-05T19:20:44.526638",
+  "summary": {
+    "passed": 7,
+    "failed": 0,
+    "warned": 0
+  },
+  "models": [
+    "mistral:7b-instruct"
+  ],
+  "results": {
+    "inference_time": 9.2687509059906,
+    "concurrent": {
+      "total_time": 4.093902111053467,
+      "successful": 4,
+      "avg_time": 3.805633008480072,
+      "recommendation": 8
+    },
+    "tokens_per_sec": 44.865555969106516,
+    "best_model": "mistral:7b-instruct"
+  }
+}

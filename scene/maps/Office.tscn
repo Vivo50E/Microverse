@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=4 uid="uid://nhba2jdtsjsx"]
+[gd_scene load_steps=73 format=4 uid="uid://nhba2jdtsjsx"]
 
 [ext_resource type="Texture2D" uid="uid://bg7vxkearntad" path="res://asset/maps/interiors/3_Bathroom_32x32.png" id="1_xsptx"]
 [ext_resource type="Texture2D" uid="uid://u2qghko6a2k2" path="res://asset/maps/interiors/Room_Builder_32x32.png" id="2_0ao8h"]
@@ -33,6 +33,7 @@
 [ext_resource type="Script" uid="uid://dwbuqa6u6pc8y" path="res://script/RoomManager.gd" id="31_8h615"]
 [ext_resource type="PackedScene" uid="uid://b37ihqa7p6w5t" path="res://scene/characters/Stephen.tscn" id="31_8035k"]
 [ext_resource type="PackedScene" uid="uid://cyhpykj1xrn1n" path="res://scene/characters/Tom.tscn" id="32_vckrt"]
+[ext_resource type="Script" uid="uid://ccj8wabvsstyb" path="res://economy_experiments/scripts/ExperimentController.gd" id="34_t3fek"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3he53"]
 
@@ -17050,3 +17051,6 @@ shape = SubResource("RectangleShape2D_285b5")
 
 [node name="RoomManager" type="Node2D" parent="."]
 script = ExtResource("31_8h615")
+
+[node name="ExperimentController" type="Node" parent="."]
+script = ExtResource("34_t3fek")

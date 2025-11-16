@@ -1,0 +1,33 @@
+{
+  "name": "altruistic",
+  "description": "Agent with high altruism - values others' welfare, cooperates generously",
+  "parameters": {
+    "risk_aversion": 0.5,
+    "time_preference": 0.4,
+    "altruism": 0.9,
+    "fairness_concern": 0.8,
+    "trust_level": 0.8,
+    "reciprocity": 0.9,
+    "learning_rate": 0.08
+  },
+  "decision_style": "emotional",
+  "behavioral_traits": {
+    "prefers_certain_outcomes": false,
+    "avoids_losses": false,
+    "values_stability": true,
+    "cautious_in_new_situations": false,
+    "empathetic": true,
+    "cooperative": true,
+    "generous": true
+  },
+  "typical_behaviors": [
+    "Offers generous splits in Ultimatum Game (45-50%)",
+    "Sends most endowment in Trust Game",
+    "Returns more than received as trustee",
+    "Contributes heavily in Public Goods Game",
+    "Gives large amounts in Dictator Game",
+    "Helps others even at personal cost",
+    "Prioritizes group welfare over personal gain"
+  ]
+}
+

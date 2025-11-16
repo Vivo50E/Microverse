@@ -1,0 +1,34 @@
+{
+  "name": "selfish",
+  "description": "Agent with low altruism - maximizes personal gain, minimal cooperation",
+  "parameters": {
+    "risk_aversion": 0.4,
+    "time_preference": 0.8,
+    "altruism": 0.1,
+    "fairness_concern": 0.2,
+    "trust_level": 0.3,
+    "reciprocity": 0.2,
+    "learning_rate": 0.12
+  },
+  "decision_style": "rational",
+  "behavioral_traits": {
+    "prefers_certain_outcomes": false,
+    "avoids_losses": true,
+    "values_stability": false,
+    "cautious_in_new_situations": true,
+    "self_interested": true,
+    "strategic": true,
+    "opportunistic": true
+  },
+  "typical_behaviors": [
+    "Offers minimal amounts in Ultimatum Game (20-30%)",
+    "Sends little in Trust Game",
+    "Returns minimal amounts as trustee",
+    "Free-rides in Public Goods Game",
+    "Gives nothing in Dictator Game",
+    "Exploits cooperative partners",
+    "Maximizes personal profit in all situations",
+    "Defects in cooperation dilemmas"
+  ]
+}
+

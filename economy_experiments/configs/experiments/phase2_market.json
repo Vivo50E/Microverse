@@ -1,0 +1,75 @@
+{
+  "name": "Phase 2: Market Dynamics",
+  "description": "Introduce market trading with multiple goods to study price discovery and trading strategies",
+  "duration_minutes": 30,
+  "agents": [
+    {
+      "name": "Alice",
+      "profile": "risk_seeking",
+      "initial_cash": 500.0
+    },
+    {
+      "name": "Jack",
+      "profile": "risk_averse",
+      "initial_cash": 500.0
+    },
+    {
+      "name": "Grace",
+      "profile": "altruistic",
+      "initial_cash": 500.0
+    },
+    {
+      "name": "Joe",
+      "profile": "selfish",
+      "initial_cash": 500.0
+    },
+    {
+      "name": "Lea",
+      "profile": "risk_neutral",
+      "initial_cash": 500.0
+    },
+    {
+      "name": "Monica",
+      "profile": "risk_averse",
+      "initial_cash": 500.0
+    }
+  ],
+  "games": [
+    {
+      "type": "public_goods",
+      "rounds": 2,
+      "endowment": 100.0,
+      "multiplier": 2.0,
+      "schedule": "every_10_minutes",
+      "group_size": 4
+    }
+  ],
+  "market": {
+    "enabled": true,
+    "goods_types": ["food", "tools", "luxury"],
+    "price_range": [20, 80],
+    "initial_goods_per_agent": {
+      "food": 5,
+      "tools": 3,
+      "luxury": 1
+    },
+    "transaction_fee_percent": 2.0
+  },
+  "logging": {
+    "level": "info",
+    "save_dialogues": true,
+    "save_memories": true,
+    "auto_save_interval": 60
+  },
+  "analysis": {
+    "metrics_to_track": [
+      "cooperation_rate",
+      "wealth_distribution",
+      "gini_coefficient",
+      "market_efficiency",
+      "price_volatility",
+      "trading_volume"
+    ]
+  }
+}
+

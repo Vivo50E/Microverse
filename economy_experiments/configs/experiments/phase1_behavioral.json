@@ -1,0 +1,78 @@
+{
+  "name": "Phase 1: Behavioral Games Baseline",
+  "description": "Test all four behavioral economics games to establish baseline agent behaviors",
+  "duration_minutes": 20,
+  "agents": [
+    {
+      "name": "Alice",
+      "profile": "risk_seeking",
+      "initial_cash": 200.0
+    },
+    {
+      "name": "Jack",
+      "profile": "risk_averse",
+      "initial_cash": 200.0
+    },
+    {
+      "name": "Grace",
+      "profile": "altruistic",
+      "initial_cash": 200.0
+    },
+    {
+      "name": "Joe",
+      "profile": "selfish",
+      "initial_cash": 200.0
+    }
+  ],
+  "games": [
+    {
+      "type": "ultimatum",
+      "rounds": 3,
+      "endowment": 100.0,
+      "schedule": "start",
+      "group_size": 2
+    },
+    {
+      "type": "trust",
+      "rounds": 3,
+      "endowment": 100.0,
+      "multiplier": 3.0,
+      "schedule": "every_5_minutes",
+      "group_size": 2
+    },
+    {
+      "type": "dictator",
+      "rounds": 2,
+      "endowment": 100.0,
+      "schedule": "every_7_minutes",
+      "group_size": 2
+    },
+    {
+      "type": "public_goods",
+      "rounds": 3,
+      "endowment": 100.0,
+      "multiplier": 2.0,
+      "schedule": "every_6_minutes",
+      "group_size": 4
+    }
+  ],
+  "market": {
+    "enabled": false
+  },
+  "logging": {
+    "level": "info",
+    "save_dialogues": true,
+    "save_memories": true,
+    "auto_save_interval": 60
+  },
+  "analysis": {
+    "metrics_to_track": [
+      "cooperation_rate",
+      "fairness_score",
+      "trust_level",
+      "reciprocity_level",
+      "wealth_distribution"
+    ]
+  }
+}
+

@@ -1,0 +1,85 @@
+{
+  "name": "Phase 3: Model Comparison",
+  "description": "Compare behavior across different LLM models (requires running multiple times with different models)",
+  "duration_minutes": 15,
+  "agents": [
+    {
+      "name": "Alice",
+      "profile": "risk_neutral",
+      "initial_cash": 300.0
+    },
+    {
+      "name": "Jack",
+      "profile": "risk_neutral",
+      "initial_cash": 300.0
+    },
+    {
+      "name": "Grace",
+      "profile": "risk_neutral",
+      "initial_cash": 300.0
+    },
+    {
+      "name": "Joe",
+      "profile": "risk_neutral",
+      "initial_cash": 300.0
+    }
+  ],
+  "games": [
+    {
+      "type": "ultimatum",
+      "rounds": 5,
+      "endowment": 100.0,
+      "schedule": "start",
+      "group_size": 2
+    },
+    {
+      "type": "trust",
+      "rounds": 5,
+      "endowment": 100.0,
+      "multiplier": 3.0,
+      "schedule": "every_3_minutes",
+      "group_size": 2
+    },
+    {
+      "type": "public_goods",
+      "rounds": 4,
+      "endowment": 100.0,
+      "multiplier": 2.0,
+      "schedule": "every_4_minutes",
+      "group_size": 4
+    }
+  ],
+  "market": {
+    "enabled": false
+  },
+  "logging": {
+    "level": "debug",
+    "save_dialogues": true,
+    "save_memories": true,
+    "save_prompts": true,
+    "save_model_responses": true,
+    "auto_save_interval": 30
+  },
+  "analysis": {
+    "metrics_to_track": [
+      "cooperation_rate",
+      "fairness_score",
+      "trust_level",
+      "reciprocity_level",
+      "decision_consistency",
+      "response_time"
+    ],
+    "comparison_groups": [
+      "model_type",
+      "model_size"
+    ]
+  },
+  "notes": [
+    "Run this experiment multiple times with different models:",
+    "1. mistral:7b-instruct",
+    "2. llama2:13b",
+    "3. gemma:7b",
+    "4. Compare results using analysis/scripts/compare_models.py"
+  ]
+}
+

@@ -1,0 +1,28 @@
+{
+  "name": "risk_neutral",
+  "description": "Agent with neutral risk preference - evaluates options by expected value",
+  "parameters": {
+    "risk_aversion": 0.5,
+    "time_preference": 0.5,
+    "altruism": 0.5,
+    "fairness_concern": 0.5,
+    "trust_level": 0.5,
+    "reciprocity": 0.5,
+    "learning_rate": 0.1
+  },
+  "decision_style": "rational",
+  "behavioral_traits": {
+    "prefers_certain_outcomes": false,
+    "avoids_losses": false,
+    "values_stability": false,
+    "cautious_in_new_situations": false
+  },
+  "typical_behaviors": [
+    "Makes mathematically optimal decisions",
+    "Offers based on expected utility calculations",
+    "Balances risk and reward objectively",
+    "Adjusts behavior based on expected returns",
+    "Willing to take calculated risks"
+  ]
+}
+

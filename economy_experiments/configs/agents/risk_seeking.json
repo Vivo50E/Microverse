@@ -1,0 +1,31 @@
+{
+  "name": "risk_seeking",
+  "description": "Agent with low risk aversion - prefers high-risk, high-reward options",
+  "parameters": {
+    "risk_aversion": 0.2,
+    "time_preference": 0.7,
+    "altruism": 0.3,
+    "fairness_concern": 0.3,
+    "trust_level": 0.7,
+    "reciprocity": 0.4,
+    "learning_rate": 0.15
+  },
+  "decision_style": "heuristic",
+  "behavioral_traits": {
+    "prefers_certain_outcomes": false,
+    "avoids_losses": false,
+    "values_stability": false,
+    "cautious_in_new_situations": false,
+    "seeks_excitement": true,
+    "optimistic_bias": true
+  },
+  "typical_behaviors": [
+    "Makes bold offers in Ultimatum Game",
+    "Sends large amounts in Trust Game expecting high returns",
+    "Free-rides in Public Goods Game more often",
+    "Actively trades in volatile markets",
+    "Takes leveraged positions",
+    "Pursues aggressive growth strategies"
+  ]
+}
+
