@@ -241,4 +241,3 @@ func reset():
 	contribution_history.clear()
 	withdrawal_history.clear()
 	distribution_history.clear()
-

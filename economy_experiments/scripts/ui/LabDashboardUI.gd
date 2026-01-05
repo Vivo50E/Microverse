@@ -21,32 +21,39 @@ func _ready():
 	# 应用统一主题样式
 	_apply_lab_theme()
 	
-	# 添加关闭按钮
-	_add_close_button()
+	# 延迟添加关闭按钮，避免在父节点设置子节点时添加
+	call_deferred("_add_close_button")
 	
 	# 获取或创建实验室管理器
 	lab_manager = get_node_or_null("/root/ExperimentLabManager")
 	if not lab_manager:
 		lab_manager = ExperimentLabManager.new()
 		lab_manager.name = "ExperimentLabManager"
-		get_tree().root.add_child(lab_manager)
+		get_tree().root.call_deferred("add_child", lab_manager)
 	
 	# 连接信号
 	quick_experiment_button.pressed.connect(_on_quick_experiment)
 	view_report_button.pressed.connect(_on_view_report)
 	
-	lab_manager.daily_goal_completed.connect(_on_daily_goal_completed)
-	lab_manager.achievement_earned.connect(_on_achievement_earned)
+	# 延迟连接实验室管理器的信号，确保它已经添加到场景树
+	call_deferred("_connect_lab_manager_signals")
 	
 	# 初始化显示
-	_update_display()
+	call_deferred("_update_display")
 	
 	# 定期更新
 	var timer = Timer.new()
 	timer.wait_time = 2.0
 	timer.timeout.connect(_update_display)
-	add_child(timer)
+	call_deferred("add_child", timer)
+	await get_tree().process_frame
 	timer.start()
+
+func _connect_lab_manager_signals():
+	"""延迟连接实验室管理器信号"""
+	if lab_manager:
+		lab_manager.daily_goal_completed.connect(_on_daily_goal_completed)
+		lab_manager.achievement_earned.connect(_on_achievement_earned)
 
 func _update_display():
 	if not lab_manager:
@@ -200,6 +207,9 @@ func _show_notification(message: String):
 
 func _add_close_button():
 	"""添加关闭按钮到右上角"""
+	if close_button:
+		return  # 已经添加过了
+	
 	close_button = Button.new()
 	close_button.text = "✖ 关闭"
 	close_button.custom_minimum_size = Vector2(80, 40)
@@ -222,6 +232,8 @@ func _add_close_button():
 	
 	# 移到最上层
 	move_child(close_button, get_child_count() - 1)
+	
+	print("✅ 关闭按钮已添加到实验室模式")
 
 func _on_close_pressed():
 	"""关闭按钮点击处理"""

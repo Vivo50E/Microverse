@@ -53,8 +53,9 @@ func _execute_round():
 		
 		contributions[agent.character_name] = contribution
 		
-		# Add to resource pool
-		resource_pool.contribute(agent.character_name, contribution)
+		# Add to resource pool (only if contribution is positive)
+		if contribution > 0:
+			resource_pool.contribute(agent.character_name, contribution)
 		
 		record_decision(agent.character_name, {
 			"action": "contribute",

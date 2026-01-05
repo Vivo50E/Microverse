@@ -1,0 +1,3704 @@
+[
+	{
+		"data": {
+			"session_id": "Phase 1: Behavioral Games Baseline_1767611571.87256",
+			"timestamp": 1767611571.87257
+		},
+		"timestamp": 1767611571.87293,
+		"type": "session_started"
+	},
+	{
+		"data": {
+			"agents": [
+				"Alice",
+				"Jack",
+				"Grace",
+				"Joe"
+			],
+			"config": {
+				"agents": [
+					{
+						"initial_cash": 200.0,
+						"name": "Alice",
+						"profile": "risk_seeking"
+					},
+					{
+						"initial_cash": 200.0,
+						"name": "Jack",
+						"profile": "risk_averse"
+					},
+					{
+						"initial_cash": 200.0,
+						"name": "Grace",
+						"profile": "altruistic"
+					},
+					{
+						"initial_cash": 200.0,
+						"name": "Joe",
+						"profile": "selfish"
+					}
+				],
+				"analysis": {
+					"metrics_to_track": [
+						"cooperation_rate",
+						"fairness_score",
+						"trust_level",
+						"reciprocity_level",
+						"wealth_distribution"
+					]
+				},
+				"description": "Test all four behavioral economics games to establish baseline agent behaviors",
+				"duration_minutes": 20.0,
+				"games": [
+					{
+						"endowment": 100.0,
+						"group_size": 2.0,
+						"rounds": 3.0,
+						"schedule": "start",
+						"type": "ultimatum"
+					},
+					{
+						"endowment": 100.0,
+						"group_size": 2.0,
+						"multiplier": 3.0,
+						"rounds": 3.0,
+						"schedule": "every_5_minutes",
+						"type": "trust"
+					},
+					{
+						"endowment": 100.0,
+						"group_size": 2.0,
+						"rounds": 2.0,
+						"schedule": "every_7_minutes",
+						"type": "dictator"
+					},
+					{
+						"endowment": 100.0,
+						"group_size": 4.0,
+						"multiplier": 2.0,
+						"rounds": 3.0,
+						"schedule": "every_6_minutes",
+						"type": "public_goods"
+					}
+				],
+				"logging": {
+					"auto_save_interval": 60.0,
+					"level": "info",
+					"save_dialogues": true,
+					"save_memories": true
+				},
+				"market": {
+					"enabled": false
+				},
+				"name": "Phase 1: Behavioral Games Baseline"
+			},
+			"name": "Phase 1: Behavioral Games Baseline"
+		},
+		"timestamp": 1767611571.87293,
+		"type": "experiment_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 2.0,
+				"rounds": 3.0,
+				"schedule": "start",
+				"type": "ultimatum"
+			},
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"game_type": "ultimatum",
+			"players": [
+				"Alice",
+				"Joe"
+			]
+		},
+		"timestamp": 1767611571.97437,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"round": 1
+		},
+		"timestamp": 1767611571.97438,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "propose",
+				"keep": 78.4705194309893,
+				"offer": 21.5294805690107,
+				"offer_ratio": 0.215294805690107,
+				"round": 1,
+				"timestamp": 1767611571.97438
+			},
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"player_id": "Alice",
+			"round": 1
+		},
+		"timestamp": 1767611571.97438,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"accepted": false,
+				"action": "respond",
+				"offer_received": 21.5294805690107,
+				"round": 1,
+				"timestamp": 1767611571.97439
+			},
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"player_id": "Joe",
+			"round": 1
+		},
+		"timestamp": 1767611571.97439,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"results": {
+				"accepted": false,
+				"endowment": 100.0,
+				"offer": 21.5294805690107,
+				"offer_ratio": 0.215294805690107,
+				"proposer": "Alice",
+				"proposer_payoff": 0.0,
+				"responder": "Joe",
+				"responder_payoff": 0.0,
+				"round": 1
+			},
+			"round": 1
+		},
+		"timestamp": 1767611571.9744,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"round": 2
+		},
+		"timestamp": 1767611571.9744,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "propose",
+				"keep": 69.1409264765972,
+				"offer": 30.8590735234028,
+				"offer_ratio": 0.308590735234028,
+				"round": 2,
+				"timestamp": 1767611571.9744
+			},
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"player_id": "Alice",
+			"round": 2
+		},
+		"timestamp": 1767611571.9744,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"accepted": true,
+				"action": "respond",
+				"offer_received": 30.8590735234028,
+				"round": 2,
+				"timestamp": 1767611571.97441
+			},
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"player_id": "Joe",
+			"round": 2
+		},
+		"timestamp": 1767611571.97441,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"results": {
+				"accepted": true,
+				"endowment": 100.0,
+				"offer": 30.8590735234028,
+				"offer_ratio": 0.308590735234028,
+				"proposer": "Alice",
+				"proposer_payoff": 69.1409264765972,
+				"responder": "Joe",
+				"responder_payoff": 30.8590735234028,
+				"round": 2
+			},
+			"round": 2
+		},
+		"timestamp": 1767611571.97442,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"round": 3
+		},
+		"timestamp": 1767611571.97442,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "propose",
+				"keep": 62.7647003604854,
+				"offer": 37.2352996395146,
+				"offer_ratio": 0.372352996395146,
+				"round": 3,
+				"timestamp": 1767611571.97443
+			},
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"player_id": "Alice",
+			"round": 3
+		},
+		"timestamp": 1767611571.97443,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"accepted": true,
+				"action": "respond",
+				"offer_received": 37.2352996395146,
+				"round": 3,
+				"timestamp": 1767611571.97443
+			},
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"player_id": "Joe",
+			"round": 3
+		},
+		"timestamp": 1767611571.97443,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"results": {
+				"accepted": true,
+				"endowment": 100.0,
+				"offer": 37.2352996395146,
+				"offer_ratio": 0.372352996395146,
+				"proposer": "Alice",
+				"proposer_payoff": 62.7647003604854,
+				"responder": "Joe",
+				"responder_payoff": 37.2352996395146,
+				"round": 3
+			},
+			"round": 3
+		},
+		"timestamp": 1767611571.97444,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.0000669956207275391,
+			"final_results": {
+				"acceptance_rate": 0.666666666666667,
+				"average_offer_ratio": 0.298746179106427,
+				"duration": 0.0000669956207275391,
+				"end_time": 1767611571.97444,
+				"game_id": "GAME_BASE_1767611571.97436_586",
+				"game_type": "ultimatum",
+				"player_results": {
+					"Alice": {
+						"average_payoff": 43.9685422790275,
+						"rounds_played": 3,
+						"total_payoff": 131.905626837083
+					},
+					"Joe": {
+						"average_payoff": 22.6981243876391,
+						"rounds_played": 3,
+						"total_payoff": 68.0943731629174
+					}
+				},
+				"rejection_rate": 0.333333333333333,
+				"start_time": 1767611571.97437,
+				"total_accepted": 2,
+				"total_rejected": 1,
+				"total_rounds": 3
+			},
+			"game_id": "GAME_BASE_1767611571.97436_586"
+		},
+		"timestamp": 1767611571.97445,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767611571.97444,
+			"game_id": "GAME_BASE_1767611571.97436_586",
+			"game_name": "Ultimatum Game",
+			"game_type": "ultimatum",
+			"max_rounds": 3,
+			"players": [
+				"Alice",
+				"Joe"
+			],
+			"round": 3,
+			"start_time": 1767611571.97437,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767611571.97445,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 2.0,
+				"multiplier": 3.0,
+				"rounds": 3.0,
+				"schedule": "every_5_minutes",
+				"type": "trust"
+			},
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"game_type": "trust",
+			"players": [
+				"Alice",
+				"Jack"
+			]
+		},
+		"timestamp": 1767611571.97448,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"round": 1
+		},
+		"timestamp": 1767611571.97448,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 56.1532848797232,
+				"amount_sent": 43.8467151202768,
+				"round": 1,
+				"send_ratio": 0.438467151202768,
+				"timestamp": 1767611571.97449
+			},
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"player_id": "Alice",
+			"round": 1
+		},
+		"timestamp": 1767611571.97449,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 84.4915232075295,
+				"received": 131.54014536083,
+				"return_ratio": 0.357675005027863,
+				"returned": 47.0486221533009,
+				"round": 1,
+				"timestamp": 1767611571.97449
+			},
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"player_id": "Jack",
+			"round": 1
+		},
+		"timestamp": 1767611571.97449,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"results": {
+				"amount_returned": 47.0486221533009,
+				"amount_sent": 43.8467151202768,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 131.54014536083,
+				"multiplier": 3.0,
+				"return_ratio": 0.357675005027863,
+				"round": 1,
+				"send_ratio": 0.438467151202768,
+				"trust_rewarded": true,
+				"trustee": "Jack",
+				"trustee_final": 184.49152320753,
+				"trustee_gain": 84.4915232075295,
+				"trustor": "Alice",
+				"trustor_final": 103.201907033024,
+				"trustor_gain": 3.2019070330241
+			},
+			"round": 1
+		},
+		"timestamp": 1767611571.9745,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"round": 2
+		},
+		"timestamp": 1767611571.9745,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 15.7580675221606,
+				"amount_sent": 84.2419324778394,
+				"round": 2,
+				"send_ratio": 0.842419324778394,
+				"timestamp": 1767611571.97451
+			},
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"player_id": "Alice",
+			"round": 2
+		},
+		"timestamp": 1767611571.97451,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 209.954141303678,
+				"received": 252.725797433518,
+				"return_ratio": 0.169241353926648,
+				"returned": 42.7716561298404,
+				"round": 2,
+				"timestamp": 1767611571.97451
+			},
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"player_id": "Jack",
+			"round": 2
+		},
+		"timestamp": 1767611571.97451,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"results": {
+				"amount_returned": 42.7716561298404,
+				"amount_sent": 84.2419324778394,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 252.725797433518,
+				"multiplier": 3.0,
+				"return_ratio": 0.169241353926648,
+				"round": 2,
+				"send_ratio": 0.842419324778394,
+				"trust_rewarded": false,
+				"trustee": "Jack",
+				"trustee_final": 309.954141303678,
+				"trustee_gain": 209.954141303678,
+				"trustor": "Alice",
+				"trustor_final": 58.529723652001,
+				"trustor_gain": -41.470276347999
+			},
+			"round": 2
+		},
+		"timestamp": 1767611571.97452,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"round": 3
+		},
+		"timestamp": 1767611571.97452,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 57.2179635637537,
+				"amount_sent": 42.7820364362463,
+				"round": 3,
+				"send_ratio": 0.427820364362463,
+				"timestamp": 1767611571.97452
+			},
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"player_id": "Alice",
+			"round": 3
+		},
+		"timestamp": 1767611571.97452,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 106.394346259253,
+				"received": 128.346109308739,
+				"return_ratio": 0.17103567196323,
+				"returned": 21.9517630494864,
+				"round": 3,
+				"timestamp": 1767611571.97452
+			},
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"player_id": "Jack",
+			"round": 3
+		},
+		"timestamp": 1767611571.97452,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"results": {
+				"amount_returned": 21.9517630494864,
+				"amount_sent": 42.7820364362463,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 128.346109308739,
+				"multiplier": 3.0,
+				"return_ratio": 0.17103567196323,
+				"round": 3,
+				"send_ratio": 0.427820364362463,
+				"trust_rewarded": false,
+				"trustee": "Jack",
+				"trustee_final": 206.394346259253,
+				"trustee_gain": 106.394346259253,
+				"trustor": "Alice",
+				"trustor_final": 79.1697266132401,
+				"trustor_gain": -20.8302733867599
+			},
+			"round": 3
+		},
+		"timestamp": 1767611571.97453,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.0000548362731933594,
+			"final_results": {
+				"average_return_ratio": 0.232650676972581,
+				"average_send_ratio": 0.569568946781208,
+				"duration": 0.0000548362731933594,
+				"end_time": 1767611571.97454,
+				"game_id": "GAME_BASE_1767611571.97447_486",
+				"game_type": "trust",
+				"player_results": {
+					"Alice": {
+						"average_payoff": -19.6995475672449,
+						"rounds_played": 3,
+						"total_payoff": -59.0986427017348
+					},
+					"Jack": {
+						"average_payoff": 133.613336923487,
+						"rounds_played": 3,
+						"total_payoff": 400.84001077046
+					}
+				},
+				"start_time": 1767611571.97448,
+				"total_rounds": 3,
+				"trust_success_rate": 0.333333333333333
+			},
+			"game_id": "GAME_BASE_1767611571.97447_486"
+		},
+		"timestamp": 1767611571.97454,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767611571.97454,
+			"game_id": "GAME_BASE_1767611571.97447_486",
+			"game_name": "Trust Game",
+			"game_type": "trust",
+			"max_rounds": 3,
+			"players": [
+				"Alice",
+				"Jack"
+			],
+			"round": 3,
+			"start_time": 1767611571.97448,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767611571.97454,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 2.0,
+				"rounds": 2.0,
+				"schedule": "every_7_minutes",
+				"type": "dictator"
+			},
+			"game_id": "GAME_BASE_1767611571.97456_382",
+			"game_type": "dictator",
+			"players": [
+				"Jack",
+				"Grace"
+			]
+		},
+		"timestamp": 1767611571.97457,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97456_382",
+			"round": 1
+		},
+		"timestamp": 1767611571.97457,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "allocate",
+				"gift": 51.6708359842985,
+				"gift_ratio": 0.516708359842985,
+				"kept": 48.3291640157015,
+				"round": 1,
+				"timestamp": 1767611571.97457
+			},
+			"game_id": "GAME_BASE_1767611571.97456_382",
+			"player_id": "Jack",
+			"round": 1
+		},
+		"timestamp": 1767611571.97457,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "receive",
+				"received": 51.6708359842985,
+				"round": 1,
+				"timestamp": 1767611571.97457
+			},
+			"game_id": "GAME_BASE_1767611571.97456_382",
+			"player_id": "Grace",
+			"round": 1
+		},
+		"timestamp": 1767611571.97457,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97456_382",
+			"results": {
+				"dictator": "Jack",
+				"dictator_altruism": 0.5,
+				"dictator_payoff": 48.3291640157015,
+				"endowment": 100.0,
+				"gift": 51.6708359842985,
+				"gift_ratio": 0.516708359842985,
+				"recipient": "Grace",
+				"recipient_payoff": 51.6708359842985,
+				"round": 1
+			},
+			"round": 1
+		},
+		"timestamp": 1767611571.97458,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97456_382",
+			"round": 2
+		},
+		"timestamp": 1767611571.97459,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "allocate",
+				"gift": 51.3630831672072,
+				"gift_ratio": 0.513630831672072,
+				"kept": 48.6369168327928,
+				"round": 2,
+				"timestamp": 1767611571.97459
+			},
+			"game_id": "GAME_BASE_1767611571.97456_382",
+			"player_id": "Jack",
+			"round": 2
+		},
+		"timestamp": 1767611571.97459,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "receive",
+				"received": 51.3630831672072,
+				"round": 2,
+				"timestamp": 1767611571.97459
+			},
+			"game_id": "GAME_BASE_1767611571.97456_382",
+			"player_id": "Grace",
+			"round": 2
+		},
+		"timestamp": 1767611571.97459,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97456_382",
+			"results": {
+				"dictator": "Jack",
+				"dictator_altruism": 0.5,
+				"dictator_payoff": 48.6369168327928,
+				"endowment": 100.0,
+				"gift": 51.3630831672072,
+				"gift_ratio": 0.513630831672072,
+				"recipient": "Grace",
+				"recipient_payoff": 51.3630831672072,
+				"round": 2
+			},
+			"round": 2
+		},
+		"timestamp": 1767611571.9746,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.0000350475311279297,
+			"final_results": {
+				"average_altruism_trait": 0.5,
+				"average_gift_ratio": 0.515169595757528,
+				"duration": 0.0000350475311279297,
+				"end_time": 1767611571.9746,
+				"game_id": "GAME_BASE_1767611571.97456_382",
+				"game_type": "dictator",
+				"player_results": {
+					"Grace": {
+						"average_payoff": 51.5169595757528,
+						"rounds_played": 2,
+						"total_payoff": 103.033919151506
+					},
+					"Jack": {
+						"average_payoff": 48.4830404242472,
+						"rounds_played": 2,
+						"total_payoff": 96.9660808484943
+					}
+				},
+				"start_time": 1767611571.97457,
+				"total_rounds": 2
+			},
+			"game_id": "GAME_BASE_1767611571.97456_382"
+		},
+		"timestamp": 1767611571.9746,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767611571.9746,
+			"game_id": "GAME_BASE_1767611571.97456_382",
+			"game_name": "Dictator Game",
+			"game_type": "dictator",
+			"max_rounds": 2,
+			"players": [
+				"Jack",
+				"Grace"
+			],
+			"round": 2,
+			"start_time": 1767611571.97457,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767611571.97461,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 4.0,
+				"multiplier": 2.0,
+				"rounds": 3.0,
+				"schedule": "every_6_minutes",
+				"type": "public_goods"
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"game_type": "public_goods",
+			"players": [
+				"Alice",
+				"Joe",
+				"Grace",
+				"Jack"
+			]
+		},
+		"timestamp": 1767611571.97463,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"round": 1
+		},
+		"timestamp": 1767611571.97463,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 26.7997420900687,
+				"contribution_ratio": 0.267997420900687,
+				"kept": 73.2002579099313,
+				"round": 1,
+				"timestamp": 1767611571.97464
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Alice",
+			"round": 1
+		},
+		"timestamp": 1767611571.97464,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 0.0,
+				"contribution_ratio": 0.0,
+				"kept": 100.0,
+				"round": 1,
+				"timestamp": 1767611571.97465
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Joe",
+			"round": 1
+		},
+		"timestamp": 1767611571.97465,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 49.5988365297347,
+				"contribution_ratio": 0.495988365297347,
+				"kept": 50.4011634702653,
+				"round": 1,
+				"timestamp": 1767611571.97465
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Grace",
+			"round": 1
+		},
+		"timestamp": 1767611571.97465,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 33.2857315254756,
+				"contribution_ratio": 0.332857315254756,
+				"kept": 66.7142684745244,
+				"round": 1,
+				"timestamp": 1767611571.97465
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Jack",
+			"round": 1
+		},
+		"timestamp": 1767611571.97466,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"results": {
+				"average_contribution": 27.4210775363197,
+				"average_contribution_ratio": 0.274210775363197,
+				"contributions": {
+					"Alice": 26.7997420900687,
+					"Grace": 49.5988365297347,
+					"Jack": 33.2857315254756,
+					"Joe": 0.0
+				},
+				"cooperation_rate": 0.75,
+				"distribution": {
+					"Alice": 54.8421550726395,
+					"Grace": 54.8421550726395,
+					"Jack": 54.8421550726395,
+					"Joe": 54.8421550726395
+				},
+				"endowment": 100.0,
+				"free_rider_count": 1,
+				"free_riders": [
+					"Joe"
+				],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 219.368620290558,
+				"round": 1,
+				"total_contribution": 109.684310145279
+			},
+			"round": 1
+		},
+		"timestamp": 1767611571.97469,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"round": 2
+		},
+		"timestamp": 1767611571.97469,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 32.5721662458937,
+				"contribution_ratio": 0.325721662458937,
+				"kept": 67.4278337541063,
+				"round": 2,
+				"timestamp": 1767611571.9747
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Alice",
+			"round": 2
+		},
+		"timestamp": 1767611571.9747,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 18.2952370039605,
+				"contribution_ratio": 0.182952370039605,
+				"kept": 81.7047629960395,
+				"round": 2,
+				"timestamp": 1767611571.9747
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Joe",
+			"round": 2
+		},
+		"timestamp": 1767611571.97471,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 61.9157445445478,
+				"contribution_ratio": 0.619157445445478,
+				"kept": 38.0842554554522,
+				"round": 2,
+				"timestamp": 1767611571.97471
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Grace",
+			"round": 2
+		},
+		"timestamp": 1767611571.97471,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 76.3960937731954,
+				"contribution_ratio": 0.763960937731954,
+				"kept": 23.6039062268046,
+				"round": 2,
+				"timestamp": 1767611571.97471
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Jack",
+			"round": 2
+		},
+		"timestamp": 1767611571.97471,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"results": {
+				"average_contribution": 47.2948103918993,
+				"average_contribution_ratio": 0.472948103918993,
+				"contributions": {
+					"Alice": 32.5721662458937,
+					"Grace": 61.9157445445478,
+					"Jack": 76.3960937731954,
+					"Joe": 18.2952370039605
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 94.5896207837987,
+					"Grace": 94.5896207837987,
+					"Jack": 94.5896207837987,
+					"Joe": 94.5896207837987
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 378.358483135195,
+				"round": 2,
+				"total_contribution": 189.179241567597
+			},
+			"round": 2
+		},
+		"timestamp": 1767611571.97474,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"round": 3
+		},
+		"timestamp": 1767611571.97474,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 25.300294603947,
+				"contribution_ratio": 0.25300294603947,
+				"kept": 74.699705396053,
+				"round": 3,
+				"timestamp": 1767611571.97474
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Alice",
+			"round": 3
+		},
+		"timestamp": 1767611571.97474,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 27.4824009324416,
+				"contribution_ratio": 0.274824009324416,
+				"kept": 72.5175990675584,
+				"round": 3,
+				"timestamp": 1767611571.97475
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Joe",
+			"round": 3
+		},
+		"timestamp": 1767611571.97475,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 64.2752371693178,
+				"contribution_ratio": 0.642752371693178,
+				"kept": 35.7247628306822,
+				"round": 3,
+				"timestamp": 1767611571.97476
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Grace",
+			"round": 3
+		},
+		"timestamp": 1767611571.97476,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 75.2297723055983,
+				"contribution_ratio": 0.752297723055983,
+				"kept": 24.7702276944017,
+				"round": 3,
+				"timestamp": 1767611571.97476
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"player_id": "Jack",
+			"round": 3
+		},
+		"timestamp": 1767611571.97476,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"results": {
+				"average_contribution": 48.0719262528262,
+				"average_contribution_ratio": 0.480719262528262,
+				"contributions": {
+					"Alice": 25.300294603947,
+					"Grace": 64.2752371693178,
+					"Jack": 75.2297723055983,
+					"Joe": 27.4824009324416
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 96.1438525056523,
+					"Grace": 96.1438525056523,
+					"Jack": 96.1438525056523,
+					"Joe": 96.1438525056523
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 384.575410022609,
+				"round": 3,
+				"total_contribution": 192.287705011305
+			},
+			"round": 3
+		},
+		"timestamp": 1767611571.97478,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.000151872634887695,
+			"final_results": {
+				"average_contribution_ratio": 0.409292713936818,
+				"average_cooperation_rate": 0.916666666666667,
+				"average_free_riders": 0.333333333333333,
+				"duration": 0.000151872634887695,
+				"end_time": 1767611571.97478,
+				"game_id": "GAME_BASE_1767611571.97462_436",
+				"game_type": "public_goods",
+				"player_results": {
+					"Alice": {
+						"average_payoff": 53.6344751407271,
+						"rounds_played": 3,
+						"total_payoff": 160.903425422181
+					},
+					"Grace": {
+						"average_payoff": 23.2619367061634,
+						"rounds_played": 3,
+						"total_payoff": 69.7858101184902
+					},
+					"Jack": {
+						"average_payoff": 20.2213435859404,
+						"rounds_played": 3,
+						"total_payoff": 60.6640307578212
+					},
+					"Joe": {
+						"average_payoff": 66.5993301418961,
+						"rounds_played": 3,
+						"total_payoff": 199.797990425688
+					}
+				},
+				"pool_statistics": {
+					"avg_contribution": 122.787814181045,
+					"contribution_count": 11,
+					"contributor_count": 4,
+					"current_total": 0.0,
+					"distribution_count": 3,
+					"multiplier": 2.0,
+					"pool_id": "GAME_BASE_1767611571.97462_436_pool",
+					"resource_type": "money",
+					"total_contributions": 491.151256724181,
+					"withdrawal_count": 0
+				},
+				"start_time": 1767611571.97463,
+				"total_rounds": 3
+			},
+			"game_id": "GAME_BASE_1767611571.97462_436"
+		},
+		"timestamp": 1767611571.97479,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767611571.97478,
+			"game_id": "GAME_BASE_1767611571.97462_436",
+			"game_name": "Public Goods Game",
+			"game_type": "public_goods",
+			"max_rounds": 3,
+			"players": [
+				"Alice",
+				"Joe",
+				"Grace",
+				"Jack"
+			],
+			"round": 3,
+			"start_time": 1767611571.97463,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767611571.9748,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 2.0,
+				"multiplier": 3.0,
+				"rounds": 3.0,
+				"schedule": "every_5_minutes",
+				"type": "trust"
+			},
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"game_type": "trust",
+			"players": [
+				"Jack",
+				"Grace"
+			]
+		},
+		"timestamp": 1767611871.59764,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"round": 1
+		},
+		"timestamp": 1767611871.59765,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 79.9044321592401,
+				"amount_sent": 20.0955678407599,
+				"round": 1,
+				"send_ratio": 0.200955678407599,
+				"timestamp": 1767611871.59772
+			},
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"player_id": "Jack",
+			"round": 1
+		},
+		"timestamp": 1767611871.59772,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 43.3934910981298,
+				"received": 60.2867035222796,
+				"return_ratio": 0.280214565354476,
+				"returned": 16.8932124241498,
+				"round": 1,
+				"timestamp": 1767611871.59774
+			},
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"player_id": "Grace",
+			"round": 1
+		},
+		"timestamp": 1767611871.59774,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"results": {
+				"amount_returned": 16.8932124241498,
+				"amount_sent": 20.0955678407599,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 60.2867035222796,
+				"multiplier": 3.0,
+				"return_ratio": 0.280214565354476,
+				"round": 1,
+				"send_ratio": 0.200955678407599,
+				"trust_rewarded": false,
+				"trustee": "Grace",
+				"trustee_final": 143.39349109813,
+				"trustee_gain": 43.3934910981298,
+				"trustor": "Jack",
+				"trustor_final": 96.7976445833899,
+				"trustor_gain": -3.2023554166101
+			},
+			"round": 1
+		},
+		"timestamp": 1767611871.5979,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"round": 2
+		},
+		"timestamp": 1767611871.59791,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 88.0232366834591,
+				"amount_sent": 11.9767633165408,
+				"round": 2,
+				"send_ratio": 0.119767633165408,
+				"timestamp": 1767611871.59792
+			},
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"player_id": "Jack",
+			"round": 2
+		},
+		"timestamp": 1767611871.59792,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 24.9301522869725,
+				"received": 35.9302899496225,
+				"return_ratio": 0.30615220968362,
+				"returned": 11.0001376626501,
+				"round": 2,
+				"timestamp": 1767611871.59793
+			},
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"player_id": "Grace",
+			"round": 2
+		},
+		"timestamp": 1767611871.59793,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"results": {
+				"amount_returned": 11.0001376626501,
+				"amount_sent": 11.9767633165408,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 35.9302899496225,
+				"multiplier": 3.0,
+				"return_ratio": 0.30615220968362,
+				"round": 2,
+				"send_ratio": 0.119767633165408,
+				"trust_rewarded": false,
+				"trustee": "Grace",
+				"trustee_final": 124.930152286972,
+				"trustee_gain": 24.9301522869725,
+				"trustor": "Jack",
+				"trustor_final": 99.0233743461092,
+				"trustor_gain": -0.976625653890764
+			},
+			"round": 2
+		},
+		"timestamp": 1767611871.59798,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"round": 3
+		},
+		"timestamp": 1767611871.59799,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 61.7164736136246,
+				"amount_sent": 38.2835263863754,
+				"round": 3,
+				"send_ratio": 0.382835263863754,
+				"timestamp": 1767611871.598
+			},
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"player_id": "Jack",
+			"round": 3
+		},
+		"timestamp": 1767611871.598,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 67.8460730981152,
+				"received": 114.850579159126,
+				"return_ratio": 0.409266600178707,
+				"returned": 47.004506061011,
+				"round": 3,
+				"timestamp": 1767611871.59801
+			},
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"player_id": "Grace",
+			"round": 3
+		},
+		"timestamp": 1767611871.59801,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"results": {
+				"amount_returned": 47.004506061011,
+				"amount_sent": 38.2835263863754,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 114.850579159126,
+				"multiplier": 3.0,
+				"return_ratio": 0.409266600178707,
+				"round": 3,
+				"send_ratio": 0.382835263863754,
+				"trust_rewarded": true,
+				"trustee": "Grace",
+				"trustee_final": 167.846073098115,
+				"trustee_gain": 67.8460730981151,
+				"trustor": "Jack",
+				"trustor_final": 108.720979674636,
+				"trustor_gain": 8.72097967463563
+			},
+			"round": 3
+		},
+		"timestamp": 1767611871.59805,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.000437021255493164,
+			"final_results": {
+				"average_return_ratio": 0.331877791738934,
+				"average_send_ratio": 0.234519525145587,
+				"duration": 0.000437021255493164,
+				"end_time": 1767611871.59806,
+				"game_id": "GAME_BASE_1767611871.59753_612",
+				"game_type": "trust",
+				"player_results": {
+					"Grace": {
+						"average_payoff": 45.3899054944058,
+						"rounds_played": 3,
+						"total_payoff": 136.169716483217
+					},
+					"Jack": {
+						"average_payoff": 1.51399953471159,
+						"rounds_played": 3,
+						"total_payoff": 4.54199860413476
+					}
+				},
+				"start_time": 1767611871.59762,
+				"total_rounds": 3,
+				"trust_success_rate": 0.333333333333333
+			},
+			"game_id": "GAME_BASE_1767611871.59753_612"
+		},
+		"timestamp": 1767611871.59809,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767611871.59806,
+			"game_id": "GAME_BASE_1767611871.59753_612",
+			"game_name": "Trust Game",
+			"game_type": "trust",
+			"max_rounds": 3,
+			"players": [
+				"Jack",
+				"Grace"
+			],
+			"round": 3,
+			"start_time": 1767611871.59762,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767611871.59811,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 4.0,
+				"multiplier": 2.0,
+				"rounds": 3.0,
+				"schedule": "every_6_minutes",
+				"type": "public_goods"
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"game_type": "public_goods",
+			"players": [
+				"Alice",
+				"Grace",
+				"Jack",
+				"Joe"
+			]
+		},
+		"timestamp": 1767611931.59907,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"round": 1
+		},
+		"timestamp": 1767611931.59908,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 44.5819895830783,
+				"contribution_ratio": 0.445819895830783,
+				"kept": 55.4180104169217,
+				"round": 1,
+				"timestamp": 1767611931.59922
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Alice",
+			"round": 1
+		},
+		"timestamp": 1767611931.59923,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 62.5603791809496,
+				"contribution_ratio": 0.625603791809496,
+				"kept": 37.4396208190504,
+				"round": 1,
+				"timestamp": 1767611931.59929
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Grace",
+			"round": 1
+		},
+		"timestamp": 1767611931.59929,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 67.8825529445141,
+				"contribution_ratio": 0.678825529445141,
+				"kept": 32.1174470554859,
+				"round": 1,
+				"timestamp": 1767611931.59932
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Jack",
+			"round": 1
+		},
+		"timestamp": 1767611931.59932,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 14.5101458087136,
+				"contribution_ratio": 0.145101458087136,
+				"kept": 85.4898541912864,
+				"round": 1,
+				"timestamp": 1767611931.59935
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Joe",
+			"round": 1
+		},
+		"timestamp": 1767611931.59935,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"results": {
+				"average_contribution": 47.3837668793139,
+				"average_contribution_ratio": 0.473837668793139,
+				"contributions": {
+					"Alice": 44.5819895830783,
+					"Grace": 62.5603791809496,
+					"Jack": 67.8825529445141,
+					"Joe": 14.5101458087136
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 94.7675337586278,
+					"Grace": 94.7675337586278,
+					"Jack": 94.7675337586278,
+					"Joe": 94.7675337586278
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 379.070135034511,
+				"round": 1,
+				"total_contribution": 189.535067517256
+			},
+			"round": 1
+		},
+		"timestamp": 1767611931.59949,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"round": 2
+		},
+		"timestamp": 1767611931.5995,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 59.6063583974122,
+				"contribution_ratio": 0.596063583974122,
+				"kept": 40.3936416025878,
+				"round": 2,
+				"timestamp": 1767611931.59952
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Alice",
+			"round": 2
+		},
+		"timestamp": 1767611931.59953,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 84.9315471415668,
+				"contribution_ratio": 0.849315471415668,
+				"kept": 15.0684528584332,
+				"round": 2,
+				"timestamp": 1767611931.59955
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Grace",
+			"round": 2
+		},
+		"timestamp": 1767611931.59955,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 66.2431914701,
+				"contribution_ratio": 0.662431914701,
+				"kept": 33.7568085299,
+				"round": 2,
+				"timestamp": 1767611931.59957
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Jack",
+			"round": 2
+		},
+		"timestamp": 1767611931.59957,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 49.4118557874795,
+				"contribution_ratio": 0.494118557874795,
+				"kept": 50.5881442125205,
+				"round": 2,
+				"timestamp": 1767611931.59961
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Joe",
+			"round": 2
+		},
+		"timestamp": 1767611931.59961,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"results": {
+				"average_contribution": 65.0482381991396,
+				"average_contribution_ratio": 0.650482381991396,
+				"contributions": {
+					"Alice": 59.6063583974122,
+					"Grace": 84.9315471415668,
+					"Jack": 66.2431914701,
+					"Joe": 49.4118557874795
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 130.096476398279,
+					"Grace": 130.096476398279,
+					"Jack": 130.096476398279,
+					"Joe": 130.096476398279
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 520.385905593117,
+				"round": 2,
+				"total_contribution": 260.192952796558
+			},
+			"round": 2
+		},
+		"timestamp": 1767611931.5997,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"round": 3
+		},
+		"timestamp": 1767611931.59971,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 60.4280850350675,
+				"contribution_ratio": 0.604280850350675,
+				"kept": 39.5719149649325,
+				"round": 3,
+				"timestamp": 1767611931.59974
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Alice",
+			"round": 3
+		},
+		"timestamp": 1767611931.59974,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 86.2660048761916,
+				"contribution_ratio": 0.862660048761916,
+				"kept": 13.7339951238084,
+				"round": 3,
+				"timestamp": 1767611931.59976
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Grace",
+			"round": 3
+		},
+		"timestamp": 1767611931.59977,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 54.5200717073877,
+				"contribution_ratio": 0.545200717073877,
+				"kept": 45.4799282926123,
+				"round": 3,
+				"timestamp": 1767611931.5998
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Jack",
+			"round": 3
+		},
+		"timestamp": 1767611931.5998,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 26.3673952207563,
+				"contribution_ratio": 0.263673952207563,
+				"kept": 73.6326047792437,
+				"round": 3,
+				"timestamp": 1767611931.59982
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"player_id": "Joe",
+			"round": 3
+		},
+		"timestamp": 1767611931.59982,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"results": {
+				"average_contribution": 56.8953892098508,
+				"average_contribution_ratio": 0.568953892098508,
+				"contributions": {
+					"Alice": 60.4280850350675,
+					"Grace": 86.2660048761916,
+					"Jack": 54.5200717073877,
+					"Joe": 26.3673952207563
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 113.790778419702,
+					"Grace": 113.790778419702,
+					"Jack": 113.790778419702,
+					"Joe": 113.790778419702
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 455.163113678806,
+				"round": 3,
+				"total_contribution": 227.581556839403
+			},
+			"round": 3
+		},
+		"timestamp": 1767611931.59992,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.000859975814819336,
+			"final_results": {
+				"average_contribution_ratio": 0.564424647627681,
+				"average_cooperation_rate": 1.0,
+				"average_free_riders": 0.0,
+				"duration": 0.000859975814819336,
+				"end_time": 1767611931.59992,
+				"game_id": "GAME_BASE_1767611931.59896_346",
+				"game_type": "public_goods",
+				"player_results": {
+					"Alice": {
+						"average_payoff": 58.0127851870169,
+						"rounds_played": 3,
+						"total_payoff": 174.038355561051
+					},
+					"Grace": {
+						"average_payoff": 34.9656191259669,
+						"rounds_played": 3,
+						"total_payoff": 104.896857377901
+					},
+					"Jack": {
+						"average_payoff": 50.0029908182023,
+						"rounds_played": 3,
+						"total_payoff": 150.008972454607
+					},
+					"Joe": {
+						"average_payoff": 82.7884639198864,
+						"rounds_played": 3,
+						"total_payoff": 248.365391759659
+					}
+				},
+				"pool_statistics": {
+					"avg_contribution": 169.327394288304,
+					"contribution_count": 12,
+					"contributor_count": 4,
+					"current_total": 0.0,
+					"distribution_count": 3,
+					"multiplier": 2.0,
+					"pool_id": "GAME_BASE_1767611931.59896_346_pool",
+					"resource_type": "money",
+					"total_contributions": 677.309577153217,
+					"withdrawal_count": 0
+				},
+				"start_time": 1767611931.59906,
+				"total_rounds": 3
+			},
+			"game_id": "GAME_BASE_1767611931.59896_346"
+		},
+		"timestamp": 1767611931.59996,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767611931.59992,
+			"game_id": "GAME_BASE_1767611931.59896_346",
+			"game_name": "Public Goods Game",
+			"game_type": "public_goods",
+			"max_rounds": 3,
+			"players": [
+				"Alice",
+				"Grace",
+				"Jack",
+				"Joe"
+			],
+			"round": 3,
+			"start_time": 1767611931.59906,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767611931.59999,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 2.0,
+				"rounds": 2.0,
+				"schedule": "every_7_minutes",
+				"type": "dictator"
+			},
+			"game_id": "GAME_BASE_1767611991.66719_18",
+			"game_type": "dictator",
+			"players": [
+				"Jack",
+				"Joe"
+			]
+		},
+		"timestamp": 1767611991.66727,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611991.66719_18",
+			"round": 1
+		},
+		"timestamp": 1767611991.66728,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "allocate",
+				"gift": 54.908542483188,
+				"gift_ratio": 0.54908542483188,
+				"kept": 45.091457516812,
+				"round": 1,
+				"timestamp": 1767611991.6673
+			},
+			"game_id": "GAME_BASE_1767611991.66719_18",
+			"player_id": "Jack",
+			"round": 1
+		},
+		"timestamp": 1767611991.66731,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "receive",
+				"received": 54.908542483188,
+				"round": 1,
+				"timestamp": 1767611991.66732
+			},
+			"game_id": "GAME_BASE_1767611991.66719_18",
+			"player_id": "Joe",
+			"round": 1
+		},
+		"timestamp": 1767611991.66733,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611991.66719_18",
+			"results": {
+				"dictator": "Jack",
+				"dictator_altruism": 0.53,
+				"dictator_payoff": 45.091457516812,
+				"endowment": 100.0,
+				"gift": 54.908542483188,
+				"gift_ratio": 0.54908542483188,
+				"recipient": "Joe",
+				"recipient_payoff": 54.908542483188,
+				"round": 1
+			},
+			"round": 1
+		},
+		"timestamp": 1767611991.66744,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611991.66719_18",
+			"round": 2
+		},
+		"timestamp": 1767611991.66745,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "allocate",
+				"gift": 48.2888492900397,
+				"gift_ratio": 0.482888492900397,
+				"kept": 51.7111507099603,
+				"round": 2,
+				"timestamp": 1767611991.66747
+			},
+			"game_id": "GAME_BASE_1767611991.66719_18",
+			"player_id": "Jack",
+			"round": 2
+		},
+		"timestamp": 1767611991.66748,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "receive",
+				"received": 48.2888492900397,
+				"round": 2,
+				"timestamp": 1767611991.66749
+			},
+			"game_id": "GAME_BASE_1767611991.66719_18",
+			"player_id": "Joe",
+			"round": 2
+		},
+		"timestamp": 1767611991.6675,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767611991.66719_18",
+			"results": {
+				"dictator": "Jack",
+				"dictator_altruism": 0.53,
+				"dictator_payoff": 51.7111507099603,
+				"endowment": 100.0,
+				"gift": 48.2888492900397,
+				"gift_ratio": 0.482888492900397,
+				"recipient": "Joe",
+				"recipient_payoff": 48.2888492900397,
+				"round": 2
+			},
+			"round": 2
+		},
+		"timestamp": 1767611991.66758,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.000329017639160156,
+			"final_results": {
+				"average_altruism_trait": 0.53,
+				"average_gift_ratio": 0.515986958866139,
+				"duration": 0.000329017639160156,
+				"end_time": 1767611991.66758,
+				"game_id": "GAME_BASE_1767611991.66719_18",
+				"game_type": "dictator",
+				"player_results": {
+					"Jack": {
+						"average_payoff": 48.4013041133861,
+						"rounds_played": 2,
+						"total_payoff": 96.8026082267723
+					},
+					"Joe": {
+						"average_payoff": 51.5986958866139,
+						"rounds_played": 2,
+						"total_payoff": 103.197391773228
+					}
+				},
+				"start_time": 1767611991.66725,
+				"total_rounds": 2
+			},
+			"game_id": "GAME_BASE_1767611991.66719_18"
+		},
+		"timestamp": 1767611991.66761,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767611991.66758,
+			"game_id": "GAME_BASE_1767611991.66719_18",
+			"game_name": "Dictator Game",
+			"game_type": "dictator",
+			"max_rounds": 2,
+			"players": [
+				"Jack",
+				"Joe"
+			],
+			"round": 2,
+			"start_time": 1767611991.66725,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767611991.66764,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 2.0,
+				"multiplier": 3.0,
+				"rounds": 3.0,
+				"schedule": "every_5_minutes",
+				"type": "trust"
+			},
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"game_type": "trust",
+			"players": [
+				"Joe",
+				"Grace"
+			]
+		},
+		"timestamp": 1767612171.66735,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"round": 1
+		},
+		"timestamp": 1767612171.66737,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 82.1926442396655,
+				"amount_sent": 17.8073557603345,
+				"round": 1,
+				"send_ratio": 0.178073557603345,
+				"timestamp": 1767612171.6674
+			},
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"player_id": "Joe",
+			"round": 1
+		},
+		"timestamp": 1767612171.66741,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 37.0417837683319,
+				"received": 53.4220672810036,
+				"return_ratio": 0.306620173017834,
+				"returned": 16.3802835126717,
+				"round": 1,
+				"timestamp": 1767612171.66743
+			},
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"player_id": "Grace",
+			"round": 1
+		},
+		"timestamp": 1767612171.66743,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"results": {
+				"amount_returned": 16.3802835126717,
+				"amount_sent": 17.8073557603345,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 53.4220672810036,
+				"multiplier": 3.0,
+				"return_ratio": 0.306620173017834,
+				"round": 1,
+				"send_ratio": 0.178073557603345,
+				"trust_rewarded": false,
+				"trustee": "Grace",
+				"trustee_final": 137.041783768332,
+				"trustee_gain": 37.0417837683319,
+				"trustor": "Joe",
+				"trustor_final": 98.5729277523372,
+				"trustor_gain": -1.42707224766284
+			},
+			"round": 1
+		},
+		"timestamp": 1767612171.66756,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"round": 2
+		},
+		"timestamp": 1767612171.66757,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 97.6757023287924,
+				"amount_sent": 2.32429767120756,
+				"round": 2,
+				"send_ratio": 0.0232429767120756,
+				"timestamp": 1767612171.66759
+			},
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"player_id": "Joe",
+			"round": 2
+		},
+		"timestamp": 1767612171.66759,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 3.66170841722169,
+				"received": 6.97289301362269,
+				"return_ratio": 0.474865251758783,
+				"returned": 3.311184596401,
+				"round": 2,
+				"timestamp": 1767612171.6676
+			},
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"player_id": "Grace",
+			"round": 2
+		},
+		"timestamp": 1767612171.66761,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"results": {
+				"amount_returned": 3.311184596401,
+				"amount_sent": 2.32429767120756,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 6.97289301362269,
+				"multiplier": 3.0,
+				"return_ratio": 0.474865251758783,
+				"round": 2,
+				"send_ratio": 0.0232429767120756,
+				"trust_rewarded": true,
+				"trustee": "Grace",
+				"trustee_final": 103.661708417222,
+				"trustee_gain": 3.66170841722169,
+				"trustor": "Joe",
+				"trustor_final": 100.986886925193,
+				"trustor_gain": 0.986886925193446
+			},
+			"round": 2
+		},
+		"timestamp": 1767612171.66767,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"round": 3
+		},
+		"timestamp": 1767612171.66768,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 74.0652912051314,
+				"amount_sent": 25.9347087948686,
+				"round": 3,
+				"send_ratio": 0.259347087948686,
+				"timestamp": 1767612171.66769
+			},
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"player_id": "Joe",
+			"round": 3
+		},
+		"timestamp": 1767612171.6677,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 55.4736649967881,
+				"received": 77.8041263846059,
+				"return_ratio": 0.287008702821654,
+				"returned": 22.3304613878178,
+				"round": 3,
+				"timestamp": 1767612171.66771
+			},
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"player_id": "Grace",
+			"round": 3
+		},
+		"timestamp": 1767612171.66771,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"results": {
+				"amount_returned": 22.3304613878178,
+				"amount_sent": 25.9347087948686,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 77.8041263846059,
+				"multiplier": 3.0,
+				"return_ratio": 0.287008702821654,
+				"round": 3,
+				"send_ratio": 0.259347087948686,
+				"trust_rewarded": false,
+				"trustee": "Grace",
+				"trustee_final": 155.473664996788,
+				"trustee_gain": 55.4736649967881,
+				"trustor": "Joe",
+				"trustor_final": 96.3957525929492,
+				"trustor_gain": -3.60424740705083
+			},
+			"round": 3
+		},
+		"timestamp": 1767612171.66777,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.000452041625976562,
+			"final_results": {
+				"average_return_ratio": 0.356164709199424,
+				"average_send_ratio": 0.153554540754702,
+				"duration": 0.000452041625976562,
+				"end_time": 1767612171.66778,
+				"game_id": "GAME_BASE_1767612171.66727_299",
+				"game_type": "trust",
+				"player_results": {
+					"Grace": {
+						"average_payoff": 32.0590523941139,
+						"rounds_played": 3,
+						"total_payoff": 96.1771571823417
+					},
+					"Joe": {
+						"average_payoff": -1.34814424317341,
+						"rounds_played": 3,
+						"total_payoff": -4.04443272952022
+					}
+				},
+				"start_time": 1767612171.66733,
+				"total_rounds": 3,
+				"trust_success_rate": 0.333333333333333
+			},
+			"game_id": "GAME_BASE_1767612171.66727_299"
+		},
+		"timestamp": 1767612171.66782,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767612171.66778,
+			"game_id": "GAME_BASE_1767612171.66727_299",
+			"game_name": "Trust Game",
+			"game_type": "trust",
+			"max_rounds": 3,
+			"players": [
+				"Joe",
+				"Grace"
+			],
+			"round": 3,
+			"start_time": 1767612171.66733,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767612171.66785,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 4.0,
+				"multiplier": 2.0,
+				"rounds": 3.0,
+				"schedule": "every_6_minutes",
+				"type": "public_goods"
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"game_type": "public_goods",
+			"players": [
+				"Joe",
+				"Alice",
+				"Jack",
+				"Grace"
+			]
+		},
+		"timestamp": 1767612291.77026,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"round": 1
+		},
+		"timestamp": 1767612291.77027,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 43.8542552584154,
+				"contribution_ratio": 0.438542552584154,
+				"kept": 56.1457447415846,
+				"round": 1,
+				"timestamp": 1767612291.77054
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Joe",
+			"round": 1
+		},
+		"timestamp": 1767612291.77055,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 28.3877976143775,
+				"contribution_ratio": 0.283877976143775,
+				"kept": 71.6122023856225,
+				"round": 1,
+				"timestamp": 1767612291.77067
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Alice",
+			"round": 1
+		},
+		"timestamp": 1767612291.77067,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 56.5974406118078,
+				"contribution_ratio": 0.565974406118078,
+				"kept": 43.4025593881922,
+				"round": 1,
+				"timestamp": 1767612291.77074
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Jack",
+			"round": 1
+		},
+		"timestamp": 1767612291.77074,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 66.9331265122167,
+				"contribution_ratio": 0.669331265122167,
+				"kept": 33.0668734877833,
+				"round": 1,
+				"timestamp": 1767612291.7708
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Grace",
+			"round": 1
+		},
+		"timestamp": 1767612291.7708,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"results": {
+				"average_contribution": 48.9431549992044,
+				"average_contribution_ratio": 0.489431549992044,
+				"contributions": {
+					"Alice": 28.3877976143775,
+					"Grace": 66.9331265122167,
+					"Jack": 56.5974406118078,
+					"Joe": 43.8542552584154
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 97.8863099984087,
+					"Grace": 97.8863099984087,
+					"Jack": 97.8863099984087,
+					"Joe": 97.8863099984087
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 391.545239993635,
+				"round": 1,
+				"total_contribution": 195.772619996817
+			},
+			"round": 1
+		},
+		"timestamp": 1767612291.77112,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"round": 2
+		},
+		"timestamp": 1767612291.77113,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 37.2689173187465,
+				"contribution_ratio": 0.372689173187465,
+				"kept": 62.7310826812535,
+				"round": 2,
+				"timestamp": 1767612291.77118
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Joe",
+			"round": 2
+		},
+		"timestamp": 1767612291.77119,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 44.5814677831308,
+				"contribution_ratio": 0.445814677831308,
+				"kept": 55.4185322168692,
+				"round": 2,
+				"timestamp": 1767612291.77124
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Alice",
+			"round": 2
+		},
+		"timestamp": 1767612291.77125,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 74.8724882365985,
+				"contribution_ratio": 0.748724882365985,
+				"kept": 25.1275117634015,
+				"round": 2,
+				"timestamp": 1767612291.7713
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Jack",
+			"round": 2
+		},
+		"timestamp": 1767612291.77131,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 84.1762131802244,
+				"contribution_ratio": 0.841762131802244,
+				"kept": 15.8237868197756,
+				"round": 2,
+				"timestamp": 1767612291.77135
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Grace",
+			"round": 2
+		},
+		"timestamp": 1767612291.77136,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"results": {
+				"average_contribution": 60.2247716296751,
+				"average_contribution_ratio": 0.602247716296751,
+				"contributions": {
+					"Alice": 44.5814677831308,
+					"Grace": 84.1762131802244,
+					"Jack": 74.8724882365985,
+					"Joe": 37.2689173187465
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 120.44954325935,
+					"Grace": 120.44954325935,
+					"Jack": 120.44954325935,
+					"Joe": 120.44954325935
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 481.798173037401,
+				"round": 2,
+				"total_contribution": 240.8990865187
+			},
+			"round": 2
+		},
+		"timestamp": 1767612291.77152,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"round": 3
+		},
+		"timestamp": 1767612291.77153,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 18.8843117087934,
+				"contribution_ratio": 0.188843117087934,
+				"kept": 81.1156882912067,
+				"round": 3,
+				"timestamp": 1767612291.77158
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Joe",
+			"round": 3
+		},
+		"timestamp": 1767612291.77159,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 39.5804582199001,
+				"contribution_ratio": 0.395804582199001,
+				"kept": 60.4195417800999,
+				"round": 3,
+				"timestamp": 1767612291.77164
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Alice",
+			"round": 3
+		},
+		"timestamp": 1767612291.77164,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 62.7039703308143,
+				"contribution_ratio": 0.627039703308143,
+				"kept": 37.2960296691857,
+				"round": 3,
+				"timestamp": 1767612291.77169
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Jack",
+			"round": 3
+		},
+		"timestamp": 1767612291.77169,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 68.7155351091732,
+				"contribution_ratio": 0.687155351091732,
+				"kept": 31.2844648908268,
+				"round": 3,
+				"timestamp": 1767612291.77174
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"player_id": "Grace",
+			"round": 3
+		},
+		"timestamp": 1767612291.77174,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"results": {
+				"average_contribution": 47.4710688421702,
+				"average_contribution_ratio": 0.474710688421702,
+				"contributions": {
+					"Alice": 39.5804582199001,
+					"Grace": 68.7155351091732,
+					"Jack": 62.7039703308143,
+					"Joe": 18.8843117087934
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 94.9421376843405,
+					"Grace": 94.9421376843405,
+					"Jack": 94.9421376843405,
+					"Joe": 94.9421376843405
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 379.768550737362,
+				"round": 3,
+				"total_contribution": 189.884275368681
+			},
+			"round": 3
+		},
+		"timestamp": 1767612291.7719,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.00167298316955566,
+			"final_results": {
+				"average_contribution_ratio": 0.522129984903499,
+				"average_cooperation_rate": 1.0,
+				"average_free_riders": 0.0,
+				"duration": 0.00167298316955566,
+				"end_time": 1767612291.7719,
+				"game_id": "GAME_BASE_1767612291.77002_276",
+				"game_type": "public_goods",
+				"player_results": {
+					"Alice": {
+						"average_payoff": 66.9094224415636,
+						"rounds_played": 3,
+						"total_payoff": 200.728267324691
+					},
+					"Grace": {
+						"average_payoff": 31.151038713495,
+						"rounds_played": 3,
+						"total_payoff": 93.453116140485
+					},
+					"Jack": {
+						"average_payoff": 39.7013639209596,
+						"rounds_played": 3,
+						"total_payoff": 119.104091762879
+					},
+					"Joe": {
+						"average_payoff": 71.0901688853813,
+						"rounds_played": 3,
+						"total_payoff": 213.270506656144
+					}
+				},
+				"pool_statistics": {
+					"avg_contribution": 156.63899547105,
+					"contribution_count": 12,
+					"contributor_count": 4,
+					"current_total": 0.0,
+					"distribution_count": 3,
+					"multiplier": 2.0,
+					"pool_id": "GAME_BASE_1767612291.77002_276_pool",
+					"resource_type": "money",
+					"total_contributions": 626.555981884199,
+					"withdrawal_count": 0
+				},
+				"start_time": 1767612291.77023,
+				"total_rounds": 3
+			},
+			"game_id": "GAME_BASE_1767612291.77002_276"
+		},
+		"timestamp": 1767612291.77197,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767612291.7719,
+			"game_id": "GAME_BASE_1767612291.77002_276",
+			"game_name": "Public Goods Game",
+			"game_type": "public_goods",
+			"max_rounds": 3,
+			"players": [
+				"Joe",
+				"Alice",
+				"Jack",
+				"Grace"
+			],
+			"round": 3,
+			"start_time": 1767612291.77023,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767612291.77201,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 2.0,
+				"rounds": 2.0,
+				"schedule": "every_7_minutes",
+				"type": "dictator"
+			},
+			"game_id": "GAME_BASE_1767612411.77743_559",
+			"game_type": "dictator",
+			"players": [
+				"Joe",
+				"Jack"
+			]
+		},
+		"timestamp": 1767612411.77745,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612411.77743_559",
+			"round": 1
+		},
+		"timestamp": 1767612411.77746,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "allocate",
+				"gift": 9.54464596461937,
+				"gift_ratio": 0.0954464596461937,
+				"kept": 90.4553540353806,
+				"round": 1,
+				"timestamp": 1767612411.77747
+			},
+			"game_id": "GAME_BASE_1767612411.77743_559",
+			"player_id": "Joe",
+			"round": 1
+		},
+		"timestamp": 1767612411.77747,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "receive",
+				"received": 9.54464596461937,
+				"round": 1,
+				"timestamp": 1767612411.77747
+			},
+			"game_id": "GAME_BASE_1767612411.77743_559",
+			"player_id": "Jack",
+			"round": 1
+		},
+		"timestamp": 1767612411.77747,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612411.77743_559",
+			"results": {
+				"dictator": "Joe",
+				"dictator_altruism": 0.208,
+				"dictator_payoff": 90.4553540353806,
+				"endowment": 100.0,
+				"gift": 9.54464596461937,
+				"gift_ratio": 0.0954464596461937,
+				"recipient": "Jack",
+				"recipient_payoff": 9.54464596461937,
+				"round": 1
+			},
+			"round": 1
+		},
+		"timestamp": 1767612411.7775,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612411.77743_559",
+			"round": 2
+		},
+		"timestamp": 1767612411.77751,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "allocate",
+				"gift": 23.8799776237271,
+				"gift_ratio": 0.238799776237271,
+				"kept": 76.1200223762729,
+				"round": 2,
+				"timestamp": 1767612411.77751
+			},
+			"game_id": "GAME_BASE_1767612411.77743_559",
+			"player_id": "Joe",
+			"round": 2
+		},
+		"timestamp": 1767612411.77751,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "receive",
+				"received": 23.8799776237271,
+				"round": 2,
+				"timestamp": 1767612411.77751
+			},
+			"game_id": "GAME_BASE_1767612411.77743_559",
+			"player_id": "Jack",
+			"round": 2
+		},
+		"timestamp": 1767612411.77752,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612411.77743_559",
+			"results": {
+				"dictator": "Joe",
+				"dictator_altruism": 0.208,
+				"dictator_payoff": 76.1200223762729,
+				"endowment": 100.0,
+				"gift": 23.8799776237271,
+				"gift_ratio": 0.238799776237271,
+				"recipient": "Jack",
+				"recipient_payoff": 23.8799776237271,
+				"round": 2
+			},
+			"round": 2
+		},
+		"timestamp": 1767612411.77753,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.0000798702239990234,
+			"final_results": {
+				"average_altruism_trait": 0.208,
+				"average_gift_ratio": 0.167123117941732,
+				"duration": 0.0000798702239990234,
+				"end_time": 1767612411.77753,
+				"game_id": "GAME_BASE_1767612411.77743_559",
+				"game_type": "dictator",
+				"player_results": {
+					"Jack": {
+						"average_payoff": 16.7123117941732,
+						"rounds_played": 2,
+						"total_payoff": 33.4246235883464
+					},
+					"Joe": {
+						"average_payoff": 83.2876882058268,
+						"rounds_played": 2,
+						"total_payoff": 166.575376411654
+					}
+				},
+				"start_time": 1767612411.77745,
+				"total_rounds": 2
+			},
+			"game_id": "GAME_BASE_1767612411.77743_559"
+		},
+		"timestamp": 1767612411.77754,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767612411.77753,
+			"game_id": "GAME_BASE_1767612411.77743_559",
+			"game_name": "Dictator Game",
+			"game_type": "dictator",
+			"max_rounds": 2,
+			"players": [
+				"Joe",
+				"Jack"
+			],
+			"round": 2,
+			"start_time": 1767612411.77745,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767612411.77754,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 2.0,
+				"multiplier": 3.0,
+				"rounds": 3.0,
+				"schedule": "every_5_minutes",
+				"type": "trust"
+			},
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"game_type": "trust",
+			"players": [
+				"Grace",
+				"Joe"
+			]
+		},
+		"timestamp": 1767612471.72109,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"round": 1
+		},
+		"timestamp": 1767612471.7211,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 33.291388291994,
+				"amount_sent": 66.708611708006,
+				"round": 1,
+				"send_ratio": 0.66708611708006,
+				"timestamp": 1767612471.72113
+			},
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"player_id": "Grace",
+			"round": 1
+		},
+		"timestamp": 1767612471.72113,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 174.131298129085,
+				"received": 200.125835124018,
+				"return_ratio": 0.12989096074889,
+				"returned": 25.9945369949326,
+				"round": 1,
+				"timestamp": 1767612471.72115
+			},
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"player_id": "Joe",
+			"round": 1
+		},
+		"timestamp": 1767612471.72116,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"results": {
+				"amount_returned": 25.9945369949326,
+				"amount_sent": 66.708611708006,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 200.125835124018,
+				"multiplier": 3.0,
+				"return_ratio": 0.12989096074889,
+				"round": 1,
+				"send_ratio": 0.66708611708006,
+				"trust_rewarded": false,
+				"trustee": "Joe",
+				"trustee_final": 274.131298129085,
+				"trustee_gain": 174.131298129085,
+				"trustor": "Grace",
+				"trustor_final": 59.2859252869266,
+				"trustor_gain": -40.7140747130734
+			},
+			"round": 1
+		},
+		"timestamp": 1767612471.72126,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"round": 2
+		},
+		"timestamp": 1767612471.72127,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 33.7366279382024,
+				"amount_sent": 66.2633720617976,
+				"round": 2,
+				"send_ratio": 0.662633720617976,
+				"timestamp": 1767612471.72129
+			},
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"player_id": "Grace",
+			"round": 2
+		},
+		"timestamp": 1767612471.7213,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 177.045625586643,
+				"received": 198.790116185393,
+				"return_ratio": 0.109384163639557,
+				"returned": 21.7444905987495,
+				"round": 2,
+				"timestamp": 1767612471.72131
+			},
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"player_id": "Joe",
+			"round": 2
+		},
+		"timestamp": 1767612471.72133,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"results": {
+				"amount_returned": 21.7444905987495,
+				"amount_sent": 66.2633720617976,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 198.790116185393,
+				"multiplier": 3.0,
+				"return_ratio": 0.109384163639557,
+				"round": 2,
+				"send_ratio": 0.662633720617976,
+				"trust_rewarded": false,
+				"trustee": "Joe",
+				"trustee_final": 277.045625586643,
+				"trustee_gain": 177.045625586643,
+				"trustor": "Grace",
+				"trustor_final": 55.4811185369519,
+				"trustor_gain": -44.5188814630481
+			},
+			"round": 2
+		},
+		"timestamp": 1767612471.72139,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"round": 3
+		},
+		"timestamp": 1767612471.72141,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "send",
+				"amount_kept": 28.3779166218333,
+				"amount_sent": 71.6220833781667,
+				"round": 3,
+				"send_ratio": 0.716220833781667,
+				"timestamp": 1767612471.72142
+			},
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"player_id": "Grace",
+			"round": 3
+		},
+		"timestamp": 1767612471.72144,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "return",
+				"kept": 186.407114520544,
+				"received": 214.8662501345,
+				"return_ratio": 0.132450469052919,
+				"returned": 28.4591356139563,
+				"round": 3,
+				"timestamp": 1767612471.72145
+			},
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"player_id": "Joe",
+			"round": 3
+		},
+		"timestamp": 1767612471.72145,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"results": {
+				"amount_returned": 28.4591356139563,
+				"amount_sent": 71.6220833781667,
+				"initial_endowment": 100.0,
+				"multiplied_amount": 214.8662501345,
+				"multiplier": 3.0,
+				"return_ratio": 0.132450469052919,
+				"round": 3,
+				"send_ratio": 0.716220833781667,
+				"trust_rewarded": false,
+				"trustee": "Joe",
+				"trustee_final": 286.407114520544,
+				"trustee_gain": 186.407114520544,
+				"trustor": "Grace",
+				"trustor_final": 56.8370522357896,
+				"trustor_gain": -43.1629477642104
+			},
+			"round": 3
+		},
+		"timestamp": 1767612471.72151,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.000445127487182617,
+			"final_results": {
+				"average_return_ratio": 0.123908531147122,
+				"average_send_ratio": 0.681980223826567,
+				"duration": 0.000445127487182617,
+				"end_time": 1767612471.72152,
+				"game_id": "GAME_BASE_1767612471.72096_116",
+				"game_type": "trust",
+				"player_results": {
+					"Grace": {
+						"average_payoff": -42.7986346467773,
+						"rounds_played": 3,
+						"total_payoff": -128.395903940332
+					},
+					"Joe": {
+						"average_payoff": 179.194679412091,
+						"rounds_played": 3,
+						"total_payoff": 537.584038236272
+					}
+				},
+				"start_time": 1767612471.72107,
+				"total_rounds": 3,
+				"trust_success_rate": 0.0
+			},
+			"game_id": "GAME_BASE_1767612471.72096_116"
+		},
+		"timestamp": 1767612471.72156,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767612471.72152,
+			"game_id": "GAME_BASE_1767612471.72096_116",
+			"game_name": "Trust Game",
+			"game_type": "trust",
+			"max_rounds": 3,
+			"players": [
+				"Grace",
+				"Joe"
+			],
+			"round": 3,
+			"start_time": 1767612471.72107,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767612471.72158,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"config": {
+				"endowment": 100.0,
+				"group_size": 4.0,
+				"multiplier": 2.0,
+				"rounds": 3.0,
+				"schedule": "every_6_minutes",
+				"type": "public_goods"
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"game_type": "public_goods",
+			"players": [
+				"Jack",
+				"Grace",
+				"Alice",
+				"Joe"
+			]
+		},
+		"timestamp": 1767612651.6916,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"round": 1
+		},
+		"timestamp": 1767612651.69161,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 78.10106153258,
+				"contribution_ratio": 0.7810106153258,
+				"kept": 21.89893846742,
+				"round": 1,
+				"timestamp": 1767612651.69175
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Jack",
+			"round": 1
+		},
+		"timestamp": 1767612651.69176,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 88.8910225628303,
+				"contribution_ratio": 0.888910225628303,
+				"kept": 11.1089774371697,
+				"round": 1,
+				"timestamp": 1767612651.69181
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Grace",
+			"round": 1
+		},
+		"timestamp": 1767612651.69182,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 41.2381334353543,
+				"contribution_ratio": 0.412381334353543,
+				"kept": 58.7618665646457,
+				"round": 1,
+				"timestamp": 1767612651.69187
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Alice",
+			"round": 1
+		},
+		"timestamp": 1767612651.69187,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 34.3958717315331,
+				"contribution_ratio": 0.343958717315331,
+				"kept": 65.6041282684669,
+				"round": 1,
+				"timestamp": 1767612651.69194
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Joe",
+			"round": 1
+		},
+		"timestamp": 1767612651.69194,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"results": {
+				"average_contribution": 60.6565223155744,
+				"average_contribution_ratio": 0.606565223155744,
+				"contributions": {
+					"Alice": 41.2381334353543,
+					"Grace": 88.8910225628303,
+					"Jack": 78.10106153258,
+					"Joe": 34.3958717315331
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 121.313044631149,
+					"Grace": 121.313044631149,
+					"Jack": 121.313044631149,
+					"Joe": 121.313044631149
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 485.252178524595,
+				"round": 1,
+				"total_contribution": 242.626089262298
+			},
+			"round": 1
+		},
+		"timestamp": 1767612651.69211,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"round": 2
+		},
+		"timestamp": 1767612651.69212,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 71.2075540598983,
+				"contribution_ratio": 0.712075540598983,
+				"kept": 28.7924459401017,
+				"round": 2,
+				"timestamp": 1767612651.69216
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Jack",
+			"round": 2
+		},
+		"timestamp": 1767612651.69216,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 100.0,
+				"contribution_ratio": 1.0,
+				"kept": 0.0,
+				"round": 2,
+				"timestamp": 1767612651.6922
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Grace",
+			"round": 2
+		},
+		"timestamp": 1767612651.69221,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 45.7521131209342,
+				"contribution_ratio": 0.457521131209342,
+				"kept": 54.2478868790658,
+				"round": 2,
+				"timestamp": 1767612651.69224
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Alice",
+			"round": 2
+		},
+		"timestamp": 1767612651.69225,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 15.2497006906695,
+				"contribution_ratio": 0.152497006906695,
+				"kept": 84.7502993093305,
+				"round": 2,
+				"timestamp": 1767612651.69229
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Joe",
+			"round": 2
+		},
+		"timestamp": 1767612651.6923,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"results": {
+				"average_contribution": 58.0523419678755,
+				"average_contribution_ratio": 0.580523419678755,
+				"contributions": {
+					"Alice": 45.7521131209342,
+					"Grace": 100.0,
+					"Jack": 71.2075540598983,
+					"Joe": 15.2497006906695
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 116.104683935751,
+					"Grace": 116.104683935751,
+					"Jack": 116.104683935751,
+					"Joe": 116.104683935751
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 464.418735743004,
+				"round": 2,
+				"total_contribution": 232.209367871502
+			},
+			"round": 2
+		},
+		"timestamp": 1767612651.69242,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"round": 3
+		},
+		"timestamp": 1767612651.69242,
+		"type": "round_started"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 54.2448339503233,
+				"contribution_ratio": 0.542448339503233,
+				"kept": 45.7551660496767,
+				"round": 3,
+				"timestamp": 1767612651.69247
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Jack",
+			"round": 3
+		},
+		"timestamp": 1767612651.69247,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 89.3048512898366,
+				"contribution_ratio": 0.893048512898366,
+				"kept": 10.6951487101634,
+				"round": 3,
+				"timestamp": 1767612651.69251
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Grace",
+			"round": 3
+		},
+		"timestamp": 1767612651.69251,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 56.4050156125879,
+				"contribution_ratio": 0.564050156125879,
+				"kept": 43.5949843874121,
+				"round": 3,
+				"timestamp": 1767612651.69255
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Alice",
+			"round": 3
+		},
+		"timestamp": 1767612651.69255,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"decision": {
+				"action": "contribute",
+				"contribution": 48.667757386201,
+				"contribution_ratio": 0.48667757386201,
+				"kept": 51.332242613799,
+				"round": 3,
+				"timestamp": 1767612651.6926
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"player_id": "Joe",
+			"round": 3
+		},
+		"timestamp": 1767612651.6926,
+		"type": "decision_made"
+	},
+	{
+		"data": {
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"results": {
+				"average_contribution": 62.1556145597372,
+				"average_contribution_ratio": 0.621556145597372,
+				"contributions": {
+					"Alice": 56.4050156125879,
+					"Grace": 89.3048512898366,
+					"Jack": 54.2448339503233,
+					"Joe": 48.667757386201
+				},
+				"cooperation_rate": 1.0,
+				"distribution": {
+					"Alice": 124.311229119474,
+					"Grace": 124.311229119474,
+					"Jack": 124.311229119474,
+					"Joe": 124.311229119474
+				},
+				"endowment": 100.0,
+				"free_rider_count": 0,
+				"free_riders": [],
+				"group_size": 4,
+				"multiplier": 2.0,
+				"pool_after_multiplier": 497.244916477898,
+				"round": 3,
+				"total_contribution": 248.622458238949
+			},
+			"round": 3
+		},
+		"timestamp": 1767612651.69271,
+		"type": "round_finished"
+	},
+	{
+		"data": {
+			"duration": 0.00113010406494141,
+			"final_results": {
+				"average_contribution_ratio": 0.602881596143957,
+				"average_cooperation_rate": 1.0,
+				"average_free_riders": 0.0,
+				"duration": 0.00113010406494141,
+				"end_time": 1767612651.69272,
+				"game_id": "GAME_BASE_1767612651.69149_144",
+				"game_type": "public_goods",
+				"player_results": {
+					"Alice": {
+						"average_payoff": 72.7778985058326,
+						"rounds_played": 3,
+						"total_payoff": 218.333695517498
+					},
+					"Grace": {
+						"average_payoff": 27.8443612779024,
+						"rounds_played": 3,
+						"total_payoff": 83.5330838337073
+					},
+					"Jack": {
+						"average_payoff": 52.7251693811909,
+						"rounds_played": 3,
+						"total_payoff": 158.175508143573
+					},
+					"Joe": {
+						"average_payoff": 87.8052092926569,
+						"rounds_played": 3,
+						"total_payoff": 263.415627877971
+					}
+				},
+				"pool_statistics": {
+					"avg_contribution": 180.864478843187,
+					"contribution_count": 12,
+					"contributor_count": 4,
+					"current_total": 0.0,
+					"distribution_count": 3,
+					"multiplier": 2.0,
+					"pool_id": "GAME_BASE_1767612651.69149_144_pool",
+					"resource_type": "money",
+					"total_contributions": 723.457915372749,
+					"withdrawal_count": 0
+				},
+				"start_time": 1767612651.69159,
+				"total_rounds": 3
+			},
+			"game_id": "GAME_BASE_1767612651.69149_144"
+		},
+		"timestamp": 1767612651.69277,
+		"type": "game_finished"
+	},
+	{
+		"data": {
+			"end_time": 1767612651.69272,
+			"game_id": "GAME_BASE_1767612651.69149_144",
+			"game_name": "Public Goods Game",
+			"game_type": "public_goods",
+			"max_rounds": 3,
+			"players": [
+				"Jack",
+				"Grace",
+				"Alice",
+				"Joe"
+			],
+			"round": 3,
+			"start_time": 1767612651.69159,
+			"state": "FINISHED"
+		},
+		"timestamp": 1767612651.69279,
+		"type": "game_started"
+	},
+	{
+		"data": {
+			"real_duration": 1199.75054311752,
+			"virtual_time": 1200.00846133262
+		},
+		"timestamp": 1767612771.62314,
+		"type": "experiment_finished"
+	},
+	{
+		"data": {
+			"duration": 1199.76736187935,
+			"session_id": "Phase 1: Behavioral Games Baseline_1767611571.87256",
+			"timestamp": 1767612771.63993
+		},
+		"timestamp": 1767612771.63993,
+		"type": "session_ended"
+	}
+]
