@@ -1,0 +1,539 @@
+# Microverse - 项目索引
+
+> **《Microverse In Box 盒中小世界》** - AI 驱动的多智能体社交模拟游戏  
+> 基于 Godot 4 开发 | Steam 即将上线
+
+---
+
+## 📋 快速导航
+
+### 🎮 核心文档
+- [项目主文档](README.md) - 项目介绍、特性、安装指南
+- [英文文档](README_EN.md) - English documentation
+- [贡献指南](CONTRIBUTING.md) - 如何为项目做贡献
+- [许可证](LICENSE) - MIT License
+- [配置系统说明](配置系统说明.md) - 系统配置详细说明
+
+### 🔬 经济实验系统
+- [Economy Experiments 主文档](economy_experiments/README.md) - 经济行为研究平台
+- [快速开始](economy_experiments/QUICK_START.md) - 实验系统快速上手
+- [项目总结](economy_experiments/PROJECT_SUMMARY.md) - 完整功能概览
+- [API 参考](economy_experiments/docs/API_REFERENCE.md) - 详细 API 文档
+- [实验指南](economy_experiments/docs/EXPERIMENT_GUIDE.md) - 如何设计实验
+- [集成指南](economy_experiments/docs/INTEGRATION_GUIDE.md) - 集成到游戏
+- [游戏融合设计方案](economy_experiments/游戏融合设计方案.md) - 融合方案详解
+- [游戏融合快速开始](economy_experiments/游戏融合快速开始.md) - 快速融合教程
+
+### 🛠️ 实验工具
+- [Experiment Tools 文档](experiment_tools/README.md) - Ollama 配置和测试
+- [快速开始指南](experiment_tools/Quick_Start_Guide.md) - 快速配置
+- [Microverse 配置指南](experiment_tools/MICROVERSE_CONFIG_GUIDE.md) - 详细配置
+- [实验可行性分析](experiment_tools/EXPERIMENT_FEASIBILITY_ANALYSIS.md) - 技术分析
+- [设置完成说明](experiment_tools/SETUP_SUCCESS.md) - 设置验证
+
+### 📝 UI 系统文档
+- [UI 系统说明](economy_experiments/UI系统说明.md) - UI 架构说明
+- [实验 UI 使用指南](economy_experiments/实验UI使用指南.md) - UI 操作指南
+- [实验 UI 开发完成](economy_experiments/实验UI开发完成.md) - 开发日志
+- [集成实验 UI 到游戏](economy_experiments/如何集成实验UI到游戏.md) - 集成教程
+- [添加实验按钮教程](economy_experiments/添加实验按钮到游戏教程.md) - 按钮集成
+
+### 🐛 问题修复文档
+- [实验室 UI 修复说明](economy_experiments/实验室UI修复说明.md)
+- [实验窗口点击问题已修复](economy_experiments/实验窗口点击问题已修复.md)
+- [游戏收益问题已修复](economy_experiments/游戏收益问题已修复.md)
+- [背景设定已更新为实验室](economy_experiments/背景设定已更新为实验室.md)
+
+---
+
+## 🏗️ 项目结构
+
+### 📂 核心目录
+
+#### `/asset/` - 游戏资源
+```
+asset/
+├── characters/       # 角色素材（8个AI角色）
+│   ├── body/         # 角色精灵图
+│   └── portraits/    # 角色头像
+├── fonts/            # 字体文件（像素字体）
+├── maps/             # 地图瓦片集
+│   ├── exteriors/    # 外部场景
+│   └── interiors/    # 内部场景
+├── objects/          # 场景对象素材
+├── singleObjects/    # 单个对象（办公室物品）
+├── ui/               # UI 素材
+│   ├── singles32x32/ # UI 元素
+│   ├── shaders/      # 着色器
+│   └── theme/        # UI 主题
+└── pics/             # 封面和宣传图
+```
+
+#### `/scene/` - Godot 场景文件
+```
+scene/
+├── characters/       # 角色场景 (8个AI角色)
+│   ├── Alice.tscn    # 项目经理
+│   ├── Grace.tscn    # 数据分析师
+│   ├── Jack.tscn     # 设计师
+│   ├── Joe.tscn      # 技术专家
+│   ├── Lea.tscn      # 市场营销
+│   ├── Monica.tscn   # HR专员
+│   ├── Stephen.tscn  # 财务分析师
+│   └── Tom.tscn      # 软件工程师
+├── maps/             # 地图场景
+│   └── Office.tscn   # 办公室主场景
+├── prefab/           # 预制件（家具等）
+└── ui/               # UI 场景
+    ├── GodUI.tscn            # 主UI
+    ├── CommandUI.tscn        # 命令界面
+    ├── DialogBubble.tscn     # 对话气泡
+    ├── GlobalSettingsUI.tscn # 全局设置
+    └── SaveLoadUI.tscn       # 存档系统
+```
+
+#### `/script/` - 核心脚本
+```
+script/
+├── ai/                      # AI 系统核心
+│   ├── AIAgent.gd           # AI 智能体基类
+│   ├── APIManager.gd        # API 管理（支持多种 AI 服务）
+│   ├── DialogManager.gd     # 对话系统
+│   ├── ConversationManager.gd # 对话管理
+│   ├── memory/              # 记忆系统
+│   │   └── MemoryManager.gd # 长期记忆管理
+│   └── background_story/    # 角色背景故事
+├── ui/                      # UI 脚本
+│   ├── GodUI.gd             # 主UI控制器
+│   ├── SettingsManager.gd   # 设置管理
+│   └── ...                  # 其他UI脚本
+├── CharacterManager.gd      # 角色管理
+├── CharacterController.gd   # 角色控制器
+├── CharacterPersonality.gd  # 角色性格系统
+├── GameSaveManager.gd       # 存档管理
+├── RoomManager.gd           # 房间管理
+├── TaskManager.gd           # 任务管理
+└── CameraController.gd      # 相机控制
+```
+
+#### `/economy_experiments/` - 经济实验系统
+```
+economy_experiments/
+├── scripts/                 # GDScript 核心（17个文件）
+│   ├── economic_system/     # 经济系统
+│   │   ├── Wallet.gd        # 钱包系统
+│   │   ├── Transaction.gd   # 交易记录
+│   │   ├── Market.gd        # 市场系统
+│   │   ├── ResourcePool.gd  # 资源池
+│   │   └── EconomicAgent.gd # 经济智能体
+│   ├── behavioral_games/    # 行为经济学游戏
+│   │   ├── GameBase.gd
+│   │   ├── UltimatumGame.gd      # 最后通牒游戏
+│   │   ├── TrustGame.gd          # 信任游戏
+│   │   ├── PublicGoodsGame.gd    # 公共物品游戏
+│   │   └── DictatorGame.gd       # 独裁者游戏
+│   ├── data_collection/     # 数据收集
+│   │   ├── ExperimentLogger.gd
+│   │   ├── MetricsCalculator.gd
+│   │   └── DataExporter.gd
+│   ├── managers/            # 管理器
+│   │   ├── ExperimentManager.gd
+│   │   └── EconomyManager.gd
+│   └── ui/                  # 实验UI
+│       ├── LabDashboardUI.gd
+│       ├── ExperimentDashboardUI.gd
+│       └── ...
+├── configs/                 # 配置文件（8个JSON）
+│   ├── experiments/         # 实验配置
+│   │   ├── phase1_behavioral.json
+│   │   ├── phase2_market.json
+│   │   └── phase3_comparison.json
+│   └── agents/              # 智能体配置
+│       ├── risk_averse.json      # 风险厌恶型
+│       ├── risk_neutral.json     # 风险中性型
+│       ├── risk_seeking.json     # 风险偏好型
+│       ├── altruistic.json       # 利他型
+│       └── selfish.json          # 自私型
+├── scene/                   # 实验场景
+│   ├── LabDashboardUI.tscn
+│   ├── ExperimentDashboardUI.tscn
+│   └── ...
+├── analysis/                # Python 分析工具
+│   ├── scripts/
+│   │   └── analyze_games.py
+│   └── requirements.txt
+└── data/                    # 实验数据（git忽略）
+    ├── sessions/
+    ├── logs/
+    └── exports/
+```
+
+#### `/experiment_tools/` - 实验工具
+```
+experiment_tools/
+├── setup_environment.bat    # Windows 环境配置
+├── setup_environment.ps1    # PowerShell 脚本
+├── install_ollama.bat       # Ollama 安装
+├── quick_test.bat           # 快速测试（Windows）
+├── quick_test.sh            # 快速测试（Unix）
+├── test_advanced.py         # 高级测试脚本
+└── test_nvidia_gpu.bat      # GPU 测试
+```
+
+---
+
+## 🎯 核心系统
+
+### 🤖 AI 智能体系统
+- **8个预设角色**：每个都有独特性格和背景
+- **多模型支持**：OpenAI, Claude, Gemini, DeepSeek, 豆包, Kimi, Ollama
+- **长期记忆**：持久化记忆系统，角色能记住历史
+- **自主行为**：角色可自主决策和行动
+
+### 💬 对话系统
+- **自然语言对话**：基于大语言模型
+- **多轮对话**：支持深度交流
+- **对话历史**：完整记录和回放
+- **实时显示**：动态对话气泡UI
+
+### 📋 任务系统
+- **任务创建**：自动创建和分配
+- **优先级管理**：基于优先级的调度
+- **协作机制**：AI 角色间协作
+- **状态追踪**：实时监控任务状态
+
+### 🧠 记忆系统
+- **持久化存储**：长期记忆保存
+- **智能检索**：基于上下文检索
+- **学习适应**：根据经验学习
+- **格式化存储**：结构化记忆数据
+
+### 💰 经济系统
+- **钱包系统**：现金、储蓄、债务管理
+- **市场机制**：动态定价、供需平衡
+- **交易系统**：智能体间交易
+- **公共资源**：资源池和公共物品
+
+### 🔬 实验系统
+- **行为经济学游戏**：4种经典游戏
+- **数据收集**：实时日志和指标
+- **实验配置**：JSON 配置系统
+- **结果分析**：Python 分析工具
+
+---
+
+## 🚀 快速开始
+
+### 1️⃣ 克隆项目
+```bash
+git clone https://github.com/KsanaDock/Microverse.git
+cd Microverse
+```
+
+### 2️⃣ 打开项目
+1. 启动 Godot 4.3+
+2. 导入 `project.godot`
+3. 等待资源导入完成
+
+### 3️⃣ 配置 AI 服务
+1. 运行游戏（F5）
+2. 按 `ESC` 打开设置
+3. 配置 API：
+   - **OpenAI**: API Key + 模型选择
+   - **Ollama**: `http://localhost:11434/v1/chat/completions`
+   - **其他服务**: 按提示配置
+
+### 4️⃣ 开始游戏
+- **移动**: WASD 或方向键
+- **坐下**: 空格键
+- **开始对话**: T 键
+- **结束对话**: L 键
+- **打开设置**: ESC 键
+- **保存/加载**: F1 键
+- **控制台**: ` 键（反引号）
+
+### 5️⃣ 运行经济实验
+```gdscript
+# 在 Godot 脚本中
+var exp_manager = ExperimentManager.new()
+exp_manager.load_experiment("res://economy_experiments/configs/experiments/phase1_behavioral.json")
+exp_manager.setup_experiment()
+exp_manager.start_experiment()
+```
+
+或者打开场景：
+```
+economy_experiments/scene/LabDashboardUI.tscn
+```
+
+---
+
+## 🎮 游戏角色
+
+| 角色 | 职位 | 性格特点 |
+|------|------|----------|
+| **Alice** | 项目经理 | 友善、组织能力强 |
+| **Grace** | 数据分析师 | 专业、逻辑思维 |
+| **Jack** | 设计师 | 创意、艺术气质 |
+| **Joe** | 技术专家 | 专注、技术导向 |
+| **Lea** | 市场营销 | 外向、沟通能力强 |
+| **Monica** | HR专员 | 细心、善解人意 |
+| **Stephen** | 财务分析师 | 严谨、数据敏感 |
+| **Tom** | 软件工程师 | 务实、问题解决者 |
+
+---
+
+## 🔧 开发指南
+
+### 自动加载（AutoLoad）单例
+```
+SettingsManager       # 设置管理
+DialogManager         # 对话管理
+CharacterManager      # 角色管理
+APIManager            # API 管理
+GameSaveManager       # 存档管理
+SaveLoadUIManager     # 存档UI
+MemoryManager         # 记忆管理
+```
+
+### 核心 API
+
+#### 角色管理
+```gdscript
+# 获取所有角色
+var characters = CharacterManager.get_all_characters()
+
+# 获取特定角色
+var alice = CharacterManager.get_character("Alice")
+
+# 角色移动
+character.move_to(target_position)
+```
+
+#### 对话系统
+```gdscript
+# 开始对话
+DialogManager.start_dialog(character_a, character_b)
+
+# 发送消息
+DialogManager.send_message(speaker, message)
+
+# 结束对话
+DialogManager.end_dialog()
+```
+
+#### 记忆系统
+```gdscript
+# 保存记忆
+MemoryManager.save_memory(character, memory_text, category)
+
+# 检索记忆
+var memories = MemoryManager.retrieve_memories(character, query)
+
+# 获取记忆
+var all_memories = MemoryManager.get_memories(character)
+```
+
+#### 经济系统
+```gdscript
+# 创建经济智能体
+var agent = EconomicAgent.new()
+agent.setup(character_name, initial_cash)
+
+# 市场交易
+var market = Market.new()
+market.place_order(agent, good_type, quantity, price)
+
+# 运行行为游戏
+var game = UltimatumGame.new()
+game.setup(proposer, responder, endowment)
+var result = game.play()
+```
+
+### 扩展开发
+
+#### 添加新角色
+1. 在 `/asset/characters/` 添加素材
+2. 在 `/scene/characters/` 创建 `.tscn`
+3. 配置性格和背景
+4. 注册到 `CharacterManager`
+
+#### 添加新场景
+1. 在 `/asset/maps/` 准备瓦片集
+2. 在 `/scene/maps/` 创建场景
+3. 添加导航和交互点
+4. 配置场景切换
+
+#### 集成新 AI 服务
+1. 在 `APIManager.gd` 添加新类型
+2. 实现 API 调用逻辑
+3. 在设置UI添加配置项
+4. 测试对话功能
+
+---
+
+## 📊 实验研究方向
+
+### 行为经济学
+- ✅ 公平偏好（最后通牒/独裁者游戏）
+- ✅ 信任与互惠（信任游戏）
+- ✅ 合作与搭便车（公共物品游戏）
+- ✅ 风险态度（跨游戏分析）
+
+### 市场行为
+- ✅ 价格发现与均衡
+- ✅ 交易策略（做市、套利）
+- ✅ 市场效率测量
+- ✅ 财富分配（基尼系数）
+
+### 智能体分析
+- ✅ 决策一致性
+- ✅ 学习与适应
+- ✅ 性格特质演化
+- ✅ 社交网络形成
+
+### 模型对比
+- ✅ 本地 vs 云端 LLM
+- ✅ 模型规模影响（7B vs 13B vs 70B）
+- ✅ 提示工程影响
+- ✅ 温度参数敏感性
+
+---
+
+## 🛠️ 技术栈
+
+### 游戏引擎
+- **Godot Engine**: 4.3+
+- **编程语言**: GDScript
+- **渲染**: GL Compatibility
+
+### AI 集成
+- **OpenAI**: GPT-3.5, GPT-4
+- **Anthropic**: Claude
+- **Google**: Gemini
+- **DeepSeek**: 深度求索
+- **字节跳动**: 豆包
+- **月之暗面**: Kimi
+- **Ollama**: 本地部署（Mistral, Llama2, Gemma）
+
+### 数据分析
+- **Python**: 3.8+
+- **Pandas**: 数据处理
+- **Matplotlib**: 可视化
+- **Jupyter**: 交互式分析
+
+### 存储
+- **JSON**: 配置和数据存储
+- **CSV**: 数据导出
+- **本地文件系统**: 记忆和存档
+
+---
+
+## 📦 系统要求
+
+### 开发环境
+- **Godot**: 4.3 或更高版本
+- **Python**: 3.8+ (用于分析工具)
+- **Ollama**: 用于本地 LLM（可选）
+
+### 支持平台
+- ✅ **Windows**: 10/11 (64位)
+- ✅ **macOS**: 10.15+ (Intel/Apple Silicon)
+- ✅ **Linux**: Ubuntu 18.04+, Fedora 32+, Arch Linux
+- ✅ **Android**: 6.0+ (API Level 23+)
+
+### 硬件要求
+- **最低**: 4GB RAM, 1GB 存储
+- **推荐**: 8GB RAM, 2GB 存储
+- **网络**: 稳定互联网连接（API 调用）
+- **GPU**: NVIDIA RTX 系列（用于本地 LLM）
+
+---
+
+## 🔗 外部链接
+
+### 官方平台
+- 🎮 **Steam**: https://store.steampowered.com/app/3902630/Microverse_In_Box/
+- 🌐 **官网**: https://www.ksanadock.com
+- 💻 **GitHub**: https://github.com/KsanaDock/Microverse
+
+### 社交媒体
+- 📕 **小红书**: https://www.xiaohongshu.com/user/profile/653c5f81000000000301f274
+- 📺 **Bilibili**: https://space.bilibili.com/336052319
+- 🐦 **X (Twitter)**: https://x.com/KsanaDock
+- 🎬 **YouTube**: https://www.youtube.com/@KsanaDock
+
+---
+
+## 📄 许可证
+
+本项目采用 **MIT License** 开源许可证。
+
+查看 [LICENSE](LICENSE) 文件了解详情。
+
+---
+
+## 🙏 致谢
+
+- **Godot Engine** - 强大的开源游戏引擎
+- **LimeZu** - 精美的游戏素材提供者
+- **开源社区** - 所有贡献者和支持者
+- **AI 服务商** - OpenAI, Anthropic, Google, DeepSeek 等
+
+---
+
+## 📧 联系与支持
+
+### 问题反馈
+- 📝 **GitHub Issues**: https://github.com/KsanaDock/Microverse/issues
+
+### 技术支持
+- 💬 查看文档
+- 🔍 搜索已有 Issues
+- 📧 联系开发团队
+
+### 商务合作
+- 🌐 访问官网: https://www.ksanadock.com
+
+---
+
+## 🗺️ 项目路线图
+
+### 已完成 ✅
+- [x] 核心 AI 智能体系统
+- [x] 对话系统
+- [x] 记忆系统
+- [x] 任务管理
+- [x] 经济系统
+- [x] 行为经济学游戏（4种）
+- [x] 数据收集与分析
+- [x] 实验配置系统
+- [x] Python 分析工具
+- [x] 完整文档
+
+### 开发中 🚧
+- [ ] Steam 版本发布
+- [ ] 更多场景地图
+- [ ] 更多行为游戏
+- [ ] 高级 AI 模型集成
+- [ ] 多人协作模式
+
+### 计划中 📋
+- [ ] 移动端优化
+- [ ] 更多角色
+- [ ] 自定义角色编辑器
+- [ ] 社区内容共享
+- [ ] 实时在线对战
+
+---
+
+## 📚 版本信息
+
+- **当前版本**: 0.1.0 (Demo)
+- **Godot 版本**: 4.3+
+- **最后更新**: 2025-01-05
+
+---
+
+*本文档最后更新: 2025-01-05*  
+*项目主页: https://github.com/KsanaDock/Microverse*
