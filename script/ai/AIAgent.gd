@@ -186,7 +186,7 @@ func get_environment_info() -> String:
 	# 根据场景名称提供不同的环境描述
 	match current_scene:
 		"Office":
-			environment_info = "这是一家现代化的公司，有多个工作区、会议室和休息区。办公室装修简洁明亮，有大窗户可以看到外面的景色。"
+			environment_info = "这是时空码头经济行为研究所的实验室，有多个实验桌、数据监控中心、代理休息区和研究员工作站。实验区域设计科学，墙上的大屏幕实时显示着实验进度。"
 		"School":
 			environment_info = "这是一个学校。"
 		"Jail":
@@ -201,17 +201,17 @@ func get_environment_info() -> String:
 	var time_description = ""
 	
 	if hour >= 6 and hour < 9:
-		time_description = "现在是早晨，办公室刚开始一天的工作。"
+		time_description = "现在是早晨，实验室刚开始一天的实验活动。"
 	elif hour >= 9 and hour < 12:
-		time_description = "现在是上午，办公室正处于工作高峰期。"
+		time_description = "现在是上午，实验室正在进行各种经济实验。"
 	elif hour >= 12 and hour < 14:
-		time_description = "现在是午餐时间，一些同事可能去吃午饭了。"
+		time_description = "现在是午餐时间，一些参与者可能去休息区用餐了。"
 	elif hour >= 14 and hour < 18:
-		time_description = "现在是下午，大家都在专注工作。"
+		time_description = "现在是下午，大家都在专注参与实验。"
 	elif hour >= 18 and hour < 21:
-		time_description = "现在是傍晚，一些同事开始准备下班。"
+		time_description = "现在是傍晚，一些参与者开始准备离开实验室。"
 	else:
-		time_description = "现在是夜晚，办公室只有少数人在加班。"
+		time_description = "现在是夜晚，实验室只有少数人还在进行实验。"
 	
 	environment_info += "\n" + time_description
 	return environment_info
@@ -224,16 +224,16 @@ func get_object_info(obj: Node2D) -> String:
 	if obj is StaticBody2D:
 		# 检查物品类型并添加相应描述
 		if "Chair" in obj.name or obj.is_in_group("chairs"):
-			info += "（一把椅子，可以坐下休息或工作）"
+			info += "（一把椅子，可以坐下休息或参与实验）"
 			# 检查椅子是否被占用
 			if obj.has_method("is_occupied") and obj.is_occupied():
 				info += "，目前有人正在使用"
 			else:
 				info += "，目前无人使用"
 		elif "Desk" in obj.name:
-			info += "（一张办公桌，可以在这里工作、放置电脑和文件）"
+			info += "（一张实验桌，可以在这里参与实验、放置电脑和资料）"
 		elif "Computer" in obj.name:
-			info += "（一台电脑，可以用来处理工作、查看邮件或浏览网页）"
+			info += "（一台电脑，可以用来参与实验、查看实验数据或浏览信息）"
 		elif "Printer" in obj.name:
 			info += "（一台打印机，可以打印文件）"
 		elif "CoffeeMachine" in obj.name:
@@ -285,7 +285,7 @@ func get_character_status_info(char_node = null) -> String:
 	# 情感关系信息
 	var relations = target_character.get_meta("relations", {})
 	if relations.size() > 0:
-		status_info += "\n\n对其他同事的情感关系："
+		status_info += "\n\n对其他参与者的情感关系："
 		for target_name in relations:
 			var relation = relations[target_name]
 			var emotion_type = relation["type"] if relation.has("type") else "未知"
@@ -306,26 +306,26 @@ func get_character_status_info(char_node = null) -> String:
 	
 	return status_info
 
-# 获取公司员工信息字符串
+# 获取实验参与者信息字符串
 func get_company_employees_info() -> String:
-	var employees_info = "\n\n公司员工名单及职位信息："
+	var employees_info = "\n\n实验室参与者名单及类型："
 	
 	# 遍历CharacterPersonality中的所有角色配置
 	for character_name in CharacterPersonality.PERSONALITY_CONFIG:
 		var personality = CharacterPersonality.PERSONALITY_CONFIG[character_name]
 		employees_info += "\n- " + character_name + "：" + personality["position"]
 	
-	employees_info += "\n注意：在生成任何内容时，只能提及以上列出的员工，不要创造新的角色名字。"
+	employees_info += "\n注意：在生成任何内容时，只能提及以上列出的参与者，不要创造新的角色名字。"
 	return employees_info
 
-# 获取公司基本信息字符串
+# 获取实验室基本信息字符串
 func get_company_basic_info() -> String:
-	var company_info = "\n\n公司基本信息："
-	company_info += "\n你们公司的主要产品是《CountSheep》小游戏。"
-	company_info += "\n游戏宣传语：Can't Sleep? Count Sheep"
-	company_info += "\n游戏玩法：通过让用户数手机屏幕上跳过的小羊，然后有九宫格数字按钮来计数得分。"
-	company_info += "\n该游戏目前十分流行，吸引了许多跟时髦的小青年充值购买小羊皮肤和按键皮肤。"
-	return company_info
+	var lab_info = "\n\n实验室基本信息："
+	lab_info += "\n你正在时空码头经济行为研究所参与经济实验。"
+	lab_info += "\n研究所致力于研究AI代理的经济决策行为，包括信任游戏、最后通牒博弈、公共品游戏等。"
+	lab_info += "\n你的决策数据将用于经济学研究，所有收益都会如实支付给你。"
+	lab_info += "\n该游戏目前十分流行，吸引了许多跟时髦的小青年充值购买小羊皮肤和按键皮肤。"
+	return lab_info
 
 # 获取角色任务信息
 func get_character_task_info(char_node = null) -> String:
@@ -429,18 +429,18 @@ func _generate_random_task(character_node):
 	
 	# 通用任务
 	tasks_pool.append("检查邮件")
-	tasks_pool.append("整理工作区")
-	tasks_pool.append("与同事交流")
-	tasks_pool.append("参加会议")
+	tasks_pool.append("整理实验区")
+	tasks_pool.append("与其他参与者交流")
+	tasks_pool.append("参加实验说明会")
 	tasks_pool.append("休息放松一下")
 	tasks_pool.append("准备明天的工作")
 	tasks_pool.append("回复重要邮件")
 	tasks_pool.append("整理文件")
 	tasks_pool.append("学习新技能")
 	tasks_pool.append("思考工作改进方案")
-	tasks_pool.append("与上级沟通工作进展")
-	tasks_pool.append("帮助同事解决问题")
-	tasks_pool.append("制定工作计划")
+	tasks_pool.append("与研究员沟通实验进展")
+	tasks_pool.append("帮助其他参与者解决问题")
+	tasks_pool.append("制定实验参与计划")
 	tasks_pool.append("总结今日工作")
 	tasks_pool.append("准备工作报告")
 	
@@ -513,7 +513,7 @@ func make_decision():
 	var task_info = get_character_task_info(character)
 	
 	# 构建prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。你的性格是：%s。你的说话风格是：%s。你的工作职责是：%s。你的工作习惯是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的类型是：%s。你的性格是：%s。你的说话风格是：%s。你的参与职责是：%s。你的行为习惯是：%s。" % [
 		character.name,
 		personality["position"],
 		personality["personality"],
@@ -522,7 +522,7 @@ func make_decision():
 		personality["work_habits"]
 	]
 	
-	# 添加公司基本信息和员工名单信息
+	# 添加实验室基本信息和参与者名单信息
 	prompt += get_company_basic_info()
 	prompt += get_company_employees_info()
 	prompt += status_info  # 添加详细状态信息
@@ -534,7 +534,7 @@ func make_decision():
 	prompt += "\n- 你的健康状况可能限制你的活动能力"
 	prompt += "\n- 你的财务状况可能影响你对金钱相关话题的敏感度"
 	prompt += "\n- 你的记忆会影响你对当前情况的判断"
-	prompt += "\n- 你对其他同事的情感关系会影响你是否愿意与他们互动"
+	prompt += "\n- 你对其他参与者的情感关系会影响你是否愿意与他们互动"
 	prompt += "\n- 你应该优先考虑完成渴望程度高的任务"
 	prompt += "\n- 你的行动应该与当前最重要的任务相关"
 	prompt += "\n\n根据以上所有信息，你想要采取什么行动？请从以下选项中选择一个："
@@ -625,14 +625,14 @@ func make_conversation_decision():
 	var task_info = get_character_task_info(character)
 	
 	# 构建聊天决策prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。你的性格是：%s。你的说话风格是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。你的性格是：%s。你的说话风格是：%s。" % [
 		character.name,
 		personality["position"],
 		personality["personality"],
 		personality["speaking_style"]
 	]
 	
-	# 添加公司基本信息和员工名单信息
+	# 添加实验室基本信息和参与者名单信息
 	prompt += get_company_basic_info()
 	prompt += get_company_employees_info()
 	prompt += status_info
@@ -716,7 +716,7 @@ func _generate_farewell_message(char_node, partner_node):
 		chat_history = history_node.get_recent_conversation_with(partner_node.name, 5)
 	
 	# 构建告别消息prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。你的性格是：%s。你的说话风格是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。你的性格是：%s。你的说话风格是：%s。" % [
 		char_node.name,
 		personality["position"],
 		personality["personality"],
@@ -917,7 +917,7 @@ func _generate_initial_tasks():
 	var status_info = get_character_status_info(character)
 	
 	# 构建生成任务的prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。你的性格是：%s。你的说话风格是：%s。你的工作职责是：%s。你的工作习惯是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。你的性格是：%s。你的说话风格是：%s。你的工作职责是：%s。你的工作习惯是：%s。" % [
 		character.name,
 		personality["position"],
 		personality["personality"],
@@ -926,7 +926,7 @@ func _generate_initial_tasks():
 		personality["work_habits"]
 	]
 	
-	# 添加公司基本信息和员工名单信息
+	# 添加实验室基本信息和参与者名单信息
 	prompt += get_company_basic_info()
 	prompt += get_company_employees_info()
 	prompt += status_info
@@ -938,9 +938,9 @@ func _generate_initial_tasks():
 	prompt += "\n- 每个任务用一句话描述（20-50字）"
 	prompt += "\n\n请按以下格式输出，每行一个任务，格式为：任务描述|渴望程度（1-10的数字）"
 	prompt += "\n例如："
-	prompt += "\n完成本月的销售报告|8"
-	prompt += "\n与同事讨论新项目方案|6"
-	prompt += "\n整理办公桌上的文件|4"
+	prompt += "\n参与本月的经济实验|8"
+	prompt += "\n与其他参与者讨论实验体会|6"
+	prompt += "\n整理实验桌上的资料|4"
 	prompt += "\n\n请生成3个任务："
 	
 	# 使用APIManager生成任务
@@ -1044,13 +1044,13 @@ func _adjust_tasks(char_node = null):
 	var scene_description = generate_scene_description()
 	
 	# 构建调整任务的prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。你的性格是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。你的性格是：%s。" % [
 		target_character.name,
 		personality["position"],
 		personality["personality"]
 	]
 	
-	# 添加公司基本信息和员工名单信息
+	# 添加实验室基本信息和参与者名单信息
 	prompt += get_company_basic_info()
 	prompt += get_company_employees_info()
 	prompt += status_info
@@ -1154,13 +1154,13 @@ func _continue_current_task(char_node = null):
 	var scene_description = generate_scene_description()
 	
 	# 构建执行任务的prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。你的性格是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。你的性格是：%s。" % [
 		target_character.name,
 		personality["position"],
 		personality["personality"]
 	]
 	
-	# 添加公司基本信息和员工名单信息
+	# 添加实验室基本信息和参与者名单信息
 	prompt += get_company_basic_info()
 	prompt += get_company_employees_info()
 	prompt += status_info
@@ -1244,17 +1244,17 @@ func _execute_task_movement(target_character, current_task):
 	var scene_description = generate_scene_description()
 	
 	# 构建移动决策的prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。" % [
 		target_character.name,
 		personality["position"]
 	]
 	
-	# 添加公司基本信息和员工名单信息
+	# 添加实验室基本信息和参与者名单信息
 	prompt += get_company_basic_info()
 	prompt += get_company_employees_info()
 	prompt += "\n" + scene_description
 	prompt += "\n\n你当前的任务是：%s" % current_task.description
-	prompt += "\n\n为了完成这个任务，你需要移动到哪里？请根据当前环境中的物品以及公司员工信息，选择一个最合适的目标。"
+	prompt += "\n\n为了完成这个任务，你需要移动到哪里？请根据当前环境中的物品以及实验室参与者信息，选择一个最合适的目标。"
 	prompt += "\n请只回复目标的名字，不要有任何其他文字。如果没有合适的目标，请回复'无合适目标'。"
 	print(prompt)
 	# 使用APIManager生成决策
@@ -1362,23 +1362,23 @@ func _execute_task_conversation(target_character, current_task):
 	
 	if available_chars.size() == 0:
 		print("[AIAgent] %s 没有其他角色可以交谈" % target_character.name)
-		_add_memory(target_character, "你想要通过对话来完成任务'%s'，但是公司里没有其他人。" % current_task.description)
+		_add_memory(target_character, "你想要通过对话来完成任务'%s'，但是实验室里没有其他人。" % current_task.description)
 		return
 	
 	# 获取角色人设
 	var personality = CharacterPersonality.get_personality(target_character.name)
 	
 	# 构建对话选择的prompt，包含角色的精确坐标信息
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。" % [
 		target_character.name,
 		personality["position"]
 	]
 	
-	# 添加公司基本信息和员工名单信息
+	# 添加实验室基本信息和参与者名单信息
 	prompt += get_company_basic_info()
 	prompt += get_company_employees_info()
 	prompt += "\n\n你当前的任务是：%s" % current_task.description
-	prompt += "\n\n公司里有以下同事可以交谈："
+	prompt += "\n\n实验室里有以下参与者可以交谈："
 	for char in available_chars:
 		var char_personality = CharacterPersonality.get_personality(char.name)
 		var char_room = room_manager.get_current_room(room_manager.rooms, char.global_position)
@@ -1507,14 +1507,14 @@ func _execute_task_thinking(target_character, current_task):
 	var scene_description = generate_scene_description()
 	
 	# 构建思考prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。你的性格是：%s。你的说话风格是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。你的性格是：%s。你的说话风格是：%s。" % [
 		target_character.name,
 		personality["position"],
 		personality["personality"],
 		personality["speaking_style"]
 	]
 	
-	# 添加公司基本信息和员工名单信息
+	# 添加实验室基本信息和参与者名单信息
 	prompt += get_company_basic_info()
 	prompt += get_company_employees_info()
 	prompt += status_info
@@ -1815,8 +1815,8 @@ func _add_urgent_task_default(target_character):
 		"处理紧急邮件",
 		"参加临时会议",
 		"解决突发问题",
-		"协助同事完成工作",
-		"准备重要报告"
+		"协助其他参与者完成实验",
+		"准备实验总结报告"
 	]
 	
 	var urgent_task = {
@@ -1876,14 +1876,14 @@ func _handle_target_not_found(target_character, target_name: String, current_tas
 		room_names.append(room_name)
 	
 	# 构建决策prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。" % [
 		target_character.name,
 		personality["position"]
 	]
 	
 	prompt += "\n\n你当前的任务是：%s" % current_task.description
 	prompt += "\n你想要找到'%s'来完成这个任务，但是在当前房间没有找到这个目标。" % target_name
-	prompt += "\n\n公司有以下房间：%s" % ", ".join(room_names)
+	prompt += "\n\n实验室有以下房间：%s" % ", ".join(room_names)
 	prompt += "\n\n请选择你的行动："
 	prompt += "\n1. 去其他房间寻找'%s'" % target_name
 	prompt += "\n2. 留在原地，重新安排任务"
@@ -1967,7 +1967,7 @@ func _choose_room_to_search(target_character, target_name: String, current_task)
 		return
 	
 	# 构建房间选择prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。" % [
 		target_character.name,
 		personality["position"]
 	]
@@ -2050,12 +2050,12 @@ func _reschedule_task(target_character, current_task, failed_target_name: String
 	var scene_description = generate_scene_description()
 	
 	# 构建重新安排任务的prompt
-	var prompt = "你是一个办公室员工，名字是%s。你的职位是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的职位是：%s。" % [
 		target_character.name,
 		personality["position"]
 	]
 	
-	# 添加公司基本信息和员工名单信息
+	# 添加实验室基本信息和参与者名单信息
 	prompt += get_company_basic_info()
 	prompt += get_company_employees_info()
 	prompt += "\n" + scene_description
@@ -2065,7 +2065,7 @@ func _reschedule_task(target_character, current_task, failed_target_name: String
 	prompt += "\n\n请重新安排一个新的任务，这个任务应该："
 	prompt += "\n1. 适合你的职位和当前环境"
 	prompt += "\n2. 可以在当前环境中完成"
-	prompt += "\n3. 符合办公室工作的常理"
+	prompt += "\n3. 符合实验室活动的常理"
 	prompt += "\n\n请只回复新任务的描述，不要有任何其他文字。"
 	
 	print(prompt)

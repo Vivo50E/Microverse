@@ -102,6 +102,11 @@ func _ready():
 	
 	# 初始关闭UI
 	_toggle_ui(true)
+	
+	# 添加实验系统
+	_add_experiment_button()
+	_add_lab_mode_button()
+	_add_lab_dashboard()
 
 # 每帧更新一次角色列表，确保能捕获到动态添加的角色
 func _process(_delta):
@@ -1104,3 +1109,108 @@ func clear_character_selection():
 		character_list.deselect_all()
 	# 更新角色详情显示
 	_update_character_detail()
+
+# === 实验系统集成 ===
+func _add_lab_dashboard():
+	"""添加实验室仪表板"""
+	var lab_dashboard = load("res://economy_experiments/scene/LabDashboardUI.tscn").instantiate()
+	lab_dashboard.name = "LabDashboard"
+	lab_dashboard.visible = false  # 初始隐藏
+	add_child(lab_dashboard)
+	
+	# 连接关闭信号
+	lab_dashboard.dashboard_closed.connect(_on_lab_dashboard_closed)
+	
+	print("✅ 实验室仪表板已添加")
+	return lab_dashboard
+
+func toggle_lab_dashboard():
+	"""切换实验室仪表板显示"""
+	var lab_dashboard = get_node_or_null("LabDashboard")
+	if not lab_dashboard:
+		lab_dashboard = _add_lab_dashboard()
+	
+	lab_dashboard.visible = not lab_dashboard.visible
+	
+	# 隐藏主UI以专注于实验室模式
+	if lab_dashboard.visible:
+		$HBoxContainer.visible = false
+	else:
+		$HBoxContainer.visible = true
+
+func _on_lab_dashboard_closed():
+	"""实验室仪表板关闭时的回调"""
+	$HBoxContainer.visible = true  # 恢复主UI显示
+	print("✅ 主UI已恢复显示")
+
+func _add_lab_mode_button():
+	"""添加实验室模式按钮"""
+	var right_vbox = $HBoxContainer/RightPanel/VBoxContainer
+	
+	# 检查是否已存在
+	if right_vbox.has_node("LabModeButton"):
+		print("⚠️ 实验室模式按钮已存在")
+		return
+	
+	var lab_button = Button.new()
+	lab_button.name = "LabModeButton"
+	lab_button.text = "🔬 实验室模式"
+	lab_button.custom_minimum_size = Vector2(200, 40)
+	lab_button.tooltip_text = "切换到实验室控制台"
+	
+	lab_button.pressed.connect(toggle_lab_dashboard)
+	
+	right_vbox.add_child(lab_button)
+	
+	# 移动到倒数第二个位置
+	var toggle_button_index = -1
+	for i in range(right_vbox.get_child_count()):
+		if right_vbox.get_child(i).name == "ToggleUIButton":
+			toggle_button_index = i
+			break
+	
+	if toggle_button_index >= 0:
+		right_vbox.move_child(lab_button, toggle_button_index)
+	
+	print("✅ 实验室模式按钮已添加")
+
+func _add_experiment_button():
+	"""添加实验室按钮到右侧面板"""
+	
+	# 检查是否已存在
+	var right_vbox = $HBoxContainer/RightPanel/VBoxContainer
+	if right_vbox.has_node("ExperimentButton"):
+		print("⚠️ 实验按钮已存在")
+		return
+	
+	# 创建按钮
+	var experiment_button = Button.new()
+	experiment_button.name = "ExperimentButton"
+	experiment_button.text = "🧪 实验室"
+	experiment_button.custom_minimum_size = Vector2(200, 40)
+	experiment_button.tooltip_text = "打开经济行为实验面板"
+	
+	# 附加脚本
+	var script_path = "res://script/ui/ExperimentMenuButton.gd"
+	if ResourceLoader.exists(script_path):
+		var script = load(script_path)
+		experiment_button.set_script(script)
+		print("✅ 实验按钮脚本加载成功")
+	else:
+		push_error("❌ 找不到实验按钮脚本: " + script_path)
+		return
+	
+	# 添加到面板
+	right_vbox.add_child(experiment_button)
+	
+	# 移动到倒数第二个位置（ToggleUIButton之前）
+	var toggle_button_index = -1
+	for i in range(right_vbox.get_child_count()):
+		if right_vbox.get_child(i).name == "ToggleUIButton":
+			toggle_button_index = i
+			break
+	
+	if toggle_button_index >= 0:
+		right_vbox.move_child(experiment_button, toggle_button_index)
+	
+	print("✅ 实验按钮已添加到 GodUI 右侧面板")

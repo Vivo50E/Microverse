@@ -25,11 +25,29 @@ class SocialRule:
 		is_custom = custom
 
 # 当前状态
-static var current_map_name: String = "Office"
+static var current_map_name: String = "ExperimentLab"
 static var custom_rules: Array[String] = []
 
 # 预设的故事背景配置
 static var BACKGROUND_CONFIGS = {
+	"ExperimentLab": {
+		"company_name": "时空码头经济行为研究所",
+		"company_description": "一家前沿的AI经济行为研究机构。在这里，AI代理们自愿参与各种经济实验，研究员们通过观察和分析AI的决策行为，探索经济学的基本原理。研究所配备了先进的实验设施和数据分析系统，致力于推动实验经济学和AI行为科学的发展。",
+		"environment_description": "实验室环境现代化，配有多个实验桌、数据监控中心、代理休息区和研究员工作站。实验区域设计科学，既能确保实验的严谨性，又提供了舒适的参与环境。墙上的大屏幕实时显示着实验进度和数据可视化图表。",
+		"time_period": "现代（2024年）",
+		"cultural_context": "科研文化，强调实证研究、数据驱动和理性分析。鼓励创新实验设计和跨学科合作。",
+		"economic_situation": "研究所拥有充足的研究经费，能够为实验参与者提供合理的报酬。实验数据和研究成果受到学术界的广泛关注。",
+		"social_rules": [
+			"实验期间请遵循实验规则和程序",
+			"诚实地做出决策，不要刻意迎合预期",
+			"尊重其他参与者的隐私和决策",
+			"可以在休息时间自由交流，但不要讨论具体决策细节",
+			"保持实验环境的安静和专注",
+			"如有疑问可以向研究员咨询",
+			"实验收益会如实支付给你",
+			"你可以随时选择退出实验"
+		]
+	},
 	"Office": {
 		"company_name": "CountSheep游戏公司",
 		"company_description": "一家专注于休闲小游戏开发的创新公司，主要产品是《CountSheep》小游戏。游戏宣传语：Can't Sleep? Count Sheep。游戏玩法：通过让用户数手机屏幕上跳过的小羊，然后有九宫格数字按钮来计数得分。该游戏目前十分流行，吸引了许多跟时髦的小青年充值购买小羊皮肤和按键皮肤。",
@@ -90,14 +108,14 @@ static var current_background: StoryBackground
 static var CUSTOM_RULES_FILE = "user://custom_social_rules.json"
 
 # 初始化背景故事管理器
-static func initialize(map_name: String = "Office"):
+static func initialize(map_name: String = "ExperimentLab"):
 	set_background(map_name)
 
 # 设置当前地图的故事背景
 static func set_background(map_name: String):
 	if not BACKGROUND_CONFIGS.has(map_name):
-		print("[BackgroundStoryManager] 警告：未找到地图 '%s' 的背景配置，使用默认Office配置" % map_name)
-		map_name = "Office"
+		print("[BackgroundStoryManager] 警告：未找到地图 '%s' 的背景配置，使用默认ExperimentLab配置" % map_name)
+		map_name = "ExperimentLab"
 	
 	var config = BACKGROUND_CONFIGS[map_name]
 	var social_rules_array: Array[String] = []

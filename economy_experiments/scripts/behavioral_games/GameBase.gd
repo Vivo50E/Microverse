@@ -256,7 +256,13 @@ func record_payoff(player_id: String, payoff: float):
 	
 	# Update agent's wallet if in real economy mode
 	if player.agent and player.agent.wallet:
-		player.agent.wallet.deposit(payoff, "game_payout: " + game_type)
+		# Handle positive, negative, and zero payoffs
+		if payoff > 0:
+			player.agent.wallet.deposit(payoff, "game_payout: " + game_type)
+		elif payoff < 0:
+			# For negative payoffs (losses), withdraw from wallet
+			player.agent.wallet.withdraw(abs(payoff), "game_loss: " + game_type)
+		# If payoff is 0, do nothing (no transaction needed)
 
 ## Get game summary
 func get_summary() -> Dictionary:

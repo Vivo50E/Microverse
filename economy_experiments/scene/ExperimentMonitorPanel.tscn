@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=3 uid="uid://drt3kv8xqwxvje"]
+
+[ext_resource type="Script" path="res://economy_experiments/scripts/ui/ExperimentMonitorPanel.gd" id="1"]
+
+[node name="ExperimentMonitorPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="TitleLabel" type="Label" parent="ScrollContainer/VBox"]
+layout_mode = 2
+text = "📊 实验实时监控"
+horizontal_alignment = 1
+
+[node name="StatusSection" type="VBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="SectionLabel" type="Label" parent="ScrollContainer/VBox/StatusSection"]
+layout_mode = 2
+text = "状态概览"
+
+[node name="EventCounter" type="Label" parent="ScrollContainer/VBox/StatusSection"]
+layout_mode = 2
+text = "事件: 0 | 活跃游戏: 0 | 已完成: 0"
+
+[node name="AgentsSection" type="VBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="SectionLabel" type="Label" parent="ScrollContainer/VBox/AgentsSection"]
+layout_mode = 2
+text = "代理状态"
+
+[node name="AgentGrid" type="GridContainer" parent="ScrollContainer/VBox/AgentsSection"]
+layout_mode = 2
+columns = 4
+
+[node name="GamesSection" type="VBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="SectionLabel" type="Label" parent="ScrollContainer/VBox/GamesSection"]
+layout_mode = 2
+text = "游戏日志"
+
+[node name="GameLog" type="RichTextLabel" parent="ScrollContainer/VBox/GamesSection"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="MetricsSection" type="VBoxContainer" parent="ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="SectionLabel" type="Label" parent="ScrollContainer/VBox/MetricsSection"]
+layout_mode = 2
+text = "财富分布"
+
+[node name="WealthChart" type="Control" parent="ScrollContainer/VBox/MetricsSection"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+

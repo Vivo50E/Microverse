@@ -133,7 +133,7 @@ func build_dialog_prompt(speaker_personality: Dictionary, listener_personality: 
 	# 获取故事背景和社会规则
 	var background_prompt = BackgroundStoryManager.generate_background_prompt()
 	
-	var prompt = "你是一个员工，名字是%s。你的职位是：%s。你的性格是：%s。你的说话风格是：%s。" % [
+	var prompt = "你是一个实验参与者，名字是%s。你的类型是：%s。你的性格是：%s。你的说话风格是：%s。" % [
 		speaker.name,
 		speaker_personality["position"],
 		speaker_personality["personality"],
@@ -144,7 +144,7 @@ func build_dialog_prompt(speaker_personality: Dictionary, listener_personality: 
 	if not background_prompt.is_empty():
 		prompt += "\n\n" + background_prompt
 	
-	# 添加公司基本信息和员工名单信息
+	# 添加实验室基本信息和参与者名单信息
 	prompt += company_basic_info
 	prompt += company_info
 	
@@ -252,26 +252,26 @@ func _on_request_completed(result, response_code, headers, body):
 		# 生成对方的回复
 		await generate_dialog()
 
-# 获取公司员工信息字符串
+# 获取实验参与者信息字符串
 func get_company_employees_info() -> String:
-	var employees_info = "\n\n公司员工名单及职位信息："
+	var employees_info = "\n\n实验室参与者名单及类型："
 	
 	# 遍历CharacterPersonality中的所有角色配置
 	for character_name in CharacterPersonality.PERSONALITY_CONFIG:
 		var personality = CharacterPersonality.PERSONALITY_CONFIG[character_name]
 		employees_info += "\n- " + character_name + "：" + personality["position"]
 	
-	employees_info += "\n注意：在生成任何内容时，只能提及以上列出的员工，不要创造新的角色名字。"
+	employees_info += "\n注意：在生成任何内容时，只能提及以上列出的参与者，不要创造新的角色名字。"
 	return employees_info
 
-# 获取公司基本信息字符串
+# 获取实验室基本信息字符串
 func get_company_basic_info() -> String:
-	var company_info = "\n\n公司基本信息："
-	company_info += "\n你们公司的主要产品是《CountSheep》小游戏。"
-	company_info += "\n游戏宣传语：Can't Sleep? Count Sheep"
-	company_info += "\n游戏玩法：通过让用户数手机屏幕上跳过的小羊，然后有九宫格数字按钮来计数得分。"
-	company_info += "\n该游戏目前十分流行，吸引了许多跟时髦的小青年充值购买小羊皮肤和按键皮肤。"
-	return company_info
+	var lab_info = "\n\n实验室基本信息："
+	lab_info += "\n你正在时空码头经济行为研究所参与经济实验。"
+	lab_info += "\n研究所致力于研究AI代理的经济决策行为，包括信任游戏、最后通牒博弈、公共品游戏等。"
+	lab_info += "\n你的决策数据将用于经济学研究，所有收益都会如实支付给你。"
+	lab_info += "\n请根据你的真实想法做出决策，不要刻意迎合预期。"
+	return lab_info
 
 # 获取角色详细状态信息
 func get_character_status_info(character: CharacterBody2D) -> String:
