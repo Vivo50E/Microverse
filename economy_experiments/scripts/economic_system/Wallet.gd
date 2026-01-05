@@ -9,7 +9,7 @@ class_name Wallet
 ## @tutorial: See docs/API_REFERENCE.md for usage examples
 
 # Financial balances
-var cash: float = 100.0
+var cash: float = 10000.0
 var savings: float = 0.0
 var debt: float = 0.0
 var assets: Array = []  # Array of asset dictionaries
@@ -30,7 +30,7 @@ signal debt_changed
 signal low_balance_warning
 
 ## Constructor
-func _init(initial_cash: float = 100.0, p_owner_id: String = ""):
+func _init(initial_cash: float = 10000.0, p_owner_id: String = ""):
 	cash = initial_cash
 	owner_id = p_owner_id
 	_record_transaction({

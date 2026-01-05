@@ -1,10 +1,11 @@
 extends Control
 class_name LabDashboardUI
 
-## 实验室主仪表板UI
-## 集成了实验控制、状态显示、数据分析
+## 场景实验监控面板
+## 实时显示主游戏场景中所有agent的状态
+## 追踪财富变化、心理状态、交互记录
 
-signal dashboard_closed  # 新增：当仪表板关闭时发出信号
+signal dashboard_closed  # 当仪表板关闭时发出信号
 
 @onready var status_panel = $MarginContainer/VBoxContainer/ContentHBox/LeftPanel/StatusPanelContainer/StatusPanel
 @onready var quick_experiment_button = $MarginContainer/VBoxContainer/ContentHBox/RightPanel/ActionPanel/QuickExperimentButton
@@ -13,30 +14,43 @@ signal dashboard_closed  # 新增：当仪表板关闭时发出信号
 @onready var daily_goals_panel = $MarginContainer/VBoxContainer/ContentHBox/LeftPanel/DailyGoalsPanelContainer/DailyGoalsPanel
 @onready var notification_label = $MarginContainer/VBoxContainer/NotificationLabel
 
-var lab_manager: ExperimentLabManager
-var experiment_manager: ExperimentManager
+var scene_tracker: SceneExperimentTracker  # 场景实验追踪器
 var close_button: Button
+
+# 经济控制UI元素
+var auto_trade_checkbox: CheckBox
+var trade_frequency_slider: HSlider
+var trade_frequency_label: Label
 
 func _ready():
 	# 应用统一主题样式
 	_apply_lab_theme()
 	
-	# 延迟添加关闭按钮，避免在父节点设置子节点时添加
+	# 延迟添加关闭按钮
 	call_deferred("_add_close_button")
 	
-	# 获取或创建实验室管理器
-	lab_manager = get_node_or_null("/root/ExperimentLabManager")
-	if not lab_manager:
-		lab_manager = ExperimentLabManager.new()
-		lab_manager.name = "ExperimentLabManager"
-		get_tree().root.call_deferred("add_child", lab_manager)
+	# 设置经济控制UI
+	call_deferred("_setup_economic_controls")
 	
-	# 连接信号
-	quick_experiment_button.pressed.connect(_on_quick_experiment)
-	view_report_button.pressed.connect(_on_view_report)
+	# 获取场景实验追踪器
+	scene_tracker = get_node_or_null("/root/SceneExperimentTracker")
+	if not scene_tracker:
+		print("⚠️ 场景实验追踪器未找到，将创建新实例")
+		scene_tracker = SceneExperimentTracker.new()
+		scene_tracker.name = "SceneExperimentTracker"
+		get_tree().root.call_deferred("add_child", scene_tracker)
 	
-	# 延迟连接实验室管理器的信号，确保它已经添加到场景树
-	call_deferred("_connect_lab_manager_signals")
+	# 修改按钮文本
+	if quick_experiment_button:
+		quick_experiment_button.text = "📊 生成报告"
+		quick_experiment_button.pressed.connect(_on_generate_report)
+	
+	if view_report_button:
+		view_report_button.text = "📁 打开报告文件夹"
+		view_report_button.pressed.connect(_on_open_reports_folder)
+	
+	# 连接追踪器信号
+	call_deferred("_connect_tracker_signals")
 	
 	# 初始化显示
 	call_deferred("_update_display")
@@ -49,36 +63,36 @@ func _ready():
 	await get_tree().process_frame
 	timer.start()
 
-func _connect_lab_manager_signals():
-	"""延迟连接实验室管理器信号"""
-	if lab_manager:
-		lab_manager.daily_goal_completed.connect(_on_daily_goal_completed)
-		lab_manager.achievement_earned.connect(_on_achievement_earned)
+func _connect_tracker_signals():
+	"""连接场景追踪器信号"""
+	if scene_tracker:
+		scene_tracker.wealth_changed.connect(_on_wealth_changed)
+		scene_tracker.report_generated.connect(_on_report_generated)
 
 func _update_display():
-	if not lab_manager:
+	if not scene_tracker:
 		return
 	
-	var status = lab_manager.get_status_summary()
+	var stats = scene_tracker.get_statistics_summary()
 	
 	# 更新状态面板
-	_update_status_panel(status)
+	_update_status_panel(stats)
 	
 	# 更新财富榜
 	_update_wealth_leaderboard()
-	
-	# 更新每日目标
-	_update_daily_goals(status.daily_goals)
 
-func _update_status_panel(status: Dictionary):
+func _update_status_panel(stats: Dictionary):
 	if not status_panel:
 		return
 	
 	var text = ""
-	text += "📅 第 %d 天 | Lv.%d 研究员\n" % [status.day, status.level]
-	text += "💰 经费: ¥%.2f\n" % status.funding
-	text += "🧪 总实验: %d 次\n" % status.total_experiments
-	text += "📊 总数据: %d 条\n" % status.total_data
+	text += "📅 第 %d 天 | 场景实验\n" % stats.get("scene_day", 1)
+	text += "⏱️ 运行时间: %s\n" % stats.get("running_time_formatted", "0秒")
+	text += "💰 总财富: ¥%.2f\n" % stats.get("total_wealth", 0.0)
+	text += "📊 平均财富: ¥%.2f\n" % stats.get("average_wealth", 0.0)
+	text += "🤝 交互次数: %d 次\n" % stats.get("total_interactions", 0)
+	text += "💳 交易次数: %d 次\n" % stats.get("total_transactions", 0)
+	text += "👥 追踪Agent: %d 个" % stats.get("total_agents", 0)
 	
 	if status_panel is Label:
 		status_panel.text = text
@@ -86,133 +100,76 @@ func _update_status_panel(status: Dictionary):
 		status_panel.get_node("StatusLabel").text = text
 
 func _update_wealth_leaderboard():
-	if not agent_wealth_list or not lab_manager:
+	if not agent_wealth_list or not scene_tracker:
 		return
 	
 	agent_wealth_list.clear()
 	
-	var leaderboard = lab_manager.get_wealth_leaderboard()
+	var leaderboard = scene_tracker.get_wealth_leaderboard()
 	for i in range(min(8, leaderboard.size())):
-		var agent = leaderboard[i]
+		var entry = leaderboard[i]
 		var medal = ""
 		match i:
 			0: medal = "🥇 "
 			1: medal = "🥈 "
 			2: medal = "🥉 "
+			_: medal = "   "
 		
-		var text = "%s%s: ¥%.2f" % [medal, agent.name, agent.wealth]
+		var psych = entry.get("psychological_state", {})
+		var mood_icon = _get_mood_icon(psych.get("mood", 0.5))
+		
+		var text = "%s%s: ¥%.2f %s" % [medal, entry.name, entry.wealth, mood_icon]
 		agent_wealth_list.add_item(text)
 
-func _update_daily_goals(goals: Dictionary):
-	if not daily_goals_panel:
+func _get_mood_icon(mood: float) -> String:
+	"""根据心情值返回表情图标"""
+	if mood >= 0.8:
+		return "😊"
+	elif mood >= 0.6:
+		return "🙂"
+	elif mood >= 0.4:
+		return "😐"
+	elif mood >= 0.2:
+		return "😟"
+	else:
+		return "😢"
+
+func _on_generate_report():
+	"""生成当前场景的实验报告"""
+	if not scene_tracker:
+		_show_notification("⚠️ 场景追踪器未初始化")
 		return
 	
-	var text = "📋 今日目标:\n"
-	for goal_key in goals.keys():
-		var goal = goals[goal_key]
-		var status_icon = "✅" if goal.current >= goal.target else "⬜"
-		var goal_name = _translate_goal_name(goal_key)
-		text += "%s %s: %d/%d\n" % [status_icon, goal_name, goal.current, goal.target]
-	
-	if daily_goals_panel is Label:
-		daily_goals_panel.text = text
-	elif daily_goals_panel.has_node("GoalsLabel"):
-		daily_goals_panel.get_node("GoalsLabel").text = text
+	var report_path = scene_tracker.generate_scene_report()
+	_show_notification("📊 场景报告已生成！")
+	print("✅ 场景报告已生成: %s" % report_path)
 
-func _translate_goal_name(key: String) -> String:
-	match key:
-		"experiments": return "完成实验"
-		"data_points": return "收集数据"
-		"special_events": return "特殊发现"
-		_: return key
+func _on_open_reports_folder():
+	"""打开报告文件夹"""
+	var reports_path = "user://experiment_reports"
+	var absolute_path = ProjectSettings.globalize_path(reports_path)
+	
+	# 确保目录存在
+	if not DirAccess.dir_exists_absolute(reports_path):
+		DirAccess.make_dir_absolute(reports_path)
+	
+	# 尝试打开文件夹
+	OS.shell_open(absolute_path)
+	_show_notification("📁 已打开报告文件夹")
 
-func _on_quick_experiment():
-	# 创建CanvasLayer确保在最上层
-	var canvas_layer = CanvasLayer.new()
-	canvas_layer.layer = 128  # 使用更高的层级确保在最上面
-	canvas_layer.name = "QuickExperimentLayer"
-	get_tree().root.add_child(canvas_layer)
-	
-	# 创建半透明背景遮罩（可选，帮助阻挡底层点击）
-	var background = ColorRect.new()
-	background.color = Color(0, 0, 0, 0.5)  # 半透明黑色
-	background.set_anchors_preset(Control.PRESET_FULL_RECT)
-	background.mouse_filter = Control.MOUSE_FILTER_STOP  # 阻挡底层点击
-	canvas_layer.add_child(background)
-	
-	# 打开快速实验面板
-	var quick_panel = load("res://economy_experiments/scene/ExperimentQuickPanel.tscn").instantiate()
-	
-	# 使用锚点居中，而不是position
-	quick_panel.set_anchors_preset(Control.PRESET_CENTER)
-	quick_panel.position = Vector2.ZERO  # 重置position
-	
-	# 设置面板大小（如果需要）
-	if quick_panel.custom_minimum_size == Vector2.ZERO:
-		quick_panel.custom_minimum_size = Vector2(500, 350)
-	
-	# 使用偏移来微调位置（居中）
-	quick_panel.offset_left = -quick_panel.custom_minimum_size.x / 2
-	quick_panel.offset_right = quick_panel.custom_minimum_size.x / 2
-	quick_panel.offset_top = -quick_panel.custom_minimum_size.y / 2
-	quick_panel.offset_bottom = quick_panel.custom_minimum_size.y / 2
-	
-	# 确保可以接收鼠标事件
-	quick_panel.mouse_filter = Control.MOUSE_FILTER_STOP
-	quick_panel.z_index = 100  # 确保在前面
-	
-	# 添加到CanvasLayer
-	canvas_layer.add_child(quick_panel)
-	
-	# 连接背景点击关闭（可选）
-	background.gui_input.connect(func(event: InputEvent):
-		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			# 点击背景关闭面板
-			canvas_layer.queue_free()
-			print("✅ 快速实验面板已关闭（点击背景）")
-	)
-	
-	# 添加关闭按钮
-	_add_close_button_to_panel(quick_panel, canvas_layer)
-	
-	# 连接实验完成信号
-	if quick_panel.has_signal("experiment_state_changed"):
-		quick_panel.experiment_state_changed.connect(_on_experiment_state_changed)
-	if quick_panel.has_signal("experiment_completed"):
-		quick_panel.experiment_completed.connect(_on_experiment_completed_with_results)
-	
-	print("✅ 快速实验面板已创建在层级 128，居中显示")
-
-func _on_experiment_state_changed(is_running: bool):
-	if not is_running:
-		# 实验完成
-		_show_notification("✅ 实验完成！")
-		# 刷新显示
-		_update_display()
-
-func _on_experiment_completed_with_results(results: Dictionary):
-	"""处理实验完成并接收结果"""
-	print("LabDashboardUI: 收到实验结果，包含 %d 个agent的wallet数据" % results.get("wallets", {}).size())
-	
-	# 显示实验统计
-	var stats = results.get("statistics", {})
-	var message = "✅ 实验完成！游戏: %d, 决策: %d" % [
-		stats.get("games_played", 0),
-		stats.get("total_decisions", 0)
-	]
-	_show_notification(message)
-	
-	# 立即刷新显示以更新财富榜
+func _on_wealth_changed(agent_name: String, new_wealth: float):
+	"""财富变化回调"""
+	# 刷新显示
 	_update_display()
 
-func _on_view_report():
-	# 生成并显示报告
-	var report = lab_manager.generate_daily_report()
-	_show_report_dialog(report)
+func _on_report_generated(report_path: String):
+	"""报告生成回调"""
+	_show_notification("📊 自动报告已生成")
+
 
 func _show_report_dialog(report: String):
 	var dialog = AcceptDialog.new()
-	dialog.title = "实验室日报"
+	dialog.title = "场景实验日报"
 	dialog.dialog_text = report
 	dialog.size = Vector2(600, 400)
 	get_tree().root.add_child(dialog)
@@ -256,7 +213,7 @@ func _add_close_button():
 	close_button = Button.new()
 	close_button.text = "✖ 关闭"
 	close_button.custom_minimum_size = Vector2(80, 40)
-	close_button.tooltip_text = "关闭实验室模式"
+	close_button.tooltip_text = "关闭场景实验"
 	
 	# 定位到右上角
 	close_button.position = Vector2(size.x - 100, 10)
@@ -276,13 +233,13 @@ func _add_close_button():
 	# 移到最上层
 	move_child(close_button, get_child_count() - 1)
 	
-	print("✅ 关闭按钮已添加到实验室模式")
+	print("✅ 关闭按钮已添加到场景实验")
 
 func _on_close_pressed():
 	"""关闭按钮点击处理"""
 	visible = false
 	dashboard_closed.emit()  # 发送关闭信号
-	print("✅ 实验室模式已关闭")
+	print("✅ 场景实验已关闭")
 
 func _add_close_button_to_panel(panel: Control, canvas_layer: CanvasLayer):
 	"""为快速实验面板添加关闭按钮"""
@@ -315,18 +272,18 @@ func _add_close_button_to_panel(panel: Control, canvas_layer: CanvasLayer):
 	panel.move_child(panel_close_btn, panel.get_child_count() - 1)
 
 func _apply_lab_theme():
-	"""应用实验室主题样式到当前面板"""
+	"""应用场景实验主题样式到当前面板"""
 	# 尝试加载现有主题
 	var theme_path = "res://panel_container_theme.tres"
 	if ResourceLoader.exists(theme_path):
 		theme = load(theme_path)
-		print("✅ 实验室主题已加载")
+		print("✅ 场景实验主题已加载")
 	else:
 		# 创建自定义样式
 		_create_custom_lab_style()
 
 func _apply_lab_theme_to_panel(panel: Control):
-	"""应用实验室主题到快速实验面板"""
+	"""应用场景实验主题到快速实验面板"""
 	# 尝试加载现有主题
 	var theme_path = "res://panel_container_theme.tres"
 	if ResourceLoader.exists(theme_path):
@@ -336,7 +293,7 @@ func _apply_lab_theme_to_panel(panel: Control):
 		_apply_custom_style_to_panel(panel)
 
 func _create_custom_lab_style():
-	"""创建自定义实验室样式"""
+	"""创建自定义场景实验样式"""
 	var custom_theme = Theme.new()
 	
 	# Panel样式
@@ -356,7 +313,127 @@ func _create_custom_lab_style():
 	custom_theme.set_stylebox("panel", "Panel", panel_style)
 	
 	theme = custom_theme
-	print("✅ 自定义实验室主题已创建")
+	print("✅ 自定义场景实验主题已创建")
+
+func _setup_economic_controls():
+	"""设置经济控制UI - 替换DailyGoalsPanel"""
+	if not daily_goals_panel:
+		return
+	
+	# 清空原有内容
+	daily_goals_panel.text = ""
+	
+	# 获取DailyGoalsPanelContainer的父容器
+	var goals_container = daily_goals_panel.get_parent()
+	if not goals_container:
+		return
+	
+	# 移除Label，创建VBoxContainer
+	daily_goals_panel.queue_free()
+	
+	var econ_vbox = VBoxContainer.new()
+	econ_vbox.add_theme_constant_override("separation", 10)
+	goals_container.add_child(econ_vbox)
+	
+	# 标题
+	var title = Label.new()
+	title.text = "💰 经济系统控制"
+	title.add_theme_font_size_override("font_size", 16)
+	title.add_theme_color_override("font_color", Color(0.3, 0.9, 0.6))
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	econ_vbox.add_child(title)
+	
+	# 分隔线
+	var sep1 = HSeparator.new()
+	econ_vbox.add_child(sep1)
+	
+	# 自动交易开关
+	auto_trade_checkbox = CheckBox.new()
+	auto_trade_checkbox.text = "✅ 启用自动交易"
+	auto_trade_checkbox.button_pressed = true
+	auto_trade_checkbox.toggled.connect(_on_auto_trade_toggled)
+	econ_vbox.add_child(auto_trade_checkbox)
+	
+	# 交易频率标签
+	var freq_label = Label.new()
+	freq_label.text = "⏱️ 交易频率（秒）:"
+	freq_label.add_theme_font_size_override("font_size", 13)
+	econ_vbox.add_child(freq_label)
+	
+	# 频率滑块容器
+	var freq_hbox = HBoxContainer.new()
+	econ_vbox.add_child(freq_hbox)
+	
+	trade_frequency_slider = HSlider.new()
+	trade_frequency_slider.min_value = 10.0
+	trade_frequency_slider.max_value = 60.0
+	trade_frequency_slider.step = 5.0
+	trade_frequency_slider.value = 20.0
+	trade_frequency_slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	trade_frequency_slider.value_changed.connect(_on_frequency_changed)
+	freq_hbox.add_child(trade_frequency_slider)
+	
+	trade_frequency_label = Label.new()
+	trade_frequency_label.text = "20s"
+	trade_frequency_label.custom_minimum_size = Vector2(45, 0)
+	trade_frequency_label.add_theme_font_size_override("font_size", 14)
+	trade_frequency_label.add_theme_color_override("font_color", Color.LIGHT_BLUE)
+	freq_hbox.add_child(trade_frequency_label)
+	
+	# 分隔线
+	var sep2 = HSeparator.new()
+	econ_vbox.add_child(sep2)
+	
+	# 说明文本
+	var info_label = Label.new()
+	info_label.text = "💡 提示:\n• Agent将根据个性自主交易\n• 低频率=更谨慎决策\n• 高频率=更活跃市场"
+	info_label.add_theme_font_size_override("font_size", 11)
+	info_label.add_theme_color_override("font_color", Color.GRAY)
+	info_label.autowrap_mode = TextServer.AUTOWRAP_WORD
+	econ_vbox.add_child(info_label)
+	
+	print("✅ 经济控制UI已添加到场景实验")
+
+func _on_auto_trade_toggled(enabled: bool):
+	"""切换自动交易"""
+	var ai_agents = get_tree().get_nodes_in_group("controllable_characters")
+	
+	for character in ai_agents:
+		# 找到AIAgent子节点
+		for child in character.get_children():
+			if child.get_script() and child.get_script().get_global_name() == "AIAgent":
+				if child.has("economic_decision_timer"):
+					if enabled:
+						child.economic_decision_timer.start()
+						print("✅ 已启用 %s 的自动交易" % character.name)
+					else:
+						child.economic_decision_timer.stop()
+						print("⏸️ 已暂停 %s 的自动交易" % character.name)
+	
+	if enabled:
+		_show_notification("✅ 自动交易已启用")
+		if auto_trade_checkbox:
+			auto_trade_checkbox.text = "✅ 启用自动交易"
+	else:
+		_show_notification("⏸️ 自动交易已暂停")
+		if auto_trade_checkbox:
+			auto_trade_checkbox.text = "⏸️ 启用自动交易"
+
+func _on_frequency_changed(value: float):
+	"""调整交易频率"""
+	if trade_frequency_label:
+		trade_frequency_label.text = "%ds" % int(value)
+	
+	# 更新所有AI agent的经济决策频率
+	var ai_agents = get_tree().get_nodes_in_group("controllable_characters")
+	
+	for character in ai_agents:
+		for child in character.get_children():
+			if child.get_script() and child.get_script().get_global_name() == "AIAgent":
+				if child.has("economic_decision_timer"):
+					child.economic_decision_timer.wait_time = value
+	
+	print("⏱️ 经济系统：交易频率已调整为 %ds" % int(value))
 
 func _apply_custom_style_to_panel(panel: Control):
 	"""应用自定义样式到面板"""

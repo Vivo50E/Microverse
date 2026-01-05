@@ -1113,7 +1113,7 @@ func clear_character_selection():
 
 # === 实验系统集成 ===
 func _add_lab_dashboard():
-	"""添加实验室仪表板"""
+	"""添加场景实验仪表板"""
 	var lab_dashboard = load("res://economy_experiments/scene/LabDashboardUI.tscn").instantiate()
 	lab_dashboard.name = "LabDashboard"
 	lab_dashboard.visible = false  # 初始隐藏
@@ -1122,42 +1122,42 @@ func _add_lab_dashboard():
 	# 连接关闭信号
 	lab_dashboard.dashboard_closed.connect(_on_lab_dashboard_closed)
 	
-	print("✅ 实验室仪表板已添加")
+	print("✅ 场景实验仪表板已添加")
 	return lab_dashboard
 
 func toggle_lab_dashboard():
-	"""切换实验室仪表板显示"""
+	"""切换场景实验仪表板显示"""
 	var lab_dashboard = get_node_or_null("LabDashboard")
 	if not lab_dashboard:
 		lab_dashboard = _add_lab_dashboard()
 	
 	lab_dashboard.visible = not lab_dashboard.visible
 	
-	# 隐藏主UI以专注于实验室模式
+	# 隐藏主UI以专注于场景实验
 	if lab_dashboard.visible:
 		$HBoxContainer.visible = false
 	else:
 		$HBoxContainer.visible = true
 
 func _on_lab_dashboard_closed():
-	"""实验室仪表板关闭时的回调"""
+	"""场景实验仪表板关闭时的回调"""
 	$HBoxContainer.visible = true  # 恢复主UI显示
 	print("✅ 主UI已恢复显示")
 
 func _add_lab_mode_button():
-	"""添加实验室模式按钮"""
+	"""添加场景实验按钮"""
 	var right_vbox = $HBoxContainer/RightPanel/VBoxContainer
 	
 	# 检查是否已存在
 	if right_vbox.has_node("LabModeButton"):
-		print("⚠️ 实验室模式按钮已存在")
+		print("⚠️ 场景实验按钮已存在")
 		return
 	
 	var lab_button = Button.new()
 	lab_button.name = "LabModeButton"
-	lab_button.text = "🔬 实验室模式"
+	lab_button.text = "🔬 场景实验"
 	lab_button.custom_minimum_size = Vector2(200, 40)
-	lab_button.tooltip_text = "切换到实验室控制台"
+	lab_button.tooltip_text = "开启场景实验：模拟完整市场机制，长期观察agent交互、交易和心理变化"
 	
 	lab_button.pressed.connect(toggle_lab_dashboard)
 	
@@ -1173,7 +1173,7 @@ func _add_lab_mode_button():
 	if toggle_button_index >= 0:
 		right_vbox.move_child(lab_button, toggle_button_index)
 	
-	print("✅ 实验室模式按钮已添加")
+	print("✅ 场景实验按钮已添加")
 
 func _add_experiment_button():
 	"""添加实验室按钮到右侧面板"""

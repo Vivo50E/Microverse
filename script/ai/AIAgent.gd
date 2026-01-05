@@ -26,12 +26,16 @@ var is_player_controlled = false
 
 # 定时器，用于定期进行AI决策
 var decision_timer: Timer
+var economic_decision_timer: Timer  # 经济决策定时器
 
 # 直接使用自动加载单例
 @onready var api_manager = get_node("/root/APIManager")
 
 # 添加新的感知相关变量
 @onready var room_manager = get_node("/root/Office/RoomManager")
+
+# 经济决策模块
+var economic_decision_maker: EconomicDecisionMaker
 
 func _ready():
 	# 创建并配置决策定时器
@@ -41,6 +45,18 @@ func _ready():
 	add_child(decision_timer)
 	decision_timer.timeout.connect(_on_decision_timer_timeout)
 	decision_timer.start()
+	
+	# 创建经济决策定时器
+	economic_decision_timer = Timer.new()
+	economic_decision_timer.wait_time = 20.0  # 每20秒进行一次经济决策
+	economic_decision_timer.one_shot = false
+	add_child(economic_decision_timer)
+	economic_decision_timer.timeout.connect(_on_economic_decision_timer_timeout)
+	economic_decision_timer.start()
+	
+	# 初始化经济决策模块
+	economic_decision_maker = EconomicDecisionMaker.new(character)
+	add_child(economic_decision_maker)
 	
 	# 创建一个一次性定时器，等待10秒后再开始第一次决策
 	var initial_delay = Timer.new()
@@ -56,15 +72,33 @@ func toggle_player_control(enabled: bool):
 	if enabled:
 		# 停止AI决策
 		decision_timer.stop()
+		if economic_decision_timer:
+			economic_decision_timer.stop()
 		current_state = State.IDLE
 	else:
 		# 恢复AI决策
 		decision_timer.start()
+		if economic_decision_timer:
+			economic_decision_timer.start()
 
 # 定时器超时时进行决策
 func _on_decision_timer_timeout():
 	if not is_player_controlled:
 		make_decision()
+
+# 经济决策定时器回调
+func _on_economic_decision_timer_timeout():
+	if not is_player_controlled and economic_decision_maker:
+		_make_economic_decision()
+
+# 执行经济决策
+func _make_economic_decision():
+	"""让agent自主做出经济决策"""
+	var decision = economic_decision_maker.make_economic_decision()
+	
+	if decision.type != EconomicDecisionMaker.DecisionType.NONE:
+		print("💰 [EconomicAI] %s 做出经济决策：%s" % [character.name, decision])
+		economic_decision_maker.execute_decision(decision)
 
 # 修改生成场景描述函数
 func generate_scene_description() -> String:

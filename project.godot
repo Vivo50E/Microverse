@@ -24,6 +24,10 @@ APIManager="*res://script/ai/APIManager.gd"
 GameSaveManager="*res://script/GameSaveManager.gd"
 SaveLoadUIManager="*res://scene/ui/SaveLoadUIManager.tscn"
 MemoryManager="*res://script/ai/memory/MemoryManager.gd"
+GameTimeSystem="*res://script/GameTimeSystem.gd"
+InitializeTimeUI="*res://script/ui/InitializeTimeUI.gd"
+InitializeGameLog="*res://script/ui/InitializeGameLog.gd"
+SceneExperimentTracker="*res://economy_experiments/scripts/managers/SceneExperimentTracker.gd"
 
 [display]
 

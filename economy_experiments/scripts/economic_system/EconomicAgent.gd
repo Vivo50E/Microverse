@@ -31,6 +31,19 @@ var current_utility: float = 0.0
 var recent_gains: float = 0.0
 var recent_losses: float = 0.0
 
+# Psychological state tracking (for scene experiments)
+var psychological_state: Dictionary = {
+	"satisfaction": 0.5,      # 满意度 (0-1)
+	"stress": 0.0,            # 压力水平 (0-1)
+	"confidence": 0.5,        # 自信心 (0-1)
+	"social_standing": 0.5,   # 社会地位感 (0-1)
+	"mood": 0.5,              # 心情 (0-1, 0=消极, 1=积极)
+	"motivation": 0.5,        # 动机水平 (0-1)
+	"envy": 0.0,              # 嫉妒程度 (0-1)
+	"gratitude": 0.0          # 感激程度 (0-1)
+}
+var psychological_history: Array = []  # 心理状态历史记录
+
 # Decision style
 enum DecisionStyle { RATIONAL, BOUNDED_RATIONAL, HEURISTIC, EMOTIONAL }
 var decision_style: DecisionStyle = DecisionStyle.BOUNDED_RATIONAL
@@ -314,7 +327,8 @@ func to_dict() -> Dictionary:
 		"current_utility": current_utility,
 		"recent_gains": recent_gains,
 		"recent_losses": recent_losses,
-		"experience_count": experience_history.size()
+		"experience_count": experience_history.size(),
+		"psychological_state": psychological_state.duplicate()
 	}
 
 ## Private: Record experience for learning
@@ -352,3 +366,169 @@ func _on_wallet_balance_changed(new_balance: float):
 func _on_transaction_recorded(transaction: Dictionary):
 	# Could track spending patterns here
 	pass
+
+## === Psychological State Management (for Scene Experiments) ===
+
+## Update psychological state based on recent experiences
+func update_psychological_state(other_agents: Array = []):
+	"""更新心理状态，考虑财富变化、社会比较等因素"""
+	var wealth = wallet.get_net_worth()
+	var wealth_change = recent_gains - recent_losses
+	
+	# 1. 满意度 - 基于财富和最近收益
+	var wealth_satisfaction = clamp(wealth / 500.0, 0.0, 1.0)  # 假设500为满意阈值
+	var change_satisfaction = clamp(wealth_change / 100.0 + 0.5, 0.0, 1.0)
+	psychological_state.satisfaction = (wealth_satisfaction + change_satisfaction) / 2.0
+	
+	# 2. 压力 - 基于损失和债务
+	var loss_stress = clamp(recent_losses / 200.0, 0.0, 0.8)
+	var debt_stress = clamp(wallet.debt / 300.0, 0.0, 0.8)
+	psychological_state.stress = max(loss_stress, debt_stress)
+	
+	# 3. 自信心 - 基于最近成功率和财富
+	var success_rate = _calculate_recent_success_rate()
+	var wealth_confidence = clamp(wealth / 300.0, 0.0, 0.5)
+	psychological_state.confidence = clamp(success_rate * 0.7 + wealth_confidence, 0.0, 1.0)
+	
+	# 4. 社会地位感 - 基于与他人的财富比较
+	if other_agents.size() > 0:
+		var my_rank = _calculate_wealth_rank(other_agents)
+		psychological_state.social_standing = 1.0 - (float(my_rank) / float(other_agents.size()))
+		
+		# 5. 嫉妒 - 如果排名靠后
+		if my_rank > other_agents.size() * 0.6:
+			psychological_state.envy = clamp((float(my_rank) / float(other_agents.size()) - 0.5) * 2.0, 0.0, 1.0)
+		else:
+			psychological_state.envy = 0.0
+	
+	# 6. 心情 - 综合满意度和压力
+	psychological_state.mood = clamp(
+		psychological_state.satisfaction * 0.6 - psychological_state.stress * 0.4,
+		0.0, 1.0
+	)
+	
+	# 7. 动机 - 基于心情和自信
+	psychological_state.motivation = clamp(
+		(psychological_state.mood + psychological_state.confidence) / 2.0,
+		0.0, 1.0
+	)
+	
+	# 8. 感激 - 如果最近有正收益且信任/合作成功
+	if wealth_change > 0 and _had_recent_positive_interaction():
+		psychological_state.gratitude = clamp(wealth_change / 100.0, 0.0, 1.0)
+	else:
+		psychological_state.gratitude *= 0.9  # 逐渐衰减
+	
+	# 记录心理状态历史
+	_record_psychological_state()
+
+## Get psychological state summary
+func get_psychological_summary() -> Dictionary:
+	"""获取心理状态摘要"""
+	return {
+		"character_name": character_name,
+		"satisfaction": psychological_state.satisfaction,
+		"stress": psychological_state.stress,
+		"confidence": psychological_state.confidence,
+		"social_standing": psychological_state.social_standing,
+		"mood": psychological_state.mood,
+		"motivation": psychological_state.motivation,
+		"envy": psychological_state.envy,
+		"gratitude": psychological_state.gratitude,
+		"mood_label": _get_mood_label(),
+		"stress_label": _get_stress_label()
+	}
+
+## Get psychological trend over time
+func get_psychological_trend(metric: String, recent_count: int = 10) -> Array:
+	"""获取某个心理指标的历史趋势"""
+	var trend = []
+	var start_index = max(0, psychological_history.size() - recent_count)
+	
+	for i in range(start_index, psychological_history.size()):
+		var record = psychological_history[i]
+		if record.has(metric):
+			trend.append({
+				"timestamp": record.timestamp,
+				"value": record[metric]
+			})
+	
+	return trend
+
+## Private: Calculate recent success rate
+func _calculate_recent_success_rate() -> float:
+	if experience_history.size() == 0:
+		return 0.5  # 默认中等
+	
+	var recent_experiences = experience_history.slice(max(0, experience_history.size() - 10))
+	var success_count = 0
+	
+	for exp in recent_experiences:
+		if exp.get("reward", 0.0) > 0:
+			success_count += 1
+	
+	return float(success_count) / float(recent_experiences.size())
+
+## Private: Calculate wealth rank among other agents
+func _calculate_wealth_rank(other_agents: Array) -> int:
+	var my_wealth = wallet.get_net_worth()
+	var rank = 1
+	
+	for agent in other_agents:
+		if agent != self and agent.wallet.get_net_worth() > my_wealth:
+			rank += 1
+	
+	return rank
+
+## Private: Check if had recent positive interaction
+func _had_recent_positive_interaction() -> bool:
+	if experience_history.size() == 0:
+		return false
+	
+	var recent = experience_history.slice(max(0, experience_history.size() - 5))
+	for exp in recent:
+		var game_type = exp.get("game", "")
+		if game_type in ["trust", "public_goods", "cooperation"] and exp.get("reward", 0.0) > 0:
+			return true
+	
+	return false
+
+## Private: Record psychological state to history
+func _record_psychological_state():
+	var record = psychological_state.duplicate()
+	record["timestamp"] = Time.get_unix_time_from_system()
+	record["wealth"] = wallet.get_net_worth()
+	
+	psychological_history.append(record)
+	
+	# 限制历史记录大小
+	if psychological_history.size() > 100:
+		psychological_history.remove_at(0)
+
+## Private: Get mood label
+func _get_mood_label() -> String:
+	var mood = psychological_state.mood
+	if mood >= 0.8:
+		return "非常愉快"
+	elif mood >= 0.6:
+		return "愉快"
+	elif mood >= 0.4:
+		return "平静"
+	elif mood >= 0.2:
+		return "低落"
+	else:
+		return "沮丧"
+
+## Private: Get stress label
+func _get_stress_label() -> String:
+	var stress = psychological_state.stress
+	if stress >= 0.8:
+		return "极度压力"
+	elif stress >= 0.6:
+		return "高压力"
+	elif stress >= 0.4:
+		return "中等压力"
+	elif stress >= 0.2:
+		return "轻微压力"
+	else:
+		return "放松"

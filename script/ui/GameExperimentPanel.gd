@@ -263,7 +263,7 @@ func _load_game_characters():
 		
 		# 为每个角色创建EconomicAgent（如果还没有）
 		if not game_economic_agents.has(char_name):
-			var agent = EconomicAgent.new(char_name, 0.0)  # 初始金钱为0
+			var agent = EconomicAgent.new(char_name, 10000.0)  # 初始金钱为10000
 			
 			# 根据角色名称设置性格
 			_set_agent_personality(agent, char_name)
@@ -721,13 +721,24 @@ func _finalize_experiment():
 				var player_data = player_results[player_id]
 				all_results.statistics.total_decisions += player_data.get("rounds_played", 0)
 	
-	# 收集钱包状态
+	# 收集钱包状态和心理状态
+	var all_agents = game_economic_agents.values()
 	for agent_name in game_economic_agents.keys():
 		var agent = game_economic_agents[agent_name]
-		if agent and agent.wallet:
-			all_results.wallets[agent_name] = agent.wallet.to_dict()
+		if agent:
+			# 更新心理状态（基于与其他agent的比较）
+			agent.update_psychological_state(all_agents)
+			
+			# 收集数据
+			if agent.wallet:
+				all_results.wallets[agent_name] = agent.wallet.to_dict()
+			
+			# 收集心理状态
+			if not all_results.has("psychological_states"):
+				all_results.psychological_states = {}
+			all_results.psychological_states[agent_name] = agent.get_psychological_summary()
 	
-	print("GameExperimentPanel: 收集了 %d 个钱包的数据" % all_results.wallets.size())
+	print("GameExperimentPanel: 收集了 %d 个钱包的数据和心理状态" % all_results.wallets.size())
 	
 	# 显示结果
 	_display_results(all_results)
@@ -876,6 +887,51 @@ func _save_markdown_report(filename: String, data: Dictionary):
 		file.store_line("| %s | ¥%.2f | ¥%.2f | %d |" % [agent_name, cash, net_worth, tx_count])
 	
 	file.store_line("")
+	
+	# 参与者心理状态
+	var psychological_states = data.results.get("psychological_states", {})
+	if psychological_states.size() > 0:
+		file.store_line("## 参与者心理状态")
+		file.store_line("")
+		file.store_line("| 参与者 | 心情 | 满意度 | 压力 | 自信 | 社会地位感 |")
+		file.store_line("|--------|------|--------|------|------|------------|")
+		
+		for agent_name in psychological_states.keys():
+			var psych = psychological_states[agent_name]
+			file.store_line("| %s | %s | %.0f%% | %s | %.0f%% | %.0f%% |" % [
+				agent_name,
+				psych.get("mood_label", "未知"),
+				psych.get("satisfaction", 0.0) * 100,
+				psych.get("stress_label", "未知"),
+				psych.get("confidence", 0.0) * 100,
+				psych.get("social_standing", 0.0) * 100
+			])
+		
+		file.store_line("")
+		
+		# 心理状态详细说明
+		file.store_line("### 心理状态详细分析")
+		file.store_line("")
+		
+		for agent_name in psychological_states.keys():
+			var psych = psychological_states[agent_name]
+			file.store_line("#### %s" % agent_name)
+			file.store_line("")
+			file.store_line("- **心情**: %s (%.1f/1.0)" % [psych.get("mood_label", "未知"), psych.get("mood", 0.0)])
+			file.store_line("- **满意度**: %.0f%%" % (psych.get("satisfaction", 0.0) * 100))
+			file.store_line("- **压力水平**: %s (%.1f/1.0)" % [psych.get("stress_label", "未知"), psych.get("stress", 0.0)])
+			file.store_line("- **自信心**: %.0f%%" % (psych.get("confidence", 0.0) * 100))
+			file.store_line("- **社会地位感**: %.0f%%" % (psych.get("social_standing", 0.0) * 100))
+			file.store_line("- **动机水平**: %.0f%%" % (psych.get("motivation", 0.0) * 100))
+			
+			if psych.get("envy", 0.0) > 0.3:
+				file.store_line("- **嫉妒程度**: %.0f%% ⚠️" % (psych.get("envy", 0.0) * 100))
+			if psych.get("gratitude", 0.0) > 0.3:
+				file.store_line("- **感激程度**: %.0f%% ✨" % (psych.get("gratitude", 0.0) * 100))
+			
+			file.store_line("")
+		
+		file.store_line("")
 	
 	# 详细游戏结果
 	file.store_line("## 详细游戏结果")
