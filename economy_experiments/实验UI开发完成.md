@@ -226,7 +226,7 @@
 
 # 方式2：代码中
 var btn = Button.new()
-btn.text = "🧪 实验室"
+btn.text = "🧪 快速实验"
 btn.set_script(load("res://script/ui/ExperimentMenuButton.gd"))
 btn.panel_type = ExperimentMenuButton.PanelType.QUICK_PANEL
 add_child(btn)

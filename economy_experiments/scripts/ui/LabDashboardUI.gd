@@ -129,24 +129,48 @@ func _translate_goal_name(key: String) -> String:
 func _on_quick_experiment():
 	# 创建CanvasLayer确保在最上层
 	var canvas_layer = CanvasLayer.new()
-	canvas_layer.layer = 101  # 比实验室模式更高一层
+	canvas_layer.layer = 128  # 使用更高的层级确保在最上面
 	canvas_layer.name = "QuickExperimentLayer"
 	get_tree().root.add_child(canvas_layer)
+	
+	# 创建半透明背景遮罩（可选，帮助阻挡底层点击）
+	var background = ColorRect.new()
+	background.color = Color(0, 0, 0, 0.5)  # 半透明黑色
+	background.set_anchors_preset(Control.PRESET_FULL_RECT)
+	background.mouse_filter = Control.MOUSE_FILTER_STOP  # 阻挡底层点击
+	canvas_layer.add_child(background)
 	
 	# 打开快速实验面板
 	var quick_panel = load("res://economy_experiments/scene/ExperimentQuickPanel.tscn").instantiate()
 	
-	# 定位到屏幕中央
-	quick_panel.position = Vector2(
-		(get_viewport().size.x - 400) / 2,
-		(get_viewport().size.y - 250) / 2
-	)
+	# 使用锚点居中，而不是position
+	quick_panel.set_anchors_preset(Control.PRESET_CENTER)
+	quick_panel.position = Vector2.ZERO  # 重置position
+	
+	# 设置面板大小（如果需要）
+	if quick_panel.custom_minimum_size == Vector2.ZERO:
+		quick_panel.custom_minimum_size = Vector2(500, 350)
+	
+	# 使用偏移来微调位置（居中）
+	quick_panel.offset_left = -quick_panel.custom_minimum_size.x / 2
+	quick_panel.offset_right = quick_panel.custom_minimum_size.x / 2
+	quick_panel.offset_top = -quick_panel.custom_minimum_size.y / 2
+	quick_panel.offset_bottom = quick_panel.custom_minimum_size.y / 2
 	
 	# 确保可以接收鼠标事件
 	quick_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	quick_panel.z_index = 100  # 确保在前面
 	
 	# 添加到CanvasLayer
 	canvas_layer.add_child(quick_panel)
+	
+	# 连接背景点击关闭（可选）
+	background.gui_input.connect(func(event: InputEvent):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			# 点击背景关闭面板
+			canvas_layer.queue_free()
+			print("✅ 快速实验面板已关闭（点击背景）")
+	)
 	
 	# 添加关闭按钮
 	_add_close_button_to_panel(quick_panel, canvas_layer)
@@ -154,13 +178,32 @@ func _on_quick_experiment():
 	# 连接实验完成信号
 	if quick_panel.has_signal("experiment_state_changed"):
 		quick_panel.experiment_state_changed.connect(_on_experiment_state_changed)
+	if quick_panel.has_signal("experiment_completed"):
+		quick_panel.experiment_completed.connect(_on_experiment_completed_with_results)
 	
-	print("✅ 快速实验面板已创建在层级 101")
+	print("✅ 快速实验面板已创建在层级 128，居中显示")
 
 func _on_experiment_state_changed(is_running: bool):
 	if not is_running:
-		# 实验完成，通知实验室管理器
+		# 实验完成
 		_show_notification("✅ 实验完成！")
+		# 刷新显示
+		_update_display()
+
+func _on_experiment_completed_with_results(results: Dictionary):
+	"""处理实验完成并接收结果"""
+	print("LabDashboardUI: 收到实验结果，包含 %d 个agent的wallet数据" % results.get("wallets", {}).size())
+	
+	# 显示实验统计
+	var stats = results.get("statistics", {})
+	var message = "✅ 实验完成！游戏: %d, 决策: %d" % [
+		stats.get("games_played", 0),
+		stats.get("total_decisions", 0)
+	]
+	_show_notification(message)
+	
+	# 立即刷新显示以更新财富榜
+	_update_display()
 
 func _on_view_report():
 	# 生成并显示报告
@@ -247,18 +290,20 @@ func _add_close_button_to_panel(panel: Control, canvas_layer: CanvasLayer):
 	_apply_lab_theme_to_panel(panel)
 	
 	var panel_close_btn = Button.new()
-	panel_close_btn.text = "✖"
-	panel_close_btn.custom_minimum_size = Vector2(32, 32)
+	panel_close_btn.text = "✖ 关闭"
+	panel_close_btn.custom_minimum_size = Vector2(80, 32)
 	panel_close_btn.tooltip_text = "关闭快速实验面板"
 	
-	# 定位到面板右上角
-	panel_close_btn.position = Vector2(panel.size.x - 40, 8)
-	panel_close_btn.anchor_left = 1.0
-	panel_close_btn.anchor_right = 1.0
-	panel_close_btn.offset_left = -40
-	panel_close_btn.offset_right = -8
-	panel_close_btn.offset_top = 8
-	panel_close_btn.offset_bottom = 40
+	# 使用锚点定位到右上角
+	panel_close_btn.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	panel_close_btn.offset_left = -90  # 从右边偏移
+	panel_close_btn.offset_right = -10
+	panel_close_btn.offset_top = 10
+	panel_close_btn.offset_bottom = 42
+	
+	# 确保按钮在最上层
+	panel_close_btn.z_index = 10
+	panel_close_btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	
 	# 连接关闭信号
 	panel_close_btn.pressed.connect(func():

@@ -107,9 +107,24 @@ func gain_funding(amount: float, source: String = "unknown"):
 ## 更新代理财富
 func _update_agent_wealth(results: Dictionary):
 	var wallets = results.get("wallets", {})
+	if wallets.is_empty():
+		print("ExperimentLabManager: 警告 - 没有找到wallet数据")
+		return
+	
 	for agent_id in wallets.keys():
-		var balance = wallets[agent_id].get("balance", 0.0)
-		agent_wealth[agent_id] = balance
+		var wallet_data = wallets[agent_id]
+		# wallet.to_dict()返回的数据包含cash, savings, debt等
+		var cash = wallet_data.get("cash", 0.0)
+		var savings = wallet_data.get("savings", 0.0)
+		var debt = wallet_data.get("debt", 0.0)
+		var net_worth = wallet_data.get("net_worth", cash + savings - debt)
+		
+		# 更新agent财富（使用现金余额）
+		agent_wealth[agent_id] = cash
+		
+		print("ExperimentLabManager: 更新 %s 财富 -> ¥%.2f (现金:%.2f, 储蓄:%.2f, 债务:%.2f)" % [
+			agent_id, net_worth, cash, savings, debt
+		])
 
 ## 检查每日目标
 func _check_daily_goals():

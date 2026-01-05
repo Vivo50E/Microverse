@@ -13,6 +13,7 @@ class_name ExperimentQuickPanel
 var experiment_manager: ExperimentManager
 var current_experiment_config: String = ""
 var is_running: bool = false
+var lab_manager: ExperimentLabManager  # 添加对实验室管理器的引用
 
 # 预设实验配置
 var quick_experiments: Array[Dictionary] = [
@@ -31,11 +32,20 @@ var quick_experiments: Array[Dictionary] = [
 ]
 
 signal experiment_state_changed(is_running: bool)
+signal experiment_completed(results: Dictionary)  # 新增：实验完成信号
 
 func _ready():
 	# 初始化实验管理器
 	experiment_manager = ExperimentManager.new()
 	add_child(experiment_manager)
+	
+	# 获取实验室管理器
+	lab_manager = get_node_or_null("/root/ExperimentLabManager")
+	if not lab_manager:
+		lab_manager = ExperimentLabManager.new()
+		lab_manager.name = "ExperimentLabManager"
+		get_tree().root.call_deferred("add_child", lab_manager)
+		print("ExperimentQuickPanel: 创建实验室管理器")
 	
 	# 连接信号
 	experiment_manager.experiment_started.connect(_on_experiment_started)
@@ -87,9 +97,70 @@ func _on_pause_pressed():
 			pause_btn.text = "恢复"
 
 func _on_results_pressed():
-	# 打开完整的结果面板
+	# 创建CanvasLayer确保在最上层
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 128  # 最高层级
+	canvas_layer.name = "ResultsDashboardLayer"
+	get_tree().root.add_child(canvas_layer)
+	
+	# 创建半透明背景遮罩
+	var background = ColorRect.new()
+	background.color = Color(0, 0, 0, 0.5)  # 半透明黑色
+	background.set_anchors_preset(Control.PRESET_FULL_RECT)
+	background.mouse_filter = Control.MOUSE_FILTER_STOP
+	canvas_layer.add_child(background)
+	
+	# 加载结果面板
 	var dashboard = load("res://economy_experiments/scene/ExperimentDashboardUI.tscn").instantiate()
-	get_tree().root.add_child(dashboard)
+	
+	# 使用锚点让面板填满整个屏幕（或居中）
+	dashboard.set_anchors_preset(Control.PRESET_FULL_RECT)
+	
+	# 添加边距（可选，让面板不要完全填满屏幕）
+	var margin = 50
+	dashboard.offset_left = margin
+	dashboard.offset_right = -margin
+	dashboard.offset_top = margin
+	dashboard.offset_bottom = -margin
+	
+	# 确保可以接收鼠标事件
+	dashboard.mouse_filter = Control.MOUSE_FILTER_STOP
+	dashboard.z_index = 100
+	
+	# 添加到CanvasLayer
+	canvas_layer.add_child(dashboard)
+	
+	# 添加关闭按钮
+	var close_btn = Button.new()
+	close_btn.text = "✖ 关闭"
+	close_btn.custom_minimum_size = Vector2(80, 40)
+	close_btn.tooltip_text = "关闭结果面板"
+	
+	# 定位到右上角
+	close_btn.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	close_btn.offset_left = -90
+	close_btn.offset_right = -10
+	close_btn.offset_top = 10
+	close_btn.offset_bottom = 50
+	close_btn.z_index = 110
+	close_btn.mouse_filter = Control.MOUSE_FILTER_STOP
+	
+	# 连接关闭信号
+	close_btn.pressed.connect(func():
+		canvas_layer.queue_free()
+		print("✅ 结果面板已关闭")
+	)
+	
+	dashboard.add_child(close_btn)
+	
+	# 点击背景关闭
+	background.gui_input.connect(func(event: InputEvent):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			canvas_layer.queue_free()
+			print("✅ 结果面板已关闭（点击背景）")
+	)
+	
+	print("✅ 结果面板已创建在层级 128")
 
 func _on_experiment_started(exp_name: String):
 	status_label.text = "▶ 运行中: " + exp_name
@@ -100,7 +171,19 @@ func _on_experiment_finished(results: Dictionary):
 	
 	var stats = results.get("statistics", {})
 	status_label.text = "✅ 完成 | 游戏: %d" % stats.get("games_played", 0)
+	
+	# 通知实验室管理器更新agent财富
+	if lab_manager:
+		var experiment_data = {
+			"cost": 0.0,  # 可以根据实验类型设置成本
+			"data_points": stats.get("total_decisions", 0),
+			"results": results
+		}
+		lab_manager.on_experiment_completed(experiment_data)
+		print("ExperimentQuickPanel: 实验结果已传递给实验室管理器")
+	
 	experiment_state_changed.emit(false)
+	experiment_completed.emit(results)
 
 func _update_ui_state():
 	start_btn.disabled = is_running

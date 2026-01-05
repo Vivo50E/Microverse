@@ -19,7 +19,7 @@
 1. 打开场景文件
 2. 添加一个新的 `Button` 节点
 3. 设置按钮属性：
-   - **Text**: "🧪 实验室"
+   - **Text**: "🧪 快速实验"
    - **Script**: `res://script/ui/ExperimentMenuButton.gd`
 
 ### 步骤 2：配置按钮类型

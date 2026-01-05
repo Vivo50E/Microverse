@@ -15,7 +15,7 @@ enum PanelType {
 }
 
 @export var panel_type: PanelType = PanelType.QUICK_PANEL
-@export var button_text: String = "🧪 实验室"
+@export var button_text: String = "🧪 快速实验"
 
 func _ready():
 	text = button_text

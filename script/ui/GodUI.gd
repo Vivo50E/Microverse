@@ -107,6 +107,7 @@ func _ready():
 	_add_experiment_button()
 	_add_lab_mode_button()
 	_add_lab_dashboard()
+	_add_game_experiment_button()  # 添加游戏内实验按钮
 
 # 每帧更新一次角色列表，确保能捕获到动态添加的角色
 func _process(_delta):
@@ -1186,7 +1187,7 @@ func _add_experiment_button():
 	# 创建按钮
 	var experiment_button = Button.new()
 	experiment_button.name = "ExperimentButton"
-	experiment_button.text = "🧪 实验室"
+	experiment_button.text = "🧪 快速实验"
 	experiment_button.custom_minimum_size = Vector2(200, 40)
 	experiment_button.tooltip_text = "打开经济行为实验面板"
 	
@@ -1214,3 +1215,50 @@ func _add_experiment_button():
 		right_vbox.move_child(experiment_button, toggle_button_index)
 	
 	print("✅ 实验按钮已添加到 GodUI 右侧面板")
+
+func _add_game_experiment_button():
+	"""添加游戏内实验按钮到右侧面板"""
+	var right_vbox = $HBoxContainer/RightPanel/VBoxContainer
+	
+	# 检查是否已存在
+	if right_vbox.has_node("GameExperimentButton"):
+		print("⚠️ 游戏实验按钮已存在")
+		return
+	
+	var game_exp_button = Button.new()
+	game_exp_button.name = "GameExperimentButton"
+	game_exp_button.text = "🎮 自定义实验"
+	game_exp_button.custom_minimum_size = Vector2(200, 40)
+	game_exp_button.tooltip_text = "在游戏中运行经济实验"
+	
+	game_exp_button.pressed.connect(_on_game_experiment_pressed)
+	
+	# 添加到面板
+	right_vbox.add_child(game_exp_button)
+	
+	# 移动到倒数第二个位置（ToggleUIButton之前）
+	var toggle_button_index = -1
+	for i in range(right_vbox.get_child_count()):
+		if right_vbox.get_child(i).name == "ToggleUIButton":
+			toggle_button_index = i
+			break
+	
+	if toggle_button_index >= 0:
+		right_vbox.move_child(game_exp_button, toggle_button_index)
+	
+	print("✅ 游戏实验按钮已添加到 GodUI 右侧面板")
+
+var game_experiment_panel = null
+func _on_game_experiment_pressed():
+	"""打开游戏内实验面板"""
+	if not game_experiment_panel:
+		# 创建面板
+		var GameExperimentPanelScript = load("res://script/ui/GameExperimentPanel.gd")
+		game_experiment_panel = Window.new()
+		game_experiment_panel.set_script(GameExperimentPanelScript)
+		get_tree().root.add_child(game_experiment_panel)
+	
+	# 显示面板（居中）
+	game_experiment_panel.popup_centered()
+	
+	print("✅ 游戏实验面板已打开")
