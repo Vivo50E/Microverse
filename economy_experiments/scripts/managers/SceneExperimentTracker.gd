@@ -28,6 +28,11 @@ var autosave_timer: Timer
 var update_interval: float = 5.0  # 每5秒更新一次心理状态
 var autosave_interval: float = 300.0  # 每5分钟自动保存一次
 var auto_report_enabled: bool = true
+var enable_auto_transactions: bool = true  # 是否启用自动交易模拟
+var transaction_interval: float = 15.0  # 自动交易间隔（秒）
+
+# 交易定时器
+var transaction_timer: Timer
 
 func _ready():
 	tracking_start_time = Time.get_unix_time_from_system()
@@ -46,10 +51,20 @@ func _ready():
 	add_child(autosave_timer)
 	autosave_timer.start()
 	
+	# 创建交易模拟定时器
+	if enable_auto_transactions:
+		transaction_timer = Timer.new()
+		transaction_timer.wait_time = transaction_interval
+		transaction_timer.timeout.connect(_on_transaction_timer_timeout)
+		add_child(transaction_timer)
+		transaction_timer.start()
+	
 	# 延迟初始化agent
 	call_deferred("_initialize_scene_agents")
 	
 	print("✅ SceneExperimentTracker: 场景实验追踪器已启动")
+	if enable_auto_transactions:
+		print("✅ SceneExperimentTracker: 自动交易模拟已启用 (间隔: %.0f秒)" % transaction_interval)
 
 ## 初始化场景中的所有agent
 func _initialize_scene_agents():
@@ -74,6 +89,9 @@ func _initialize_scene_agents():
 			if agent.wallet:
 				agent.wallet.balance_changed.connect(func(new_balance): _on_wallet_changed(char_name, new_balance))
 				agent.wallet.transaction_recorded.connect(func(tx): _on_transaction_recorded(char_name, tx))
+				print("✅ SceneExperimentTracker: %s 的钱包信号已连接" % char_name)
+			else:
+				push_error("❌ SceneExperimentTracker: %s 的钱包为空，无法连接信号！" % char_name)
 			
 			print("✅ SceneExperimentTracker: 已为 %s 创建经济代理，初始财富 ¥10,000" % char_name)
 	
@@ -108,6 +126,11 @@ func _set_agent_personality(agent: EconomicAgent, char_name: String):
 func _on_update_timer_timeout():
 	_update_all_agents()
 
+## 定时触发交易模拟
+func _on_transaction_timer_timeout():
+	print("⏰ SceneExperimentTracker: 定时器触发 - 开始模拟交易")
+	_simulate_random_transaction()
+
 ## 更新所有agent的心理状态
 func _update_all_agents():
 	var all_agents = scene_agents.values()
@@ -135,7 +158,7 @@ func _on_wallet_changed(agent_name: String, new_balance: float):
 			break
 	
 	# 记录到游戏日志
-	_log_to_game_ui("wealth_changed", agent_name, new_balance)
+	_log_to_game_ui("wealth_changed", agent_name, new_balance) # 暂时注释掉财富变化日志，避免刷屏
 
 ## 交易记录回调
 func _on_transaction_recorded(agent_name: String, transaction: Dictionary):
@@ -144,7 +167,11 @@ func _on_transaction_recorded(agent_name: String, transaction: Dictionary):
 	var amount = transaction.get("amount", 0.0)
 	var source = transaction.get("source", "未知")
 	
-	print("📝 SceneExperimentTracker: %s 进行了交易: %s" % [agent_name, tx_type])
+	# 过滤掉初始化交易，避免刷屏
+	if tx_type == "initialization":
+		return
+	
+	print("📝 SceneExperimentTracker: %s 进行了交易: [%s] ¥%.2f (来源: %s)" % [agent_name, tx_type, amount, source])
 	
 	# 记录到游戏日志
 	_log_to_game_ui("transaction", agent_name, amount, tx_type, source)
@@ -435,12 +462,172 @@ func reset_tracker():
 	_initialize_scene_agents()
 	print("✅ SceneExperimentTracker: 追踪器已重置")
 
+## === 交易模拟系统 ===
+
+## 手动触发测试交易（调试用）
+func test_transaction():
+	"""手动触发一次测试交易 - 用于调试"""
+	print("🧪 手动触发测试交易...")
+	if scene_agents.size() < 2:
+		print("❌ 测试失败: agent数量不足")
+		return
+	
+	var agent_names = scene_agents.keys()
+	print("📋 可用agents: %s" % str(agent_names))
+	_simulate_gift(agent_names[0], agent_names[1])
+
+## 模拟一次随机交易
+func _simulate_random_transaction():
+	"""模拟agents之间的随机经济活动"""
+	if scene_agents.size() < 2:
+		print("⚠️ SceneExperimentTracker: agent数量不足，无法模拟交易 (当前: %d)" % scene_agents.size())
+		return  # 至少需要2个agent才能交易
+	
+	var agent_names = scene_agents.keys()
+	agent_names.shuffle()
+	
+	# 随机选择交易类型
+	var transaction_types = [
+		"gift",           # 礼物
+		"trade",          # 交易
+		"loan",           # 借贷
+		"investment",     # 投资
+		"service_payment" # 服务付款
+	]
+	
+	var tx_type = transaction_types[randi() % transaction_types.size()]
+	print("🎲 SceneExperimentTracker: 随机选择交易类型: %s (参与者: %s)" % [tx_type, agent_names[0] if agent_names.size() > 0 else "无"])
+	
+	match tx_type:
+		"gift":
+			_simulate_gift(agent_names[0], agent_names[1])
+		"trade":
+			_simulate_trade(agent_names[0], agent_names[1])
+		"loan":
+			_simulate_loan(agent_names[0], agent_names[1])
+		"investment":
+			_simulate_investment(agent_names[0])
+		"service_payment":
+			_simulate_service_payment(agent_names[0], agent_names[1])
+
+## 模拟赠予
+func _simulate_gift(from_name: String, to_name: String):
+	print("🎁 尝试模拟赠予: %s -> %s" % [from_name, to_name])
+	var from_agent = scene_agents.get(from_name)
+	var to_agent = scene_agents.get(to_name)
+	
+	if not from_agent or not to_agent:
+		print("❌ 赠予失败: agent不存在 (from: %s, to: %s)" % [from_agent != null, to_agent != null])
+		return
+	
+	# 赠予金额为财富的1-5%
+	var gift_amount = from_agent.wallet.cash * randf_range(0.01, 0.05)
+	gift_amount = clamp(gift_amount, 10.0, 500.0)
+	
+	print("💵 赠予金额: ¥%.2f (from %s 的现金: ¥%.2f)" % [gift_amount, from_name, from_agent.wallet.cash])
+	
+	if from_agent.wallet.can_afford(gift_amount):
+		print("✅ 执行赠予交易...")
+		from_agent.wallet.withdraw(gift_amount, "赠予给 " + to_name)
+		to_agent.wallet.deposit(gift_amount, "收到 " + from_name + " 的赠予")
+		
+		record_interaction([from_name, to_name], "gift", {
+			"amount": gift_amount,
+			"reason": "友好赠予"
+		})
+	else:
+		print("❌ 赠予失败: 资金不足")
+
+## 模拟交易
+func _simulate_trade(buyer_name: String, seller_name: String):
+	var buyer = scene_agents.get(buyer_name)
+	var seller = scene_agents.get(seller_name)
+	
+	if not buyer or not seller:
+		return
+	
+	var trade_amount = randf_range(50.0, 300.0)
+	
+	if buyer.wallet.can_afford(trade_amount):
+		buyer.wallet.withdraw(trade_amount, "购买商品/服务 from " + seller_name)
+		seller.wallet.deposit(trade_amount, "出售商品/服务 to " + buyer_name)
+		
+		record_interaction([buyer_name, seller_name], "trade", {
+			"amount": trade_amount,
+			"reason": "商品交易"
+		})
+
+## 模拟借贷
+func _simulate_loan(lender_name: String, borrower_name: String):
+	var lender = scene_agents.get(lender_name)
+	var borrower = scene_agents.get(borrower_name)
+	
+	if not lender or not borrower:
+		return
+	
+	var loan_amount = randf_range(100.0, 500.0)
+	
+	if lender.wallet.can_afford(loan_amount):
+		lender.wallet.withdraw(loan_amount, "借出给 " + borrower_name)
+		borrower.wallet.deposit(loan_amount, "借入自 " + lender_name)
+		
+		record_interaction([lender_name, borrower_name], "loan", {
+			"amount": loan_amount,
+			"reason": "短期借贷"
+		})
+
+## 模拟投资收益
+func _simulate_investment(agent_name: String):
+	var agent = scene_agents.get(agent_name)
+	
+	if not agent:
+		return
+	
+	# 随机投资回报（可能是收益或损失）
+	var return_amount = randf_range(-50.0, 150.0)
+	
+	if return_amount > 0:
+		agent.wallet.deposit(return_amount, "投资收益")
+	else:
+		if agent.wallet.can_afford(abs(return_amount)):
+			agent.wallet.withdraw(abs(return_amount), "投资损失")
+	
+	record_interaction([agent_name], "investment", {
+		"amount": abs(return_amount),
+		"type": "收益" if return_amount > 0 else "损失",
+		"reason": "市场投资回报"
+	})
+
+## 模拟服务付款
+func _simulate_service_payment(payer_name: String, provider_name: String):
+	var payer = scene_agents.get(payer_name)
+	var provider = scene_agents.get(provider_name)
+	
+	if not payer or not provider:
+		return
+	
+	var payment = randf_range(30.0, 200.0)
+	
+	if payer.wallet.can_afford(payment):
+		payer.wallet.withdraw(payment, "服务费用支付给 " + provider_name)
+		provider.wallet.deposit(payment, "提供服务收入 from " + payer_name)
+		
+		record_interaction([payer_name, provider_name], "service_payment", {
+			"amount": payment,
+			"reason": "专业服务"
+		})
+
 ## === 游戏日志集成 ===
 
 func _log_to_game_ui(event_type: String, arg1 = null, arg2 = null, arg3 = null, arg4 = null):
 	"""将事件记录到游戏日志UI"""
-	var log_ui = get_tree().root.get_node_or_null("GameLogUI")
+	# 正确的路径：GameLogUI 在 GameLogLayer 下
+	var log_ui = get_tree().root.get_node_or_null("GameLogLayer/GameLogUI")
 	if not log_ui:
+		# 仅在第一次提示即可，避免刷屏
+		if not has_meta("log_ui_warning_shown"):
+			print("⚠️ SceneExperimentTracker: 无法找到游戏日志UI (路径: GameLogLayer/GameLogUI)")
+			set_meta("log_ui_warning_shown", true)
 		return  # 日志UI未初始化
 	
 	match event_type:
@@ -465,10 +652,30 @@ func _log_to_game_ui(event_type: String, arg1 = null, arg2 = null, arg3 = null, 
 			var agent_names = arg1
 			var interaction_type = arg2
 			var details = arg3
+			
+			# 特殊处理涉及金额的交互
+			if interaction_type in ["trade", "gift", "help", "invest"] and agent_names.size() >= 2:
+				var amount = details.get("amount", 0.0)
+				var reason = details.get("reason", "")
+				if log_ui.has_method("log_transaction"):
+					log_ui.log_transaction(agent_names[0], agent_names[1], amount, reason)
+				return
+				
 			if log_ui.has_method("log_interaction") and agent_names.size() >= 2:
 				var details_str = ""
 				if details and not details.is_empty():
-					details_str = str(details.get("description", ""))
+					# 尝试从details中提取有用信息
+					if details.has("amount"):
+						details_str += "¥%.2f " % details.get("amount")
+					if details.has("reason"):
+						details_str += "(%s) " % details.get("reason")
+					if details.has("investment"):
+						details_str += "投入¥%.2f " % details.get("investment")
+					if details.has("return"):
+						details_str += "回报¥%.2f " % details.get("return")
+					if details.has("description"):
+						details_str += str(details.get("description", ""))
+						
 				log_ui.log_interaction(agent_names[0], agent_names[1], interaction_type, details_str)
 			elif log_ui.has_method("add_log"):
 				log_ui.add_log("🤝交互", "%s - %s" % [", ".join(agent_names), interaction_type], "interaction")
