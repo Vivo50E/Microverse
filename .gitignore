@@ -55,6 +55,9 @@ pids
 *.seed
 *.pid.lock
 
+# Customized
+proposal/
+
 # Coverage directory used by tools like istanbul
 coverage/
 

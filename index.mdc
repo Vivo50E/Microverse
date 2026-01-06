@@ -1,51 +1,7 @@
-# Microverse - 项目索引
-
-> **《Microverse In Box 盒中小世界》** - AI 驱动的多智能体社交模拟游戏  
-> 基于 Godot 4 开发 | Steam 即将上线
-
 ---
-
-## 📋 快速导航
-
-### 🎮 核心文档
-- [项目主文档](README.md) - 项目介绍、特性、安装指南
-- [英文文档](README_EN.md) - English documentation
-- [贡献指南](CONTRIBUTING.md) - 如何为项目做贡献
-- [许可证](LICENSE) - MIT License
-- [配置系统说明](配置系统说明.md) - 系统配置详细说明
-
-### 🔬 经济实验系统
-- [Economy Experiments 主文档](economy_experiments/README.md) - 经济行为研究平台
-- [快速开始](economy_experiments/QUICK_START.md) - 实验系统快速上手
-- [项目总结](economy_experiments/PROJECT_SUMMARY.md) - 完整功能概览
-- [API 参考](economy_experiments/docs/API_REFERENCE.md) - 详细 API 文档
-- [实验指南](economy_experiments/docs/EXPERIMENT_GUIDE.md) - 如何设计实验
-- [集成指南](economy_experiments/docs/INTEGRATION_GUIDE.md) - 集成到游戏
-- [游戏融合设计方案](economy_experiments/游戏融合设计方案.md) - 融合方案详解
-- [游戏融合快速开始](economy_experiments/游戏融合快速开始.md) - 快速融合教程
-
-### 🛠️ 实验工具
-- [Experiment Tools 文档](experiment_tools/README.md) - Ollama 配置和测试
-- [快速开始指南](experiment_tools/Quick_Start_Guide.md) - 快速配置
-- [Microverse 配置指南](experiment_tools/MICROVERSE_CONFIG_GUIDE.md) - 详细配置
-- [实验可行性分析](experiment_tools/EXPERIMENT_FEASIBILITY_ANALYSIS.md) - 技术分析
-- [设置完成说明](experiment_tools/SETUP_SUCCESS.md) - 设置验证
-
-### 📝 UI 系统文档
-- [UI 系统说明](economy_experiments/UI系统说明.md) - UI 架构说明
-- [实验 UI 使用指南](economy_experiments/实验UI使用指南.md) - UI 操作指南
-- [实验 UI 开发完成](economy_experiments/实验UI开发完成.md) - 开发日志
-- [集成实验 UI 到游戏](economy_experiments/如何集成实验UI到游戏.md) - 集成教程
-- [添加实验按钮教程](economy_experiments/添加实验按钮到游戏教程.md) - 按钮集成
-
-### 🐛 问题修复文档
-- [实验室 UI 修复说明](economy_experiments/实验室UI修复说明.md)
-- [实验窗口点击问题已修复](economy_experiments/实验窗口点击问题已修复.md)
-- [游戏收益问题已修复](economy_experiments/游戏收益问题已修复.md)
-- [背景设定已更新为实验室](economy_experiments/背景设定已更新为实验室.md)
-
+description: helps clarify the project structure
+alwaysApply: false
 ---
-
 ## 🏗️ 项目结构
 
 ### 📂 核心目录
