@@ -47,6 +47,7 @@ Thumbs.db
 *.log
 *.sql
 *.sqlite
+economy_experiments/data/logs
 
 # Runtime data
 pids
