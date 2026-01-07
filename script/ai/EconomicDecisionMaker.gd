@@ -26,7 +26,7 @@ var nearby_distance: float = 300.0  # 感知范围
 
 func _init(char_node: CharacterBody2D):
 	character_node = char_node
-	scene_tracker = get_node_or_null("/root/SceneExperimentTracker")
+	# scene_tracker will be initialized in _ready() when the node is in the scene tree
 
 func _ready():
 	if not scene_tracker:
@@ -396,4 +396,3 @@ func _get_character_by_name(char_name: String) -> CharacterBody2D:
 		if char.name == char_name:
 			return char
 	return null
-
