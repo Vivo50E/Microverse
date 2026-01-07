@@ -364,25 +364,72 @@ func _on_wallet_balance_changed(new_balance: float):
 
 ## Private: Transaction recorded callback
 func _on_transaction_recorded(transaction: Dictionary):
-	# Could track spending patterns here
-	pass
+	"""处理交易记录，更新收益/损失统计"""
+	var tx_type = transaction.get("type", "unknown")
+	var amount = transaction.get("amount", 0.0)
+	
+	# 更新收益和损失
+	match tx_type:
+		"deposit", "transfer_in", "interest_earned", "borrow":
+			# 这些是收入类型
+			recent_gains += amount
+			print("📈 %s: 收益 +¥%.2f (总收益: ¥%.2f)" % [character_name, amount, recent_gains])
+		
+		"withdraw", "transfer_out", "interest_charged", "repay":
+			# 这些是支出类型
+			recent_losses += amount
+			print("📉 %s: 损失 -¥%.2f (总损失: ¥%.2f)" % [character_name, amount, recent_losses])
+		
+		"initialization", "reset":
+			# 初始化和重置不算收益或损失
+			pass
+	
+	# 记录到经验历史
+	if tx_type not in ["initialization", "reset"]:
+		experience_history.append({
+			"type": "transaction",
+			"transaction_type": tx_type,
+			"amount": amount,
+			"timestamp": Time.get_unix_time_from_system(),
+			"balance_after": wallet.cash
+		})
 
 ## === Psychological State Management (for Scene Experiments) ===
 
 ## Update psychological state based on recent experiences
 func update_psychological_state(other_agents: Array = []):
 	"""更新心理状态，考虑财富变化、社会比较等因素"""
+	
+	# 先衰减过去的收益和损失（模拟"遗忘"和时间流逝）
+	var decay_rate = 0.90  # 每次更新保留90%，让情绪逐渐恢复
+	recent_gains *= decay_rate
+	recent_losses *= decay_rate
+	
+	# 如果太小就清零，避免浮点数累积
+	if recent_gains < 0.5:
+		recent_gains = 0.0
+	if recent_losses < 0.5:
+		recent_losses = 0.0
+	
 	var wealth = wallet.get_net_worth()
 	var wealth_change = recent_gains - recent_losses
 	
-	# 1. 满意度 - 基于财富和最近收益
-	var wealth_satisfaction = clamp(wealth / 500.0, 0.0, 1.0)  # 假设500为满意阈值
-	var change_satisfaction = clamp(wealth_change / 100.0 + 0.5, 0.0, 1.0)
-	psychological_state.satisfaction = (wealth_satisfaction + change_satisfaction) / 2.0
+	# 1. 满意度 - 基于财富和最近收益（调整阈值）
+	# 考虑平均财富，避免固定阈值
+	var avg_wealth = _calculate_average_wealth(other_agents) if other_agents.size() > 0 else 5000.0
+	var target_wealth = max(avg_wealth, 5000.0)  # 目标财富为平均值或5000，取较大值
+	var wealth_satisfaction = clamp(wealth / target_wealth, 0.0, 1.0)
 	
-	# 2. 压力 - 基于损失和债务
-	var loss_stress = clamp(recent_losses / 200.0, 0.0, 0.8)
-	var debt_stress = clamp(wallet.debt / 300.0, 0.0, 0.8)
+	# 变化满意度：考虑相对变化而非绝对值
+	var wealth_change_ratio = wealth_change / max(wealth, 100.0)  # 变化占当前财富的比例
+	var change_satisfaction = clamp(wealth_change_ratio * 5.0 + 0.5, 0.0, 1.0)  # -10%变化=-0.5, +10%变化=+0.5
+	
+	psychological_state.satisfaction = (wealth_satisfaction * 0.6 + change_satisfaction * 0.4)
+	
+	# 2. 压力 - 基于损失率而非绝对值
+	var loss_ratio = recent_losses / max(wealth, 100.0)  # 损失占财富的比例
+	var loss_stress = clamp(loss_ratio * 3.0, 0.0, 0.8)  # 损失超过27%财富才会极度压力
+	var debt_stress = clamp(wallet.debt / max(wealth * 0.5, 500.0), 0.0, 0.8)  # 债务超过50%财富才会极度压力
 	psychological_state.stress = max(loss_stress, debt_stress)
 	
 	# 3. 自信心 - 基于最近成功率和财富
@@ -468,6 +515,19 @@ func _calculate_recent_success_rate() -> float:
 			success_count += 1
 	
 	return float(success_count) / float(recent_experiences.size())
+
+## Private: Calculate average wealth among agents
+func _calculate_average_wealth(agents: Array) -> float:
+	"""计算所有agent的平均财富"""
+	if agents.size() == 0:
+		return 0.0
+	
+	var total_wealth = 0.0
+	for agent in agents:
+		if agent and agent.wallet:
+			total_wealth += agent.wallet.get_net_worth()
+	
+	return total_wealth / agents.size()
 
 ## Private: Calculate wealth rank among other agents
 func _calculate_wealth_rank(other_agents: Array) -> int:

@@ -84,6 +84,7 @@ func _initialize_scene_agents():
 			
 			# 同步角色节点的meta数据（用于GodUI显示）
 			character.set_meta("money", 10000)
+			character.set_meta("mood", "平静 (50%)")  # 初始心情
 			
 			# 连接钱包信号
 			if agent.wallet:
@@ -141,9 +142,58 @@ func _update_all_agents():
 			# 更新心理状态
 			agent.update_psychological_state(all_agents)
 			
+			# 同步心情到角色节点
+			var psych_summary = agent.get_psychological_summary()
+			_sync_mood_to_character_node(agent_name, psych_summary)
+			
 			# 发出信号
 			agent_state_updated.emit(agent_name, agent.to_dict())
-			psychological_state_changed.emit(agent_name, agent.get_psychological_summary())
+			psychological_state_changed.emit(agent_name, psych_summary)
+
+## 更新单个agent的心理状态
+func _update_agent_psychological_state(agent_name: String):
+	"""立即更新指定agent的心理状态"""
+	var agent = scene_agents.get(agent_name)
+	if not agent:
+		return
+	
+	var all_agents = scene_agents.values()
+	var old_mood = agent.psychological_state.get("mood", 0.5)
+	var old_satisfaction = agent.psychological_state.get("satisfaction", 0.5)
+	
+	# 更新心理状态
+	agent.update_psychological_state(all_agents)
+	
+	# 获取新的心理状态
+	var new_mood = agent.psychological_state.get("mood", 0.5)
+	var new_satisfaction = agent.psychological_state.get("satisfaction", 0.5)
+	var psych_summary = agent.get_psychological_summary()
+	
+	# 如果心理状态有明显变化，打印日志
+	var mood_change = new_mood - old_mood
+	var satisfaction_change = new_satisfaction - old_satisfaction
+	
+	if abs(mood_change) > 0.05 or abs(satisfaction_change) > 0.05:
+		var mood_emoji = "😊" if mood_change > 0 else "😔" if mood_change < 0 else "😐"
+		print("%s %s: 心情变化 %.0f%% → %.0f%% (%s), 满意度 %.0f%% → %.0f%%" % [
+			mood_emoji,
+			agent_name,
+			old_mood * 100,
+			new_mood * 100,
+			psych_summary.get("mood_label", "平静"),
+			old_satisfaction * 100,
+			new_satisfaction * 100
+		])
+		
+		# 记录到游戏日志
+		_log_psychological_change_to_ui(agent_name, psych_summary, mood_change)
+	
+	# 同步心情到角色节点的meta（用于GodUI左侧面板显示）
+	_sync_mood_to_character_node(agent_name, psych_summary)
+	
+	# 发出信号
+	agent_state_updated.emit(agent_name, agent.to_dict())
+	psychological_state_changed.emit(agent_name, psych_summary)
 
 ## 钱包余额变化回调
 func _on_wallet_changed(agent_name: String, new_balance: float):
@@ -156,6 +206,9 @@ func _on_wallet_changed(agent_name: String, new_balance: float):
 		if character.name == agent_name:
 			character.set_meta("money", int(new_balance))
 			break
+	
+	# 立即更新该agent的心理状态（因为财富变化会影响心情）
+	_update_agent_psychological_state(agent_name)
 	
 	# 记录到游戏日志
 	_log_to_game_ui("wealth_changed", agent_name, new_balance) # 暂时注释掉财富变化日志，避免刷屏
@@ -617,7 +670,51 @@ func _simulate_service_payment(payer_name: String, provider_name: String):
 			"reason": "专业服务"
 		})
 
+## 同步心情到角色节点
+func _sync_mood_to_character_node(agent_name: String, psych_summary: Dictionary):
+	"""将心理状态同步到角色节点的meta，供GodUI左侧面板显示"""
+	var characters = get_tree().get_nodes_in_group("controllable_characters")
+	for character in characters:
+		if character.name == agent_name:
+			var mood_label = psych_summary.get("mood_label", "平静")
+			var mood_value = psych_summary.get("mood", 0.5)
+			var stress_label = psych_summary.get("stress_label", "放松")
+			
+			# 创建详细的心情描述
+			var mood_detail = "%s (%.0f%%)" % [mood_label, mood_value * 100]
+			if psych_summary.get("stress", 0.0) > 0.4:
+				mood_detail += " [%s]" % stress_label
+			
+			# 更新meta
+			character.set_meta("mood", mood_detail)
+			break
+
 ## === 游戏日志集成 ===
+
+## 记录心理状态变化到UI
+func _log_psychological_change_to_ui(agent_name: String, psych_summary: Dictionary, mood_change: float):
+	"""将心理状态变化记录到游戏日志UI"""
+	var log_ui = get_tree().root.get_node_or_null("GameLogLayer/GameLogUI")
+	if not log_ui or not log_ui.has_method("add_log"):
+		return
+	
+	var mood_label = psych_summary.get("mood_label", "平静")
+	var mood_value = psych_summary.get("mood", 0.5)
+	var satisfaction = psych_summary.get("satisfaction", 0.5)
+	
+	var mood_emoji = "😊" if mood_change > 0 else "😔" if mood_change < 0 else "😐"
+	var change_text = "↑" if mood_change > 0 else "↓" if mood_change < 0 else "→"
+	
+	var msg = "%s %s %s [心情:%s %.0f%%, 满意度:%.0f%%]" % [
+		agent_name,
+		mood_emoji,
+		change_text,
+		mood_label,
+		mood_value * 100,
+		satisfaction * 100
+	]
+	
+	log_ui.add_log("💭心理", msg, "event")
 
 func _log_to_game_ui(event_type: String, arg1 = null, arg2 = null, arg3 = null, arg4 = null):
 	"""将事件记录到游戏日志UI"""
