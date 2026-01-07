@@ -367,6 +367,8 @@ func _on_transaction_recorded(transaction: Dictionary):
 	"""处理交易记录，更新收益/损失统计"""
 	var tx_type = transaction.get("type", "unknown")
 	var amount = transaction.get("amount", 0.0)
+	var source = transaction.get("source", "")
+	var reason = transaction.get("reason", "")
 	
 	# 更新收益和损失
 	match tx_type:
@@ -393,6 +395,136 @@ func _on_transaction_recorded(transaction: Dictionary):
 			"timestamp": Time.get_unix_time_from_system(),
 			"balance_after": wallet.cash
 		})
+		
+		# 添加到角色记忆系统
+		_add_transaction_to_memory(tx_type, amount, source, reason)
+
+## 将交易添加到角色记忆
+func _add_transaction_to_memory(tx_type: String, amount: float, source: String, reason: String):
+	"""将交易记录添加到角色的记忆系统中"""
+	# 获取角色节点（通过CharacterManager查找）
+	var character_node = _get_character_node()
+	if not character_node:
+		# 如果无法获取角色节点，静默失败（可能在实验场景中）
+		# print("⚠️ EconomicAgent: 无法获取角色节点 %s，跳过记忆添加" % character_name)
+		return
+	
+	# 构建记忆文本
+	var memory_text = _format_transaction_memory(tx_type, amount, source, reason)
+	if memory_text.is_empty():
+		return
+	
+	# 确定记忆重要性
+	var importance = MemoryManager.MemoryImportance.NORMAL
+	if amount > 1000:
+		importance = MemoryManager.MemoryImportance.CRITICAL
+	elif amount > 500:
+		importance = MemoryManager.MemoryImportance.HIGH
+	
+	# 添加到记忆系统
+	if MemoryManager:
+		MemoryManager.add_memory(character_node, memory_text, MemoryManager.MemoryType.PERSONAL, importance)
+		# print("💭 %s: 记忆已添加 - \"%s\"" % [character_name, memory_text])
+
+## 格式化交易记忆文本
+func _format_transaction_memory(tx_type: String, amount: float, source: String, reason: String) -> String:
+	"""根据交易类型格式化记忆文本"""
+	var memory_text = ""
+	
+	match tx_type:
+		"deposit":
+			if source.contains("transfer_in"):
+				# 从其他人转账收到
+				var from_name = _extract_name_from_source(source)
+				memory_text = "收到了来自%s的转账 ¥%.2f" % [from_name, amount]
+			elif source.contains("赠予"):
+				var from_name = _extract_name_from_source(source)
+				memory_text = "收到了%s赠予的 ¥%.2f" % [from_name, amount]
+			elif source.contains("借入"):
+				var from_name = _extract_name_from_source(source)
+				memory_text = "向%s借入了 ¥%.2f" % [from_name, amount]
+			elif source.contains("投资收益"):
+				memory_text = "获得投资收益 ¥%.2f" % amount
+			elif source.contains("出售"):
+				var to_name = _extract_name_from_source(source)
+				memory_text = "向%s出售商品/服务获得 ¥%.2f" % [to_name, amount]
+			else:
+				memory_text = "收入 ¥%.2f (%s)" % [amount, source if not source.is_empty() else "未知来源"]
+		
+		"withdraw":
+			if reason.contains("transfer_out"):
+				var to_name = _extract_name_from_source(reason)
+				memory_text = "向%s转账 ¥%.2f" % [to_name, amount]
+			elif reason.contains("赠予"):
+				var to_name = _extract_name_from_source(reason)
+				memory_text = "赠予了%s ¥%.2f" % [to_name, amount]
+			elif reason.contains("借出"):
+				var to_name = _extract_name_from_source(reason)
+				memory_text = "借给%s ¥%.2f" % [to_name, amount]
+			elif reason.contains("投资损失"):
+				memory_text = "投资损失 ¥%.2f" % amount
+			elif reason.contains("购买"):
+				var from_name = _extract_name_from_source(reason)
+				memory_text = "向%s购买商品/服务花费 ¥%.2f" % [from_name, amount]
+			elif reason.contains("服务费用"):
+				var to_name = _extract_name_from_source(reason)
+				memory_text = "向%s支付服务费用 ¥%.2f" % [to_name, amount]
+			else:
+				memory_text = "支出 ¥%.2f (%s)" % [amount, reason if not reason.is_empty() else "未知原因"]
+		
+		"transfer_in":
+			var from_name = _extract_name_from_source(source)
+			memory_text = "收到来自%s的转账 ¥%.2f" % [from_name, amount]
+		
+		"transfer_out":
+			var to_name = _extract_name_from_source(reason)
+			memory_text = "向%s转账 ¥%.2f" % [to_name, amount]
+		
+		"borrow":
+			memory_text = "借入资金 ¥%.2f" % amount
+		
+		"repay":
+			memory_text = "偿还借款 ¥%.2f" % amount
+		
+		"interest_earned":
+			memory_text = "获得利息收入 ¥%.2f" % amount
+		
+		"interest_charged":
+			memory_text = "支付利息 ¥%.2f" % amount
+	
+	return memory_text
+
+## 从source/reason中提取人名
+func _extract_name_from_source(text: String) -> String:
+	"""从交易来源或原因文本中提取人名"""
+	# 常见的人名列表
+	var names = ["Alice", "Bob", "Charlie", "David", "Eve", "Frank", 
+				 "Grace", "Henry", "Ivy", "Jack", "Kate", "Leo", 
+				 "Monica", "Nancy", "Oliver", "Peter", "Quinn", "Rose",
+				 "Stephen", "Tom", "Uma", "Victor", "Wendy", "Xavier",
+				 "Yolanda", "Zack", "Joe", "Lea"]
+	
+	for name in names:
+		if text.contains(name):
+			return name
+	
+	return "某人"
+
+## 获取角色节点
+func _get_character_node() -> Node:
+	"""通过CharacterManager获取角色节点"""
+	# EconomicAgent不在场景树中，需要通过其他方式获取SceneTree
+	var scene_tree = Engine.get_main_loop() as SceneTree
+	if not scene_tree:
+		return null
+	
+	# 尝试通过角色名称获取节点
+	var characters = scene_tree.get_nodes_in_group("controllable_characters")
+	for character in characters:
+		if character.name == character_name:
+			return character
+	
+	return null
 
 ## === Psychological State Management (for Scene Experiments) ===
 
